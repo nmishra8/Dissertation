@@ -1,0 +1,141 @@
+\section{Orthogonal projection pursuit}
+In this section we would just introduce the idea of using orthognal functions
+for regression and later figure out how they can be used in our problem.
+Right now we want to solve a regression problem where we have very small
+number of data points in our dataset $\D_0$ and we want to derive a better
+estimate of our function by leveraging on the other datasets $\T =
+{\D_1,\cdots,\D_K}$ which have large number of datapoints. The main assumption
+is that some of the datasets in $\T$ are similar to $\D_0$, while others are
+not. And as we mentioned before, $ |\D_0| = n\ll N = |\D_i|, \forall \D_i \in
+\T$.
+Let $\D_0 = (Y_{01}, X_1), (Y_{02}, X_2),\cdots, (Y_{0n}, X_n)$ be our target
+dataset and $\D_s = (Y_{s1}, x_1), (Y_{s2}, x_2),\cdots, (Y_{sN}, x_N)$ be the
+secondary datasets for all $\D_s \in \T$. For now, we just consider a
+1-dimensional case and a regular design meaning that $x_i = i/N$, also let $\B$
+denote the list of indices  at which data points in $\D_0$ is known.
+Let $w$ be any unknownn weight vector in $\R^K$ such that $\sum_{i=1}^{K}w_i =
+1$. Let $\C = \{1,\cdots,K\}$ and $\mathbf{X} = \{
+\frac{1}{N},\frac{2}{N}, \cdots,1\}$. We define,
+\begin{align}
+ y_{0i} &= \begin{cases}  Y_{0i} , & \text{if }i \in \B.\\
+    					\sum_{k = 1}^{K}w_k Y_{ki}, & \text{otherwise}.
+  		  \end{cases}\\
+y_{ki} &= Y_{ki}, \text{ for all }k \in \C
+\end{align}
+
+And our model is given as,
+$$
+y_{si} = r_{s}(x_i) + \sigma_s \epsilon, \text{where }\epsilon \sim N(0,1)
+$$
+We use orthogonal functions to estimate $r_s (x)$. Let $\phi_j(x)$ be any set
+of orthonromal funcions then $r_s(x)$ can be written as, 
+$$
+r_s (x) = \sum_{j = 1}^{\infty} \theta_{sj} \phi_j (x)
+$$
+An estimator for $r_s(x)$ is given by,
+\begin{equation}
+\label{eq:orthestimator}
+\hat{r}_s (x) = \sum_{j = 1}^{N} \hat{\theta}_{sj} \phi_j (x).
+\end{equation}
+where, $\hat{\theta}_{sj}(\mathbf{y}_{s}) = \frac{1}{N}\sum_{i = 1}^{N}
+y_{si}b_{sj}\phi_j(x_i)$ for some tuning parameter $\mathbf{b_s} \in \R^N$.
+Hence using $l_{sj} = \frac{1}{N}\sum_{i = 1}^{N} b_{sj} \phi_j(x)\phi_j(x_i)$,
+\eqref{eq:orthestimator} can be written as,
+\begin{equation}
+\label{eq:orthestimator2}
+\hat{r}_s (x) = \sum_{i = 1}^{N} y_{si} l_{si} (x).
+\end{equation}
+
+\begin{comment}
+Note that risk of the estimator defined above depends on the value of $w$ and
+the value of $b$. We assume that some of the datasets in $\T$ are close to
+$\D_0$, hence we want to find $w$ such that it maximizes
+\begin{equation}
+\label{eq:confband}
+\sup_{s \in \C} \Pr \left(|\hat{r}_0(x) - \hat{r}_s(x)| \leq \gamma \:
+\vert \D_0, \T; \text{ for all }x \in \mathbf{X}\right).
+\end{equation}
+
+Let $Z(x)$ be a random function given by,
+\begin{align}
+Z(x) &= \hat{r}_0(x) - \hat{r}_s(x) \\
+     &= \sum_{i = 1}^{N} \left(y_{0i} - y_{si} \right)  l_i (x)\\
+     &= \sum_{i \in \B} \left(Y_{0i} - Y_{si} \right)  l_i (x) + \sum_{i \notin
+     \B}^{N} \left( \sum_{k = 1}^{K}w_k Y_{ki} - Y_{si} \right)  l_i (x)\\
+     &= \sum_{i \in \B}\left( r_0(x_i) - r_s(x_i)\right)  + 
+        \sum_{i \notin \B} \left( \sum_{k = 1}^{K} w_k r_0(x_i) -
+        r_s(x_i)\right)  +
+        \sum_{i \in \B}\left( \epsilon_0 +\epsilon_s \right)l_i(x) \\
+     &+ \sum_{i \notin \B} \left(\sum_{k = 1}^{K}w_k \epsilon_k
+     +\epsilon_s \right)l_i(x)
+\end{align}
+Thus $Z(x) \sim N(\mu,\Lambda^2(x))$, where $\mu = \sum_{i \in \B}\left(
+r_0(x_i) - r_s(x_i)\right)  + \sum_{i \notin \B} \left( \sum_{k = 1}^{K} w_k r_0(x_i) -
+        r_s(x_i)\right)$, and $\Lambda^2(x) = \sum_{i = 1}^{N} \left(
+        \left(\sigma^2_s +\I(i \in \B) \sigma^2_0   + \I(i \notin \B)\sum_{k = 1}^{K} w^2_k
+        \sigma^2_k \right)(\l_i(x))^2\right)$.
+        
+Now observe that using $W(x) = \Lambda(x)\epsilon \text{ for } \epsilon \sim
+N(0,1)$,
+\begin{align*}
+\Pr \left(|Z(x)| \leq \gamma, \forall x \in \mathbf{X} \right)
+&\geq \Pr \left(W(x)\leq \gamma - |\mu|, \forall x \in \mathbf{X} \right)
+ \; \text{ for $\gamma \geq \mu$}\\
+&= \Pr \left(\sup_{x \in \mathbf{X}}W(x) \leq \gamma - |\mu| \right)\\
+&= \Pr \left(\epsilon \leq \frac{\gamma - |\mu|}{\sup_{x \in
+\mathbf{X}}\Lambda(x)} \right)\\
+&\geq 1 - \exp^{}\\
+\end{align*}
+\end{comment}
+
+Note that in order to estimate $\hat{r}_0(x)$ we need to find tuning
+parameter $b_0$ and weight vector $w$. We assume that the target function
+belongs to some confidence band which is determined by the datasets in $\T$. For
+each of the $K$ bands, we want to minimize the risk of the estimator
+$\hat{r}_0(x)$ subject to the condition that $\hat{r}_0(x_i) \in \hat{r}_k(x_i)
+\: \rpm c \: \hat{\sigma}_s \| l(x)\|$. Thus, our optimization problem thus
+becomes,
+
+\begin{equation*}
+\begin{aligned}
+&   \underset{w,b}{\text{min}}  
+&&   \text{Risk}(\hat{r}_0(x)) \\
+&   \text{subject to} &&\sum_{i = 1}^{K} w_i = 1,\\
+&&&	\hat{r}_0(x_i) - \hat{r}_s(x_i) \leq  \; c  \hat{\sigma}_s \| l(x_i)\|,\:
+\forall x_i \: \in \mathbf{X}\\
+&&&	\hat{r}_s(x_i) - \hat{r}_0(x_i) \leq  -c  \hat{\sigma}_s \| l(x_i)\|,\:
+\forall x_i \: \in \mathbf{X}\\
+&&&	w_i \geq 0, \forall \: i \in \C \\
+&&&
+\end{aligned}
+\end{equation*}
+
+\begin{align}
+ \text{Risk}(\hat{r}_0(x)) & = \sum_{j = 1}^{N} \left(y^2_{0j} -
+ \frac{\hat{\sigma_s}^2}{N}\right)_+(1-b_{sj})^2 + \frac{\hat{\sigma_s}^2}{N}
+ \sum_{j = 1}^{N} b^2_{sj}\\
+ & = \sum_{j \in \B} \left(Y^2_{0j} - 
+ \frac{\hat{\sigma_s}^2}{N}\right)_+(1-b_{sj})^2 + \sum_{j \notin \B} \left(
+ \left(\sum_{k=1}^{K}w_kY_{kj} \right)^2 -
+ \frac{\hat{\sigma_s}^2}{N}\right)_+(1-b_{sj})^2 +
+ \frac{\hat{\sigma_s}^2}{N}
+ \sum_{j = 1}^{N} b^2_{sj}
+\end{align}
+
+Since,
+\begin{align}
+\hat{r}_s(x_i) - \hat{r}_0(x_i)  
+ = \sum_{j \in \B} \left(Y_{0j} - Y_{sj} \right)l_j(x_i) + \sum_{j \notin
+\B} \left( \sum_{k=1}^{K}w_kY_{kj} - Y_{si}\right)l_j(x_i), 
+\end{align}
+we have the affine constraints given by,
+\begin{align*}
+\sum_{j \in \B} \left(Y_{0j} - Y_{sj} \right)l_j(x_i) + \sum_{j \notin
+\B} \left( \sum_{k=1}^{K}w_kY_{kj}  - Y_{si}\right)l_j(x_i) 
+&\leq  \; c  \hat{\sigma}_s \| l(x_i)\|,\:
+\forall x_i \: \in \mathbf{X}\\
+\sum_{j \in \B} \left(Y_{sj} - Y_{0j} \right)l_j(x_i) + \sum_{j \notin
+\B} \left( Y_{si} - \sum_{k=1}^{K}w_kY_{kj}  \right)l_j(x_i) 
+&\leq  \; c  \hat{\sigma}_s \| l(x_i)\|,\:
+\forall x_i \: \in \mathbf{X}\\
+\end{align*}

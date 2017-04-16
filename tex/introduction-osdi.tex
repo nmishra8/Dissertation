@@ -1,0 +1,133 @@
+\section{Introduction}
+% Running applications together
+Applications co-scheduled on the same physical hardware
+\emph{interfere} with one another by contending for shared resources
+\cite{dwyer2012practical,kambadur2012measuring,Bubble-flux,merkel2010resource}.
+We quantify interference as \emph{slowdown}, or the performance loss
+one application experiences in the presence of co-scheduled
+applications.  By accurately predicting this interference, a scheduler
+can determine optimal assignments of applications to physical
+machines, leading to higher throughput in batch systems and better
+quality-of-service for latency-sensitive applications.
+
+% Many, many instances of co-scheduled applications -- should use
+% these to predict behavior, but it is hard
+Data center and super computer operators often have a great deal of
+accumulated data about past jobs and their interference, yet turning
+this data into effective interference predictors is difficult
+\cite{kambadur2012measuring}.  To apply machine learning to build an
+accurate predictor from this data, two fundamental decisions must be
+made: (1) what \emph{features} should be measured and (2) what
+\emph{model} maps these features into an accurate prediction.  Smaller
+feature spaces provide more computationally efficient models, but
+may miss key data and reduce prediction accuracy.  The art to modeling
+is managing the tradeoffs between feature set size and the model
+accuracy.  One family of machine learning
+techniques---\emph{regularization}--- addresses the particular problem
+where the number of features is much larger than the number of
+samples; \ie the problem is \emph{ill-posed} and unsolvable with
+standard regression analysis.  Regularization methods solve such
+ill-posed problems by simultaneously selecting both the features and
+the model
+\cite{hoerl1988ridge,tibshirani1996regression,zou2005regularization}.
+
+This paper explores such state-of-the-art regularization models for
+predicting application interference.  We find that regularized linear
+regression methods require a relatively small number of features, but
+produce inaccurate models.  In contrast, non-linear models that
+include \emph{interaction terms}---\ie permit features to be
+multiplied together---are more accurate, but are extremely inefficient
+and not practical for online scheduling.
+%Practicality is
+%a central concern as several statistical methods for predicting
+%application interference have proven not to scale beyond two
+%applications \cite{Kambadur2010}; \ie they are impractical to
+%use when co-scheduling three or more applications.
+
+% Our approach -- split feature selection and model building into two
+We therefore combine linear and non-linear approaches to produce
+accurate and practical predictions.  We call our approach ESP for
+\textbf{E}stimating co-\textbf{S}cheduled \textbf{P}erformance.
+\SYSTEM{}'s key insight is to split regularization modeling into two
+parts: \emph{feature selection} and \emph{model building}.  \SYSTEM{}
+uses linear techniques to perform feature selection, but uses
+quadratic techniques for model building.  The result is a highly
+accurate predictor that is still practical and can be integrated into
+real application schedulers.
+
+\SYSTEM{} assumes there is a known (possibly very large) set of
+applications that may be run on the system and some offline
+measurements have been taken of these individual applications.
+Specifically, \SYSTEM{} measures low-level hardware features like
+cache misses and instructions retired during a training phase.  At
+runtime, applications from this set may be launched in any arbitrary
+combination.  The goal is to efficiently predict the interference (\ie
+slowdown) of co-scheduled applications.
+% A secondary goal is to support scalability of co-scheduled
+% applications so that more than two applications can share the same
+% node.
+
+% Use approach to build schedulers for single and multinode system
+We evaluate \SYSTEM{} by integrating it into both single and
+multi-node schedulers running on Linux/x86 servers.  In the
+single-node case, we construct a batch scheduler that orders
+application execution to minimize the total completion time.  In the
+multi-node case, we build a first-come-first-serve scheduler that
+assigns applications to nodes as they arrive to minimize application
+slowdown.  We compare \SYSTEM{}-based schedulers to prior scheduling
+techniques that use contention-aware heuristics to avoid interference
+\cite{resense,merkel2010resource,Merlin}.  We also compare \SYSTEM{}'s
+accuracy to predictors built with a number of cutting-edge
+regularization methods. We find:
+\begin{itemize}
+\item The single-node \SYSTEM{} schedules are, on average, 27\% faster
+  than techniques based on heuristics.  Even with its runtime
+  overhead, the \SYSTEM{} results are only 5\% worse (on average) than
+  an oracle that has perfect knowledge of interference and no
+  overhead. See \secref{sched_single_proc}.
+\item The multi-node \SYSTEM{} schedules are 60\% faster than activity
+  vector based schedules and only 5\% to 13\% worse than an oracle.
+  See \secref{sched-multi-node}.
+\item Critically, \SYSTEM{} produces better results as more
+  applications are scheduled.  \SYSTEM{} produces quantifiable
+  performance predictions while heuristic techniques simply produce a
+  binary decision: co-schedule or not.  \SYSTEM{}'s quantifiable
+  predictions allow schedulers to make optimal decisions even when
+  interference cannot be avoided. In contrast, heuristic techniques do
+  not quantify interference and thus cannot rank decisions.  As the
+  number of applications increases, the chance of heuristics making a
+  very poor choice in the face of unavoidable contention also
+  increases.  See \secref{exp:multi-node-job}.
+\item \SYSTEM{} is more accurate than existing linear regression
+  techniques in most cases.  When considering two applications,
+  \SYSTEM{} is similar to existing regularized linear regression
+  techniques.  Considering more than two applications, however,
+  \SYSTEM{} is uniformly more accurate than standard linear regression
+  techniques.  See \secref{st_model}.  For reasons explained in
+  \secref{est-intro}, existing regularized regression methods with
+  interaction terms cannot be evaluated for accuracy because their
+  models are too complex to be implemented in practice.
+\end{itemize}
+
+% Contributions:
+This paper makes the following contributions:
+%\begin{itemize}
+\begin{inparaenum}[1)]
+\item \SYSTEM{}, a regularization method for predicting application
+  interference,
+\item Demonstration of \SYSTEM{} in both single and multi-node
+  schedulers,
+\item Comparison to existing heuristic techniques on real systems,
+\item Comparison of \SYSTEM{}'s predictive accuracy to other
+  regularization methods,
+\item Open-source code release\footnote{The code is available at
+    https://github.com/ESPAlg/ESP}.
+%\end{itemize}
+\end{inparaenum}
+\SYSTEM{} helps scheduling at multiple levels: it determines which
+applications should run together on a single node, it determines which
+node a new application should be scheduled on, and it avoids
+disastrous decisions that heuristic schedulers cannot.  Support for
+data analytics has become an important research topic in computing
+systems, and this paper explores how data analytics can be used to
+improve computing systems.

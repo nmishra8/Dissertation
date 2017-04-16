@@ -1,22 +1,23 @@
 % ---- ETD Document Class and Useful Packages ---- %
 \documentclass{ucetd}
-\usepackage{subfigure,epsfig,amsfonts}
-\usepackage{natbib}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
 
+\include{csmathmacro}
+\include{tikz_setting}
+\newcommand{\SYSTEM}{CALO\-REE}
+%\newcommand{\SYSTEM2}{CALO\-REE}
 %% Use these commands to set biographic information for the title page:
-\title{Thesis Title}
-\author{Thesis Author}
-\department{Thesis Department}
-\division{Thesis Division}
-\degree{Type of Degree}
-\date{Graduation Date}
+\title{Statistical Methods for Performance Estimation for Improving Scheduling and Energy Minimization}
+\author{Nikita Mishra}
+\department{Computer Science}
+\division{Physical Science Division}
+\degree{Doctor of Philosophy}
+\date{June 10, 2017}
 
 %% Use these commands to set a dedication and epigraph text
 \dedication{Dedication Text}
 \epigraph{Epigraph Text}
+\bibliography{reference}
+\bibliography{references}
 
 
 \begin{document}
@@ -29,30 +30,56 @@
 \makecopyright
 \makededication
 \makeepigraph
-
-
 %% Make the various tables of contents
 \tableofcontents
 \listoffigures
 \listoftables
+\graphicspath{{figures/}} % Location of the graphics files
+%\graphicspath{{Figures/}} % Location of the graphics files
 
 \acknowledgments
 % Enter Acknowledgements here
 
 \abstract
 % Enter Abstract here
-
+\input{tex/abstract}
 \mainmatter
-% Main body of text follows
 
-\chapter{Introduction}
-% Introductory stuff
+\chapter{Single Application power and performance}
+\input{tex/introduction-asplos}
 
-\chapter{A Chapter}
-\section{Introduction}
-% Intro to chapter one
+\input{tex/example-asplos}
+\input{tex/notation-asplos}
+\input{tex/problemFormulation-asplos}
+\input{tex/hierarchicalModel-asplos}
 
-% Format a LaTeX bibliography
+\input{tex/experiments-asplos}
+
+\input{tex/related-asplos}
+\input{tex/conclusion-asplos}
+
+\chapter{Application interference estimation}
+%\input{tex/abstract}
+\input{tex/introduction-osdi}
+\input{tex/notation-osdi}
+\input{tex/regression-osdi}
+\input{tex/previous-work-osdi}
+\input{tex/estimation-problem-osdi}
+\input{tex/optimal-scheduling-osdi}
+\input{tex/experiment-osdi}
+\input{tex/previous-work-osdi}
+\input{tex/conclusion-osdi}
+
+\chapter{Performance and power estimation}
+\input{tex/intro}
+\input{tex/example}
+\input{tex/framework-new}
+\input{tex/evaluation}
+\input{tex/related}
+\input{tex/conclusion}
+\appendix
+\input{tex/appendix}
+
 \makebibliography
 
 % Figures and tables, if you decide to leave them to the end
@@ -60,5 +87,3 @@
 %\input{table}
 
 \end{document}
-
-

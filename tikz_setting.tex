@@ -1,0 +1,104 @@
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\definecolor{on}{RGB}{159, 169,133}
+\definecolor{off}{RGB}{255,165,0}%{240,232,205}
+\definecolor{leo}{RGB}{72,181,163}
+\definecolor{poet}{RGB}{249,140,182}
+\definecolor{calnp}{RGB}{117,137,191}
+\definecolor{cal}{RGB}{51,255,51} %green
+
+
+\definecolor{OPTIMAL}{RGB}{0,0,0}
+\definecolor{RACE}{RGB}{251,128,114}
+\definecolor{CONTROL}{RGB}{255,237,111}
+\definecolor{ONLINE}{RGB}{253,180,98}
+\definecolor{OFFLINE}{RGB}{252,205,229}
+\definecolor{NETFLIX}{RGB}{217,217,217}
+\definecolor{HBM}{RGB}{190,186,218}
+\definecolor{POET}{RGB}{188,128,189}
+\definecolor{CALOREE-NP}{RGB}{179,222,105}
+\definecolor{CALOREE-ONLINE}{RGB}{204,235,197}
+\definecolor{CALOREE-NETFLIX}{RGB}{141,211,199}
+\definecolor{CALOREE-HBM}{RGB}{128,177,211}
+\definecolor{PID-CONTROL}{RGB}{255,237,111}
+\definecolor{NUCLEAR}{RGB}{190,186,218}
+\definecolor{ADAPT-CONTROL}{RGB}{188,128,189}
+\definecolor{ONLINE-ADAPT}{RGB}{204,235,197}
+\definecolor{NUCLEAR-ADAPT}{RGB}{141,211,199}
+\definecolor{HBM-ADAPT}{RGB}{128,177,211}
+
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=leftline,                  % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{black},     % string literal style
+  tabsize=1,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+% options for pgfplots
+\pgfplotsset{compat=1.8,compat/show suggested version=false}
+\usetikzlibrary{calc,trees,arrows,patterns,plotmarks,shapes,snakes,er,3d,automata,backgrounds,topaths,decorations.pathmorphing,decorations.markings}
+%\pgfplotsset{compat=newest}
+\pgfplotsset{
+   /pgfplots/bar  cycle  list/.style={/pgfplots/cycle  list={%
+        {black,fill=black!30!white,mark=none},%
+        {black,fill=red!30!white,mark=none},%
+        {black,fill=green!30!white,mark=none},%
+        {black,fill=yellow!30!white,mark=none},%
+        {black,fill=brown!30!white,mark=none},%
+     }
+   },
+}
+% begin of externalization
+\usetikzlibrary{external}
+\tikzexternalize[prefix=out/]
+\tikzexternalize
+\usetikzlibrary{patterns}
+\usepgfplotslibrary{groupplots}
+
+\usepackage{tikz}
+
+%\usepgfplotslibrary{groupplots}
+\usetikzlibrary{pgfplots.groupplots}
+
+
+\pgfplotsset{
+every axis label/.append style={font=\footnotesize},
+tick label style={font=\footnotesize},
+compat=1.13
+}
+
+\makeatletter
+\g@addto@macro\normalsize{%
+  \setlength\abovedisplayskip{4pt plus 2pt minus 1pt}
+  \setlength\belowdisplayskip{4pt plus 2pt minus 1pt}
+  \setlength\abovedisplayshortskip{4pt plus 2pt minus 1pt}
+  \setlength\belowdisplayshortskip{4pt plus 2pt minus 1pt}
+}
+\makeatother
+
+\newif{\ifanonymous}
+\anonymoustrue

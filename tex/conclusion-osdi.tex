@@ -1,0 +1,19 @@
+\section{Conclusion}
+This paper explores machine learning methods for predicting
+application interference in computing systems.  Specifically, we
+explore several state-of-the-art regularization techniques for
+high-dimensional problems---when many more features are available than
+samples---and we conclude that existing linear techniques are not
+accurate enough, while existing higher-order techniques are accurate
+but slow.  Inspired by these observations we present \SYSTEM{}, a
+combination of linear feature selection with higher-order model
+building that achieves the practicality of linear models with the
+accuracy of higher-order models.  We have demonstrated that
+\SYSTEM{}'s quantitative predictions produce significantly better
+schedules than existing heuristics for both single and multi-node
+systems, with up to 1.8$\times$ improvement in application completion
+time and significantly lower variance.  Additionally, \SYSTEM{}
+achieves much higher prediction accuracies than prior
+approaches---over 93\% when considering three or more applications.
+We have made the source code available so that others may improve on
+or compare with \SYSTEM{}.

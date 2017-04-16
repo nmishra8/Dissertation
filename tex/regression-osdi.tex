@@ -1,0 +1,91 @@
+\section{Regression Overview}
+\label{sec:reg-background}
+
+This section provides a brief introduction to regression models.
+
+\subsection{Running Example}
+Let's use an example to illustrate.  Say we want to estimate the
+performance of two applications when run together.  For each
+application, we measure its instructions per clock (IPC), L2 Miss
+Rate, and its L3 Miss Rate.  Our goal is to produce a function that
+estimates the slowdown each application will experience when run
+together knowing these three values for each application when run
+individually.
+
+\subsection{General Regression}
+
+Mostly use your section 3 intro from previous version.
+
+Two key issues:
+\begin{itemize}
+\item What information to include in X.
+\item What function f represents the problem.
+\end{itemize}
+These are not independent problems, they must actually be solved together.
+
+Given a selection of what to include in X and a function f, how do we
+evaluate it?  Discuss Bias.  Bias is useful because it is independent
+of noise (epsilon).  If we only measured accuracy we might conclude
+that a predictor is bad when the system is just noisy (is that
+right?).
+
+Running example: here we need to decide which of our features (IPC,
+L2MISS, L3MISS) to include in X and how to combine them (i.e., f).
+Bias represents how far our f is from the true f that maps these
+performance features of isolated applications into the impact of
+co-scheduling.
+
+\subsection{Linear Regression}
+Most straigtforward approach is a linear combination of features. Put
+equation 2 here.  To build a linear model we need to determine beta.
+
+We determine beta by finding some sample inputs, measuring X and z for
+those samples and computing B given that sample data.  If p == n, this
+is simply done by inverting X and solving for beta.  One can then use
+Beta to predict z for new combinations of applications.
+
+Challenge: what if number of features (p) is greater than the number
+of things we want to predict (n)?  Then the matrix is not invertible.
+In our running example, this is the case: we can measure more features
+of the application than the thing we are trying to produce.  The trick
+is to select good features.  (Is that what regularization means? --
+reducing the feature set so that the problem is solvable?)
+
+Three ways to solve this from the literature: Ridge, Lasso, and
+Elastic-net.  Each subsubsection should have an equation and talk
+about the tradeoffs (or use cases for each).
+
+\subsubsection{Ridge}
+
+\subsubsection{Lasso}
+
+\subsection{ElasticNet}
+
+
+\subsection{Quadratic Regression}
+In some cases, linear models will not be sufficient, we need to
+explore higher-order models, e.g. quadratic.  Need to be very clear
+about how you formulate the quadratic model -- you blow up X and beta
+to be larger, but then you have a linear combination of that larger
+space -- this explanation is important so that people don't get
+confused.
+
+Explain how this changes the problem.  Good: can capture more complex
+interaction aomng features.  Bad: problem is computationally much
+harder -- went from $O(np)$ to $O(np^2)$ right?
+
+Now you have even more features than before so regularization matters
+a lot more now, but because of how you expressed the problem -- larger
+matrices -- techniques from above apply directly.
+
+Relate back to the example.
+
+\subsection{Summary}
+
+Need to select features and function to reduce bias.  Linear models
+are (relatively) cheap, but don't capute complexity.  Quadratic models
+are expensive but potentially more accurate.
+
+
+
+

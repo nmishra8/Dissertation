@@ -1,0 +1,65 @@
+\section{Related Work}
+\label{sec:related}
+\balance
+We discuss related work on energy and power optimization. Offline optimization techniques have been proposed (\eg \cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic}, but
+they are limited by reliance on a robust training phase.  If behavior
+occurs online that was not represented in the training data, then
+these approaches may produce suboptimal results.
+
+Several approaches augment offline model building with online
+measurement.  For example, many systems employ control theoretic
+designs which couple offline model building with online feedback
+control
+\cite{Wu2004,TCST,Chen2011,PTRADE,Heartbeats2,ControlWare,Agilos,Rajkumar,Sojka,Raghavendra2008}.
+Over a narrow range of applications the combination of offline
+learning and control works well, as the offline models capture the
+general behavior of the entire class of application and require
+negligible online overhead.  This focused approach is extremely
+effective for multimedia applications
+\cite{grace2,flinn99,flinn2004,xtune,TCST} and web-servers
+\cite{Horvarth,LuEtAl-2006a,SunDaiPan-2008a}.  The goal of \SYSTEM{},
+however, is to build a more general framework applicable to a broad
+range of applications.  \SYSTEM{}'s approach is complementary to
+control based approaches.  For example, incorporating \SYSTEM{} into
+control-based approaches might extend them to other domains even when
+the application characteristics are not known ahead of time.
+
+Some approaches have combined offline predictive models with online
+adaptation
+\cite{Zhang2012,packandcap,Winter2010,dubach2010,Koala,Cinder, wu2012inferred}.  For
+example, Dubach et al.  propose such a combo for optimizing the
+microarchitecture of a single core \cite{dubach2010}.  Such predictive
+models have also been employed at the OS level to manage system energy
+consumption \cite{Koala,Cinder}. \cite{wu2012inferred}. 
+
+Other approaches adopt an almost completely online model, optimizing
+based only on dynamic runtime feedback
+\cite{Li2006,Flicker,ParallelismDial,Ponamarev,petabricksDynamic,LeeBrooks}.
+For example, Flicker is a configurable architecture and optimization
+framework that uses only online models to maximize performance under a
+power limitation \cite{Flicker}.  Another example, ParallelismDial,
+uses online adaptation to tailor parallelism to application workload.
+
+
+Perhaps the most similar approaches to \SYSTEM{} are others that
+combine offline modeling with online model updates
+\cite{ICSE2014,Bitirgen2008,Ipek}.  For example, Bitirgen et al use an
+artificial neural network to allocate resources to multiple
+applications in a multicore \cite{Bitirgen2008}.  The neural network
+is trained offline and then adapted online using measured feedback.
+This approach optimizes performance but does not consider power or
+energy minimization.  
+
+Like these approaches, \SYSTEM{} combines offline model building and
+with online model updates.  \emph{Unlike prior approaches, \SYSTEM{}
+  learns not a single best state, but rather all Pareto-optimal
+  tradeoffs in the power/performance space (like those illustrated in
+  \figref{fig:pareto})}.  These tradeoffs can be used to maximize
+performance or to minimize energy across an application's entire range
+of possible utilization.  There is a cost for this added benefit:
+\SYSTEM{}'s online phase is likely higher overhead than these prior
+approaches that focus only on maximizing performance.  In that sense,
+however, these approaches complement each other.  If fastest
+performance is the goal, then prior approaches are likely the best
+option.  If the goal is to minimize energy for a range of possible
+performance, then \SYSTEM{} produces near optimal energy.

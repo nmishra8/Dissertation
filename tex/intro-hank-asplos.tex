@@ -1,0 +1,32 @@
+%Title: \SYSTEM{}: A machine learning approach to minimizing energy under performance constraints
+
+\section{Introduction}
+
+% Two trends: energy and load variations
+This paper addresses two trends in modern computing systems.  First, energy is increasingly important; reducing energy consumption reduces operating costs in datacenters and increases battery life in mobile devices.  Second, computer systems are often underutilized, meaning they spend significant portions of time operating at less than full computational capacity \cite{}.  
+
+% Problem: How to minimize energy while meeting load demands
+These two trends raise the problem of allocating available resources to meet the current computation demand while minimizing energy consumption. This problem is a \emph{constrainted optimization} problem. The current utilization level represents a performance constraint (\ie an amount of work that must be completed in a given time); system energy consumption represents the objective function to be minimized.  
+
+% Prior approaches: heuristics (race-to-idle) and convex optimization
+This is a challenging problem because it requires a great deal of knowledge to solve.  Specifically, it would require knowledge of the performance and energy consumption of every possible configuration the system could enter for every application and every input we want to optimize.  
+
+Given the difficulty, several approximate solutions have arisen, including those based on \emph{heuristics} and those based on \emph{convex optimization}.  Heuristic techniques include those like \emph{racing-to-idle} -- allocating all resources to an application and idling the system once its work is complete \cite{}.  The race-to-idle heuristic has proven effective due to a lack of energy proportionality in computers \cite{}, but recent empirical studies have demonstrated several systems where this heuristic is far from optimal \cite{}.  Therefore, more advanced techniques have been proposed which attempt to solve the optimization problem online, typically through some sort of convex optimization \cite{}. These prior approaches work without complete knowledge, but suffer in that they fail to truly minimize energy consumption.  \emph{Thus, there is a need for a more sophisticated approach which can learn energy and performance characteristics online and achieve greater energy savings.}
+
+% Our approach: hierarchical bayesian learning based on a prior
+We address this need by presenting \SYSTEM{}, a hierarchical Bayesian learning system which performs accurate online estimation of the power and performance of a computer system's various configurations.  \SYSTEM{} models application performance and power (from which it derives energy) as a guassian function.  We start with the assumption that we have some set of applications for which we have complete knowledge.  \SYSTEM{} uses that set of known applications to form prior beliefs about the probability distributions of the power and performance achievable in different configurations.  At runtime, \SYSTEM{} takes a small number of observations of some unknown application and uses a hierarchical model to estimate the power and performance for that application in all other configurations.
+
+% Our results
+We have implemented \SYSTEM{} on a Linux x86 server and tested its ability to predict the power and performance of 24 different applications using leave-on-out cross validation.  We first compare the accuracy of \SYSTEM{}'s performance and power predictions to both the true value and a simple statistical method based on regression (see \secref{}).  We find that, on average, \SYSTEM{} is within XX\% of the true value and exceeds the regression method by YY\%.  We then use \SYSTEM{} to solve the energy minimization problem for various performance requirements (see \secref{}).  Overall we find that \SYSTEM{} is within XX\% of the true optimal, while exceeding race-to-idle by YY\% and regression based methods by ZZ\%.
+
+% Contributions of this paper
+This paper makes the following contributions:
+\begin{itemize}
+\item It presents a hierarchical Bayesian model capable of accurately estimating the application-specific performance and power of computer system configurations without prior knowledge of the application. (See \secref{framework}).
+\item It makes the source code for this learning system available in both Matlab and C++\footnote{\TODO{put url here.}}.
+\item It evaluates \SYSTEM{}'s overhead (see \secref{overhead}).
+\item It compares the accuracy of \SYSTEM{}'s estimations to both the truth and to regression based methods (see \secref{}).
+\item It integrates \SYSTEM{} into a runtime for energy optimization and finds this learning framework can find near-optimal energy savings (see secref{}).
+\end{itemize}
+
+The rest of the paper is organized as follows...

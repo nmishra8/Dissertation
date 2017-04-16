@@ -1,0 +1,185 @@
+\section{Scheduling with \SYSTEM{}}
+\label{section:scheduling}
+We examine two use cases for \SYSTEM{}: (1) batch scheduling
+applications on a single processor, (2) and scheduling dynamically
+arriving applications on multiple processors.
+
+\subsection{Single-node Scheduling}
+\label{sec:single_proc}
+%In the previous \secref{st_model}, we described an efficient algorithm
+%to estimate the performance of applications when they run in a group.
+We assume a set $S$ of applications with $|S| = m$. Each of the
+applications have work $w_1, w_2,. . .  w_m$. They can be scheduled to
+run alone or with other applications.  Our goal is to compute the
+schedule that completes all applications' work in the minimal total
+time.  The optimal schedule can be described as a solution to a linear
+program if the performance of every application was known ahead of
+time. Since we do not know the exact performance, our algorithm uses
+\SYSTEM{} to predict the performance and then generate near-optimal
+schedules.
+
+We assume that at most $k$-tuples of applications can run together at
+a time, meaning we must predict the performance for $2\binom{m}{2} +
+3\binom{m}{3} + \ldots + k\binom{m}{k}$ application combinations.  The
+intuition behind the restriction on $k$ is that the system will become
+saturated at some point and it is no longer beneficial to continue to
+add applications to a saturated node.
+% We back this intuition by empirical findings in
+% \secref{sched_single_proc} where we show that scheduling more than 4
+% applications together does not give extra saving in terms of
+% scheduling time.  Moreover in our case on a 32 core machine, we show
+% that we can easily cut down the search space by restricting the
+% applications to run at most 4 at a time and running more
+% applications at a time does not offer extra saving in the scheduling
+% time.
+
+We first develop a linear program for optimal scheduling assuming
+known performance. We will relax that assumption momentarily.  We also
+assume that pre-emption is allowed. Then, an optimal schedule is given
+by:
+\begin{equation}
+\begin{aligned}
+\centering
+			\label{eq:schedule_general}
+			&   \y =\underset{  \y \geq 0}{\argmin} \;\;   \| \y \|_1\\
+			&   \text{subject to} \;\;\;\; \mathbf{A} \y = \w
+\end{aligned}
+\end{equation}
+This equation is quite simple, but the complexity is in the structure
+of the $\y$ vector and $\mathbf{A}$ matrix.  Each element of $\y$ is
+the time for a specific set of applications to be co-scheduled, while
+the columns of $\mathbf{A}$ represent the each application's
+performance when co-scheduled in that set.  For example, if $m = 3$,
+the superset of all possible sets of applications is $\{ \{ 1 \},
+\{2\}, \{3\}, \{1,2\}, \{1,3\},\{1,3\}, \{1,2,3\} \}$.  If we order
+these sets, then $\y_j$ in Equation \eqref{eq:schedule_general} is the
+time spent when all the applications in set $j$ run together and
+$\mathbf{A}_{ij}$ is the speed of application $i$ when co-scheduled
+with applications from set $j$.  This linear program has a sparse
+solution with at most $2m$ non-zero solutions, hence the context
+switching cost is not very high and is bounded by the total number of
+applications.
+
+
+Equation \eqref{eq:schedule_general} produces a minimal time schedule
+but is not practical.  It requires that all application interference
+is known \emph{a priori}.  Further, it assumes deterministic
+application performance, but in real systems, performance is
+stochastic and subject to inherent noise.  We therefore extend
+Equation \eqref{eq:schedule_general} by assuming that the observed
+performance $\hat{\mathbf{A}}$ is drawn from a Gaussian distribution:
+\begin{equation}
+\label{eq:opt_sched_gaussian}
+\hat{A}_{ij} \sim \mathcal{N}(A_{ij},\Sigma_{ij}).
+\end{equation}
+So, instead of using $A_{ij}$, we sample $\hat{A}_{ij}$ to predict
+$A_{ij}$ and $\Sigma_{ij}$.  Suppose $\tilde{\mathbf{A}}$ is our
+prediction for $\mathbf{A}$, then instead of solving Equation
+\eqref{eq:schedule_general} we solve:
+\begin{equation}
+\begin{aligned}
+\centering
+			\label{eq:schedule_general2}
+			&   \y =\underset{  \y \geq 0}{\argmin} \;\;   \| \y \|_1\\
+                        &  \text{subject to} \;\;\;\; \tilde{\mathbf{A}} \y = \w 
+\end{aligned}
+\end{equation}
+%where $\tilde{\mathbf{A}}$ represents an estimate for $\mathbf{A}$. 
+This equation is a proxy for Equation \eqref{eq:opt_sched_gaussian},
+but it cannot guarantee that the required work is finished because it
+uses predictions rather than true performance.  To deal with this
+uncertainty we design an iterative algorithm which repeatedly solves
+the approximate linear program in Equation
+\eqref{eq:schedule_general2} until all work is finished.  This
+approach accounts for inherent noise due to error in both performance
+measurement and prediction.
+
+\begin{algorithm}[!t]
+\caption{Iterative Scheduling Algorithm}
+\begin{algorithmic}[1]
+\small
+\REQUIRE Tolerance: $\text{TOL} = 10^{-6}$ \\
+Performance prediction matrix from \SYSTEM{}: $\tilde{\mathbf{A}}$ \\
+Total work: $\w$ \\
+Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$)\\
+\STATE Initialize scheduling matrix $\y^{(0)} = 0$, work remaining: $ \w_{rem} = \w$, total scheduling time: $s = 0$.
+\WHILE{$\|\w_{rem}\|_2 \geq \text{TOL}$}
+	\STATE Work to be processed, $ \w_{sent} = \w_{rem}/\eta$.
+    \STATE Solve linear program based on the prediction, \\ $\y = \argmin_{\y \in \mathcal{C}} \|\y\|_1 $, \\where $ \mathcal{C} = \{ \y: \tilde{\mathbf{A}} \y = \w_{sent} ,\y \geq 0 \}$.
+	\STATE Schedule/run applications according to time slices given by $\y$. Update scheduling time as, $s = s + \|A \y\|_1$.
+	\STATE Update predicted performance $\mathbf{\tilde{A}}$ based on true performance observed $\mathbf{\hat{A}}$ and update remaining work,  $\w_{rem} = ( \w_{sent} -  \mathbf{\hat{A}} \y )_{+}$.
+\ENDWHILE
+\RETURN Total scheduling time: $s$.
+\end{algorithmic}
+\label{alg:ItrSched}
+\end{algorithm}
+
+%In this algorithm $\hat{A}$ is a random variable representing stochastic performance and its value is different at each iteration. 
+Algorithm \ref{alg:ItrSched} takes four parameters: an error tolerance
+(defaulted to $10^{-6}$), \SYSTEM's predicted performance matrix, a
+vector representing the total work for each application, and a scalar
+$\eta$ controlling the trade-off between exploration-exploitation. If
+we believe that \SYSTEM{}'s performance prediction is very good, we
+can set $\eta = 1$ to run fewer iterations, saving computation. If we
+have less confidence, then we could send a smaller amount of work to
+the linear program thereby reducing the error at each iteration and
+learning more about the particular application mix scheduled that
+iteration.
+
+This algorithm loops until all work is complete.  For each loop
+iteration, the algorithm takes a \emph{step} to complete some work,
+with the step size inversely proportional to $\eta$.  It then solves
+Equation \eqref{eq:schedule_general2} using the predicted performance
+and schedules the applications according to this solution.  After
+running the schedule for the specified time, the algorithm updates the
+performance prediction using its latest observations and updates the
+work vector with the work accomplished in this step.  Given perfect
+knowledge of the application interference and no system noise, the
+algorithm requires only a single step and would be optimal.
+
+\subsection{Multi-node Scheduling}
+\label{sec:schedule_multi}
+We now consider scheduling dynamically arriving applications on
+multiple processors. Applications arrive in a stream and a centralized
+scheduler assigns an application to a processor (which may already
+have applications running). We assign jobs in a first-come-first-serve
+order; a new job is immediately assigned a processor with the goal of
+minimizing job completion time. 
+
+The multi-node scheduler (see Algorithm \ref{alg:ItrSched-multi})
+takes as input: (1) an error tolerance (again defaulted to $10^{-6}$),
+(2) \SYSTEM{}'s performance prediction $\tilde{A}$, (3) a job sequence
+(we do not look ahead, so in practice the sequence does not need to be
+known in advance), (4) the number of nodes $q$, and the
+exploration-exploitation trade-off $\eta$.  Each job is denoted as
+$J_i = (a_i,v_i)$, where $a_i$ is the application index and $v_i$ is
+that application's work.  The algorithm loops until all jobs are
+completed.  Each iteration takes the next job and determines the
+expected work and time if assigned to each processor (lines 4--7).
+It chooses the processor that has the fastest predicted completion
+time (line 8) and schedules that job on the processor using Algorithm
+\ref{alg:ItrSched} (line 9).
+ 
+\begin{algorithm}[!t]
+\caption{Multi-node Iterative Scheduling Algorithm}
+\begin{algorithmic}[1]
+\small
+\REQUIRE Tolerance: $\text{TOL} = 10^{-6}$\\ 
+Performance prediction matrix from \SYSTEM{}: $\tilde{\mathbf{A}}$ \\
+Jobs arriving in stream: $J_1, J_2, \ldots, J_T $ \\
+Number of processors: $q$. \\
+Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$) \\ 
+\STATE Initialize work matrix: $\mathbf{W} = \mathbf{0}_{m \times q}$ 
+\FORALL{i = 1:T} 
+\STATE Obtain job $J_i = (a_i, v_i)$. where $a_i$ is the application index and $v_i$ denotes the work for that application.
+\FORALL{j = 1:q} 
+\STATE Expected work, $\w_{tmp} = \mathbf{W}(:,j)$; updated with new job's work $w_{tmp}[i] = w[a_i,j] + v_i$
+\STATE Expected schedule time, $s[j] = \min_{\y \in \mathcal{C}} \|\y\|_1 $, \\where $ \mathcal{C} = \{ \y: \tilde{\mathbf{A}} \y = \w_{tmp} ,\y \geq 0 \}$.
+\ENDFOR
+\STATE Greedily choose processor $P: P = \argmin_{i\in [q]} s_i$ with least expected scheduling time.
+\STATE Run Algorithm \ref{alg:ItrSched} for processor $P$ with $\w_{tmp}$ amount of Total work, $\tilde{\mathbf{A}}$ as the performance prediction matrix and $\eta = 5$.
+\ENDFOR 
+\RETURN Total scheduling time for all processors: $\mathbf{s}$.
+\end{algorithmic}
+\label{alg:ItrSched-multi}
+\end{algorithm}

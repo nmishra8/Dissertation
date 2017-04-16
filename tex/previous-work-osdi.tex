@@ -1,0 +1,94 @@
+\section{Related work}
+Accurate performance estimates are essential for solving scheduling
+and resource allocation problems \cite{chiang2002impact}.  Accurate
+estimates are difficult to obtain due to the complexity and diversity
+of large-scale systems \cite{kanev2015profiling}.  A particular
+challenge is modeling performance loss due to contention among
+applications \cite{kambadur2012measuring}.  Better contention models
+could improve system utilization while ensuring quality-of-service in
+latency sensitive applications \cite{Bubble-flux}.
+
+Several approaches investigate statistical and machine learning
+techniques for estimating power, performance, and energy of a single
+application running on a single system.  Many of these approaches
+improve the time of developing new hardware designs, but are not
+suitable for online resource management
+\cite{Yi2003,LeeBrooks2006,CPR}.  Other approaches can predict the
+power and performance of various resource allocations to single
+applications \cite{Koala} or optimize energy efficiency under latency
+constraints \cite{LEO}.  A recent approach combines machine learning
+with control theory to guarantee energy consumption, but only for a
+single application \cite{JouleGuard}.  Perhaps most similar to
+\SYSTEM{} is the Mantis project which also uses higher-order
+regularized regression models (based on Lasso) to predict smartphone
+app performance \cite{kwon2013mantis}.  Mantis, however, does not
+predict contention among multiple applications, which is \SYSTEM{}'s
+focus.
+
+Other approaches predict and mitigate contention in single-node
+systems.  Many decide to co-schedule or not, but they do not produce
+quantitative slowdown estimates.  For example, Dwyer et al. propose a
+classifier that predicts whether contention will be high or low, but
+this approach does not produce a numerical estimate
+\cite{dwyer2012practical}.  Similarly, ReSense detects highly
+contended resources and reacts to reduce that contention, but it never
+estimates contention \cite{resense}. Another approach estimates
+throughput (total system performance), but does not produce estimates
+of individual application performance
+\cite{xu2010cache,chen2010performance}.  Subramanian et al. propose an
+approach that does produce accurate estimates of performance (within
+9.9\%) based on only last-level cache access rate and memory bandwidth
+\cite{subramanian2015slowdown}.  These results are achieved on a
+simulator rather than a real system, however, and on our real system
+these two features are not sufficient to predict contention with any
+level of accuracy.  Another single-node system, D-Factor, uses
+non-linear models to predict the slowdown of a new application given
+current resource usage \cite{Lim2012dfactor}.  Unlike \SYSTEM{},
+D-Factor is not capable of predicting how two applications will
+interfere with each other if neither is currently running.
+
+Several approaches estimate and mitigate contention to schedule for
+multi-node systems.  The activity vectors approach works on single or
+multi-node systems by maximizing the variance among resource usage in
+co-scheduled applications \cite{merkel2010resource}.  This heuristic
+makes intuitive sense -- applications with very different resource
+needs are less likely to interfere with each other -- but this
+approach does not produce quantitative estimates and therefore can
+make bad decisions when contention is unavoidable.  Merlin, is
+somewhat similar, in that it tries to estimate contended resources and
+migrate virtual machines to areas of lower contention, but it also
+does not produce slowdown estimates \cite{Merlin}.  DejaVu is a
+machine learning approach that classifies application workloads and
+then schedules according to known good schedules for the
+classification \cite{dejavu}. DejaVu creates an \emph{interference
+  index} which can be used to rank slowdowns and migrate VMs or
+reallocate resources, but it does not produce accurate estimates of
+the actual slowdowns incurred.  Similarly, Quasar \cite{quasar} and
+Stay-Away \cite{stay-away} use classification schemes to predict and
+mitigate interference, but neither produces performance estimates in
+the face of interference.  Bubble-flux \cite{Bubble-flux}, an
+improvement over the earlier Bubble-up \cite{Bubble-up} does produce
+slowdown estimates and, like \SYSTEM{}, it is efficient enough to
+consider interference among more than two applications.  The main
+difference between Bubble-flux and \SYSTEM{} is that Bubble-flux uses
+no offline prior information and must dynamically probe the system.
+This lack of prior information means that Bubble-flux must suffer
+either poor utilization or inaccurate schedules during the probing
+phase.  \SYSTEM{} uses a highly accurate offline model and combines
+that with online updates to its predictions to further improve
+accuracy while making use of the vast amount of data available to
+inform offline model building.
+
+%\TODO{One paragraph on stats related work.}
+We model interference estimation as a \emph{high-dimensional}
+regression problem with prohibitively many dimensions.  Many
+statistical methods address high-dimensionality (\eg SURE
+\cite{fan2008sure}). In computer system performance, however,
+measurable features are highly correlated and existing methods do not
+provide high accuracy.  Other statistical models emit more accurate
+predictors given correlated features (\eg \cite{yuan2006model} and
+\cite{bien2013lasso}), but they do not scale to our problem size.
+Even though we make a strong assumption that the interaction terms are
+present only if their individual linear terms are significant, the
+heuristic has very high accuracy and produces good schedules in
+practice.

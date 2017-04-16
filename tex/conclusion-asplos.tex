@@ -1,0 +1,25 @@
+\section{Conclusion}
+\label{sec:conclusion}
+\balance
+This paper has presented \SYSTEM{}, a system capable of learning
+Pareto-optimal power and performance tradeoffs for an application
+running on a configurable system.  \SYSTEM{} combines some of the best
+features of both online and offline learning approaches.  Offline,
+\SYSTEM{} acquires knowledge about a range of application behaviors.
+Online, \SYSTEM{} quickly matches the observed behavior of a new
+application to previously seen behavior from other applications to
+produce highly accurate estimates of performance and power.  We have
+implemented \SYSTEM{}, made the source code available, and tested it
+on a real system with 25 different applications exhibiting a range of
+behaviors.  Across all applications, \SYSTEM{} achieves greater than
+97\% accuracy in its performance and power estimations despite only
+sampling less than 2\% of the possible configuration space for an
+application it has never seen before.  These estimations are then used
+to allocate resources and save energy.  \SYSTEM{} produces energy
+savings within 6\% of optimal while purely Offline or Online
+approaches are both over 24\% of optimal.  \SYSTEM{}'s learning
+framework represents a promising approach to help generalize resource
+allocation in energy limited computing environments and could be used
+in conjunction with other control techniques to help develop a
+\emph{self-aware} computing system
+\cite{Hoffmann2012,1508273,1333571,1516538,Kephardt2005,laddaga1999}.

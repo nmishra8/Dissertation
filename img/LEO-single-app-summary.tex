@@ -1,0 +1,88 @@
+\begin{tikzpicture}
+\begin{centering}
+\pgfplotstableread[col sep=space]{img/LEO-dyn-eff-summary.txt}{\datatableeff}
+\pgfplotstableread[col sep=space]{img/LEO-dyn-lat-summary.txt}{\datatablelat}
+\begin{groupplot}[
+% MAKE SURE NO SPACE AROUND EQUALITY
+    scatter/classes={
+            OPTIMAL={mark=otimes*,OPTIMAL},
+            RACE={mark=otimes*,RACE},
+            CONTROL={mark=otimes*,CONTROL},
+            ONLINE={mark=otimes*,ONLINE},
+            OFFLINE={mark=otimes*,OFFLINE},
+            NUCLEAR={mark=otimes*,NUCLEAR},
+            HBM={mark=otimes*,HBM},
+            ADAPT-CONTROL={mark=otimes*,ADAPT-CONTROL},
+            CALOREE-NP={mark=otimes*,CALOREE-NP},
+            ONLINE-ADAPT={mark=otimes*,ONLINE-ADAPT},
+            NUCLEAR-ADAPT={mark=otimes*,NUCLEAR-ADAPT},
+            HBM-ADAPT={mark=otimes*,HBM-ADAPT}},
+    group style={
+        group name=plots,
+        group size=1 by 2,
+        xlabels at=edge bottom,
+        xticklabels at=edge bottom,
+        vertical sep=5pt},
+    enlargelimits=false,
+    tick align = outside,
+    tick style={white},
+    ylabel style={align=center},
+    unbounded coords=jump,
+    grid=both,
+]
+
+\nextgroupplot[
+        scale only axis,
+        height=2cm,
+        width=0.80\columnwidth,
+        xlabel near ticks,
+        xlabel = {},
+        xmin = 0,
+        xmax = 13,
+        xtick={1,2,3,4,5,6,7,8,9,10,11,12,13},
+        x tick label style={rotate=45, anchor = east, font=\tiny},
+        ylabel={\tiny Deadline Misses (\%) \\ {\tiny (lower is better)}},
+        ytick pos=left
+        ]
+        \addplot[scatter, only marks ,thick, scatter src=explicit symbolic] table[x index=0,y index=3, meta=Benchmark] {\datatablelat};
+        %\addplot[only marks, mark=diamond*, scatter src=explicit symbolic,  error bars/.cd, y dir=minus,  y explicit ] table [x index=0, y index=3, y error index=2, meta=Benchmark]  {\datatable};
+        \addplot[only marks,mark=o,  scatter src=explicit symbolic,  error bars/.cd, y dir=plus,   y explicit] table [x index=0, y index=3, y error index=4, meta=Benchmark]  {\datatablelat};
+        \addplot[only marks, mark=o, scatter src=explicit symbolic,  error bars/.cd, y dir=minus,  y explicit ] table [x index=0, y index=3, y error index=2, meta=Benchmark]  {\datatablelat};
+
+\nextgroupplot[
+        scale only axis,
+        %grid=both,
+        height=2cm,
+        width=0.80\columnwidth,
+        xlabel near ticks,
+        xlabel = {},
+        xmin = 0,
+        xmax = 13,
+        ylabel={\tiny Energy Over Optimal (\%) \\ {\tiny (lower is better)}},
+        xticklabel shift={0pt},
+        xtick={1,2,3,4,5,6,7,8,9,10,11,12,13},
+        x tick label style={rotate=45, anchor = east, font=\tiny},
+        %xticklabels from table={\datatableeff}{Benchmark},
+        xticklabels={{\scriptsize $\mathsf{Optimal}$},
+{\scriptsize $\mathsf{Race-to-idle}$},
+{\scriptsize $\mathsf{PID-Control}$},
+{\scriptsize $\mathsf{Online}$},
+{\scriptsize $\mathsf{Offline}$},
+{\scriptsize $\mathsf{Netflix}$},
+{\scriptsize $\mathsf{HBM}$},
+{\scriptsize $\mathsf{Adaptive-Control}$},
+{\scriptsize $\mathsf{CALOREE-NoPole}$},
+{\scriptsize $\mathsf{CALOREE-Online}$},
+{\scriptsize $\mathsf{CALOREE-Netflix}$},
+{\scriptsize $\mathsf{CALOREE-HBM}$}
+},
+]
+
+        ]
+        \addplot[scatter, only marks ,thick, scatter src=explicit symbolic] table[x index=0,y index=3, meta=Benchmark] {\datatableeff};
+        \addplot[only marks,mark=o,  scatter src=explicit symbolic,  error bars/.cd, y dir=plus,   y explicit] table [x index=0, y index=3, y error index=2]  {\datatableeff};
+        \addplot[only marks, mark=o, scatter src=explicit symbolic,  error bars/.cd, y dir=minus,  y explicit] table [x index=0, y index=3, y error index=4]  {\datatableeff};
+
+\end{groupplot}
+\end{centering}
+\end{tikzpicture}

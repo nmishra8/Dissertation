@@ -1,0 +1,30 @@
+\section{Notations}
+\label{sec:notation}
+
+The set of real numbers is denoted by $\R$. $\R^d$ denotes the set of
+$d$-dimensional vectors of real numbers; $\R^{d\times n}$ denotes the
+set of real $d\times n$ dimensional matrices. We denote the vectors by
+lower-case and matrices with upper-case boldfaced letters. The
+transpose of a vector $\x$ (or matrix $\mathbf{X}$) is denoted by
+$\x^T$ or just $\x'$. $\|\x\|_2$ is the $\mathcal{L}_2$ norm of vector
+$\x$, i.e. $\x = \sqrt{\sum_{i = 1}^{d} x^2[i]}$.  $\|\mathbf{X}\|_F$
+is the Frobenius norm of matrix $\mathbf{X}$; \ie $\|\mathbf{X}\|_F =
+\sqrt{\sum_{i = 1}^{d} \sum_{i = 1}^{n} X^2[i][j]}$. Let $\mathbf{A}
+\in \R^{d\times d}$ denote a d-dimensional square matrix.
+$\tr(\mathbf{A})$ is the trace of the matrix $\mathbf{A}$ and is given
+as, $\tr(\mathbf{A}) = \sum_{i = 1}^{d} \mathbf{A}[i][i]$. And,
+$\diag(\x)$ is a d-dimensional diagonal matrix $\mathbf{B} $ with the
+diagonal elements given as, $\mathbf{B}[i][i] = x [i]$ and
+off-diagonal elements being 0.
+
+We now review the standard statistical notation used below.  Let $\x,
+\y$ denote any random variables in $\R^d$. The notation $\x \sim
+\mathcal{D}$ represents that $\x$ is drawn from the distribution
+$\mathcal{D}$. Similarly, the notation $\x, \y \sim \mathcal{D}$
+represents that $\x$ and $\y$ are jointly drawn from the distribution
+$\mathcal{D}$, and finally $\x | \y \sim \mathcal{D}$ represents that
+$\x$ is drawn from the distribution after observing (or conditioned
+on) the random variable $\y$.  The following are the operators on
+$\x$: $\E[\x]$ : expected value of $\x$, $\text{var}[\x]$ : variance
+of $\x$, $\text{Cov}[\x, \y]$ : covariance of $\x$ and $\y$.
+$\hat{\x}$ denotes the estimated value for the random variable $\x$.

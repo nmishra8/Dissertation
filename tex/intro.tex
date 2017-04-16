@@ -1,0 +1,145 @@
+\section{Introduction}
+% Dennard Scaling making energy essential.  Architects address energy
+% by making more complicated processors which expose resources to
+% software management.  For a wide range of applications, need to meet
+% performance goals with minimal energy.
+Large classes of computing systems---from embedded to cloud---must
+deliver reliable performance to users while minimizing energy to
+increase battery life or decrease operating costs.  To address these
+conflicting requirements, hardware architects expose diverse,
+heterogeneous resources with a wide array of performance and energy
+tradeoffs.  Software must allocate these resources to
+guarantee performance requirements are met with minimal energy.
+
+
+% Difficulties of meeting performance with minimal energy. (1)
+% complexity---heterogeneous resources---and (2) dynamics---adjust to
+% unforeseen changes in workload and environment.
+There are two primary difficulties in determining how to allocate
+heterogeneous resources.  The first is \emph{complexity}: resources
+interact in complicated ways, leading to non-convex optimization
+spaces.  The second is \emph{dynamics}: perfor\-mance requirements
+must be met despite unpredictable disturbances; \eg{} phases in input
+or changes in operating environment.  Prior work addresses each of
+these difficulties individually.
+
+% Prior approaches addressed each of these difficulties individually.
+% ML---can handle complexity.  ML advantages: can handle
+% non-convexity, avoid local optima, get to true optimal solution. ML
+% disadvantages: advanced techniques are expensive and no notion of
+% dynamics.  Control---handles dynamics.  Control advantages: formally
+% analyzable guarantees despite dynamics.  Control disadvantages:
+% relies on good models---no local optima, bounded error.
+Many machine learning approaches model the complex performance/power
+tradeoff spaces inherent to heterogeneous computing
+\cite{reddiHPCA2013,dubach2010,Bitirgen2008,Ipek,Koala,LEO,Flicker,Ponamarev,Paragon}.
+Learning handles non-convexity, identifying local optima and moving to
+globally optimal solutions. These techniques are computationally
+expensive and lack support for dynamics; \ie{} when the environment
+changes the expensive model building process must be restarted.
+Control theoretic solutions provide formal guarantees that they will
+converge to the desired performance despite system dynamics
+\cite{Hellerstein2004a,Chen2011,POET,ControlWare,Agilos,grace2,JouleGuard}.
+Control provides formal guarantees of convergence to the desired
+performance, but these guarantees require \emph{ground truth} models
+and control will not converge if the models do not accurately capture
+system complexity---including local optima and non-linearities.
+
+
+% Want to combine learning and control to address both difficulties
+% simultaneously.  Need an interface that allows learned models to be
+% used by control system.  Challenges: (1) overhead and (2) formal
+% guarantees.  
+We want the benefits of both learning and control to ensure
+performance requirements are met with minimal energy in complex and
+dynamic environments.  Thus, we present
+\SYSTEM{}:\footnote{\textbf{C}ontrol \textbf{A}nd \textbf{L}earning
+  for \textbf{O}ptimal \textbf{R}esource \textbf{E}nergy
+  \textbf{E}fficiency} a \emph{parameter-free} framework for combining
+machine learning and control theory to build resource allocators.
+\SYSTEM{} is parameter-free because it automatically tunes all
+internal parameters and models to customize itself to the application
+under management.  In contrast, many approaches require user-specified
+parameters, like learning rate \cite{dubach2010,Tokic2010} or poles
+and zeros of characteristic equations \cite{ControlWare,POET}.
+
+\SYSTEM{} creates a general control system implementation that factors
+out the parameters that must be learned.  While traditional control
+designs assume all combinations of resource configurations have been
+measured accurately (requiring 100s or 1000s of samples
+\cite{sysid,FSE2015}), \SYSTEM{} tunes its internal models and
+parameters while sampling only a small subset of possible
+configurations.  Among these, the controller's \emph{pole} is a key
+parameter.  \SYSTEM{} automatically tunes the pole, providing formal
+guarantees the controller converges to the desired performance---even
+when behavior is estimated by a noisy learner rather than directly
+measured.  \SYSTEM{} implements modular abstractions and self-tuning
+mechanisms such that the expensive learning can be offloaded to
+another system and the controller itself runs in
+constant---$O(1)$---time.  Thus, learning's high cost can be amortized
+as \SYSTEM{} uses \emph{transfer learning} to apply knowledge from
+multiple devices and applications \cite{pan2010survey}.
+
+
+\SYSTEM{}'s generality allows a wide range of learning techniques to
+be paired with its controller.  So, \SYSTEM{} not only provides an
+advantage over existing individual learning and control techniques, it
+allows us to explore different combinations of learning and control to
+find the best.
+
+% Implement CALOREE.  Test against state of the art learning and
+% self-tuning control systems.  We find that:
+We evaluate \SYSTEM{} by implementing the learner on an x86 server and
+the controller on heterogeneous ARM big.LITTLE devices.  We compare
+\SYSTEM{} to existing, state-of-the-art learning (including polynomial
+regression \cite{Koala,dubach2010}, the Netflix algorithm
+\cite{netflix,Paragon}, and a hierarchical Bayesian model \cite{LEO})
+and control (including proportional-integral-derivative
+\cite{Hellerstein2004a} and adaptive, or self-tuning
+\cite{HandbookControl}) techniques.  \PUNT{Additionally, we compare to
+  a naive combination of learning and control that does not account
+  for the inaccuracies of learned models.}  We set performance
+goals---as latency requirements---for a set of benchmark applications
+and then measure both the percentage of time the requirements are
+violated and the energy for each application.  We test both
+\emph{single-app}, where an application runs alone, and
+\emph{multi-app} environments, where other applications enter the
+system and compete for resources.  \SYSTEM{} achieves the:
+\begin{itemize}[leftmargin=1em]
+\item \textit{Most reliable performance:}
+  \begin{itemize}[leftmargin=1em]
+  \item In the \emph{single-app} case, the best prior technique misses
+    12\% of deadlines on average, while \SYSTEM{} misses only 5\% on
+    average---reducing deadline misses by more than 58\% compared to
+    prior approaches.
+  \item In the \emph{multi-app} case, the best prior approach averages
+    30\% deadline misses, but \SYSTEM{} misses just 5.6\% of
+    deadlines---a huge improvement over prior work.
+  \end{itemize}
+\item \textit{Best energy savings:} We compare to an \emph{oracle}
+  with a perfect model of the application, system, and future events.
+  \begin{itemize}[leftmargin=1em]
+  \item In the \emph{single-app} case, the best prior approach
+    averages 12\% more energy consumption than the oracle, but
+    \SYSTEM{} consumes only 5\% more.
+  \item In the \emph{multi-app} case, the best prior approach averages
+    18\% more energy than the oracle, while \SYSTEM{} consumes just
+    8\% more.
+  \end{itemize}
+\end{itemize}
+
+% Key contributions.
+% Contributions, but I decided against bulleted llist for thsi paper
+In summary, control approaches are well suited to dynamic environments
+and learning techniques accurately model complex, heterogeneous
+processors.  \emph{To the best of our knowledge, \SYSTEM{} is the
+  first work to combine the two to ensure application performance
+  without prior knowledge of the controlled application.}  Our formal
+analysis of \SYSTEM{}'s convergence despite noisy inputs shows how to
+incorporate learned variance into control theoretic guarantees.  We
+demonstrate the practical benefits of these contributions by
+implementing \SYSTEM{} for mobile/embedded processors to show it
+provides more reliable performance and lower energy than individual,
+state-of-the-art learning and control solutions.
+
+

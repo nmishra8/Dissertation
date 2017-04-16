@@ -1,0 +1,75 @@
+\section{Appendix}
+Transform into vectorized version, $y = \Vech(T), y \in \Re^{m(m+1)/2}$. $\hat{A} \in \Re^{ m \times (m(m+1)/2)}$ matrix is a found from a  linear transformation on $\hat{R}$.
+\\
+\\
+$ 
+\begin{aligned}
+\centering
+			\label{eq:controller}
+			&   y^{(k)} =\underset{  y \in \Re^{m(m+1)/2}}{\argmin}  &&   \| y \|_1\\
+			&   \text{subject to} &&   \hat{A}y = w^{(k-1)},\\
+			&&&	  y \geq 0.\\
+\end{aligned}
+$
+\\
+\\
+where,
+\begin{equation}
+w^{(k)} = 
+\begin{cases} 
+ \text{max}(w^{(k-1)} -  A y^{(k)},0)  &k\geq1\\
+W, & k=0\\
+\end{cases}
+\end{equation}
+
+\begin{thm}
+Let $a_i$ $\hat{a}_i$  denote the row vectors for the matrix matrix $A$ and $\hat{A}$ respectively. Then under the condition,  $ \underset{i}{\mathrm{min}}  \|a_i\|_{\infty} \geq \epsilon_1$ and $\underset{i}{\mathrm{min}} \|\hat{a}_i\|_{\infty} \geq \epsilon_2$ for some $\epsilon_1, \epsilon_2 >0$; the algorithm converges linearly. Under  following  additional assumptions on the true and estimated performance matrices ($A$ and $\hat{A}$) being similar
+\begin{equation}
+\label{eq:condition}
+1 - \frac{\hat{a}_i^{T} a_i}{\|\hat{a}_i\|_2 \|a_i\|_2} < \epsilon_3 \; \mathrm{and} \; \bigg| 1 - \frac{\|\hat{a}_i\|_2 }{\|a_i\|_2} \bigg|< \epsilon_4
+\end{equation}
+(for $\epsilon_3$ and $\epsilon_4$ being small), the rate of convergence can be given by,  $2(\epsilon_3 +\epsilon_4)$. Furthermore, we can bound the total scheduling time as, $\sum_{k=1}^K \|y^{(k)}\|_1 \leq \frac{W + 2/(1-(2*(\epsilon_3+\epsilon_4))) }{\mu_n(\hat{A})}$.
+ \end{thm}
+
+
+\begin{proof}
+The algorithm runs  until the remaining work is almost zero or upto iteration $k \leq K$ until $\|w^{(k)}\|_1 >\text{TOL}$. For each iteration we have the constraint on work given by$\hat{A}^T y^{(k)} = w^{(k)}$. We have assumed that $\|\hat{a}_i\|_{\infty} \geq \; 0 \; \forall i \in [m]$; this is a necessary assumption since it requires each application to run with a positive rate under some combination.  Since $\|\hat{a}_i\|_{\infty} \geq \; 0$ and $\|w_i^{(k)}\| \neq 0 \text{ for some } i $, we have $a_i^T y^{(k)} >0 \text{ for some }i$. Hence,
+\begin{equation}
+0\leq \underset{i}{\mathrm{max}} \left(1-\text{min}\left(\frac{a_i^T y^{(k)}}{w_i^{(k-1)} },1\right) \right) < 1
+\label{eq:constant1}
+\end{equation}
+
+For any $k$ such that $\|w^{(k)}\|_1 > \text{TOL}$, we can show that $\|w^{(k)}\|_1$ decreases at each step, i.e. $\|w^{(k)}\|_1 \leq C \|w^{(k-1)}\|_1$ for some constant $C < 1$. Hence, for each element $w_i$ the following holds. We have shown earlier that for $k<K$, there exists some $i$ such that $w_i^{(k)} >0$ and since $k\geq 1$, $	w^{(k)} =\text{max}(w^{(k-1)} -  A y^{(k)},0),$ hence for those elements $i \in \{i:w^{(k)}_i>0\}$, $w_i$ the following holds,
+	\begin{align*} 
+		 w_i^{(k)} & = \text{max}(w_i^{(k-1)} -  a_i^T y^{(k)},0)\\ 		 
+		 &=  \left(1 - \text{min}\left(\frac{a_i^T y^{(k)}}{w_i^{(k-1)} },1\right) \right)w_i^{(k-1)}\\
+		 &= C_{i} w_i^{(k-1)} 
+	\end{align*}   
+For $i \in \{i:w^{(k)}_i=0\}$ $C_{i}=0$. Hence, $\|w^{(k)}\|_1 \leq C \|w^{(k-1)}\|_1  $ where $C =  \underset{i}{\mathrm{max}} (C_{i}) <1$.
+
+We have shown that the algorithm converges irrespective of the relation between $A$ and $\hat{A}$. We extend the analysis in order to find better rates when the estimate $\hat{A}$ is close to $A$. We define additional constraint to represent closeness between the estimated performance matrix($\hat{A}$) and the truth ($A$). The constraints given by Equation \eqref{eq:condition} are cosine(directional) similarity and length similarity between the all the row vectors of the matrices.
+Again, since $\hat{a}_i^T y^{(k)} = w_i^{(k)}$ the following relation holds, $a_iy^{(k)}  \geq w_i^{(k-1)} \left( \hat{a}_i^{T} a_i /\|\hat{a}_i\|^2 \right)$. Hence, 
+
+\begin{align*} 
+w_i^{(k)} &= \text{max}(w_i^{(k-1)} -  a_i^T y^{(k)},0)\\ 		 
+		  &\leq \text{max}(w_i^{(k-1)} -   ( \hat{a}_i^{T} a_i /\|\hat{a}_i\|^2) w_i^{(k-1)} ,0)
+\end{align*}  
+After some simplifications on the above equation and using the conditions given by Equation \eqref{eq:condition} we get, $w_i^{(k)} \leq 2(\epsilon_3+\epsilon_4) w_i^{(k-1)}$.
+
+
+For any x,
+	$$
+		\min_x \frac{\| \hat{A}x\|_1}{\| x\|_1} \leq \frac{\| \hat{A}x\|_1}{\| x\|_1} 
+	$$
+	Hence by replacing $y^{(k)}$ for $x$ and by substituting $w^{(k)}=\hat{A}y^{(k)}$,	
+	$$
+	\| y^{(k)}\|_1   \leq \frac{\| w^{(k-1)}\|_1 }{\mu_n(\hat{A})}.
+	$$
+where, $\mu_n(\hat{A})$ is the minimum column sum of $\hat{A}$, i.e. $\mu_n(\hat{A}) = \underset{j}{\text{min}}\sum_{i=1}^m A(i,j)$. The total scheduling time for the applications is given by $\sum_{k=1}^K \|y^{(k)}\|_1$.
+\begin{equation}
+\sum_{k=1}^K \|y^{(k)}\|_1 \leq \frac{W (1+ \sum_{k=1}^K C^{k}) }{\mu_n(\hat{A})} \leq \frac{W(1 + C/(1-C)) }{\mu_n(\hat{A})}
+\end{equation}
+If the matrices satisfy the conditions postulated by Equation \eqref{eq:condition}, $\sum_{k=1}^K \|y^{(k)}\|_1 \leq \frac{W(1 + 2/(1-(2*(\epsilon_3+\epsilon_4))) }{\mu_n(\hat{A})}$.
+
+\end{proof}
+

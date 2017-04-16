@@ -1,0 +1,81 @@
+\section{Energy Minimization}
+\label{sec:problemFormulation}
+
+% Example on x264
+This section formalizes the problem of minimizing an application's
+energy consumption for some \emph{performance constraint}; \ie work
+that should be accomplished by a particular deadline.  We assume a
+configurable system where each configuration has different
+application-specific performance and power characteristics. Our aim is
+to select the configuration that finishes the work by the deadline
+while minimizing the energy consumption.
+
+Formally, the application must accomplish $W$ work units in time $T$.
+The system has a set of configurations (\eg combinations of cores and
+clockspeeds) denoted by $\mathcal{C}$. Assuming that each
+configuration $c \in \mathcal{C}$ has an application-specific
+performance (or work rate) $r_c$ and power consumption $p_c$, then we
+formulate the energy minimization problem as a linear program in
+Equation \eqref{eq:controller}:
+\begin{equation}
+\begin{aligned}
+&   \underset{\mathbf{t} \geq \mathbf{0}}{\text{min}}  
+&&   \sum_{c \in \mathcal{C}} p_c t_c, \\
+&   \text{subject to} &&  \sum_{c \in \mathcal{C}} r_c t_c = W, \\
+&&&	 \sum_{c \in \mathcal{C}} t_c \leq T.
+\end{aligned}
+\label{eq:controller}
+\end{equation}
+where $p_c$: Power consumed when running on $c^{th}$ configuration;
+$r_c$: Performance rate when running on $c^{th}$ configuration; $W$:
+Work that needs to be done by the application; $t_c$: Time spent by
+the application in $c^{th}$ configuration; $T$: Total run time of the
+application. The linear program above finds the times $t_c$ during
+which the application runs in the $c^{th}$ configuration so as to
+minimize the total energy consumption and ensure all work is completed
+by the deadline.  The values $p_c$ and $r_c$ are the key to solving
+this problem.  If they are known, the structure of this linear program
+allows the minimal energy schedule to be found using convex
+optimization techniques \cite{LinearProgramming}. 
+
+This formulation is abstract so that it can be applied to many
+applications and systems.  To help build intuition, we relate it to
+our \texttt{Kmeans} example.  For \texttt{Kmeans} the workload is the
+number of samples to cluster.  The deadline $T$ is the time by which
+the clustering must be completed.  Configurations represent assigning
+\texttt{Kmeans} different resources.  In \secref{example}, we
+restricted configurations to be assignment of cores.  In
+\secref{experiment}, we will expand configurations to include
+assignment of cores, clockspeed, memory controllers, and hyperthreads.
+For \texttt{Kmeans}, each assignment of resources results in a
+different rate of computation (points clustered per time) and power
+consumption.  
+
+Unfortunately, power and performance are entirely application
+dependent.  For many applications, these values also vary with varying
+inputs.  Hence, for any new application in use we do not know the
+values of these coefficients. One way to solve the problem would be
+run this new application on each configuration in a brute force
+manner. But, as we pointed out earlier, we might have very large
+number of configurations and the brute force approach may not be
+tractable. Alternatively, we can just run the application in small
+subset of configurations and use these measurements to estimate the
+behavior of unmeasured configurations.  We might also consider using
+the data from other applications from the same system to estimate
+these parameters (we can collect this data offline). The question now
+is how do we utilize this data to find our estimates. One simple yet
+clever thing would be to simply take a mean of $p_c$ (similarly for
+$r_c$) across all the applications. Now, this offline method will work
+well for any application that follows the general trend exhibited by
+all prior applications. Another quick solution could be to just use
+the small subset of collected sample and run a multivariate polynomial
+regression on the configuration parameters vs $p_c$ (or $r_c$) to
+predict power (performance) in all other configurations.  This online
+method might not work for all the applications s because they might
+have local minima or maxima that are not captured by a small sample.
+In the next section, Section \ref{sec:HBN} we give details of
+\SYSTEM{}, our solution to this problem which uses both the data from
+the current application and previously seen applications for fast,
+accurate estimates.
+%\section{Notation}
+%Throughout this 

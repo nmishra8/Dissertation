@@ -1,0 +1,379 @@
+\section{Regularization}
+\label{sec:regression}
+This section discusses current state-of-the-art regularization methods
+and how they could be used to predict application interference.  A
+complete coverage of these techniques is beyond the scope of this
+paper---our goal is to present enough background for readers to
+understand \SYSTEM{}'s unique approach to interference prediction.
+
+We use a running example to build intuition.  This example is
+simplified, but our hope is that it provides sufficient intuition for
+readers to understand the full results.
+
+\noindent \textbf{Example~~}\textit{Suppose we have 4 applications
+  given as, \{\texttt{bfs, cfd, jacobi, kmeans} \}.  For each
+  application, we measure 4 features of its execution when run by
+  itself: instructions per clock \texttt{(IPC)}, L2 Access
+  Rate\texttt{(L2)}, L3 Access Rate\texttt{(L3)} and its memory
+  bandwidth \texttt{(MEM)}.  The goal is to predict the slowdown that
+  each of these applications will experience when run together in any
+  combination knowing only these 4 features for each application run
+  individually.  }
+
+\subsection{Regularization Overview}
+We are interested in predicting applications' slowdown when
+co-scheduled with other applications as a function of individual
+applications' features. The following is a general formulation of this
+problem:
+\begin{equation}
+\label{eq:stat_model_general}
+\z \sim f(\mathbf{X}),
+\end{equation}
+where $\z$ is a vector each element is one application's slowdown when
+run with the other applications.  $\mathbf{X}$ is a matrix containing
+the measured features of applications when run individually.  $f(.)$
+is the\emph{prediction function} that maps the measured features into
+predicted slowdown.  The $\sim$ sign indicates that $\z$ is a random
+variable drawn from a distribution given by $f(.)$.
+% We pin down this formulation more explicitly later in Equation
+% \eqref{eq:system_general_equation} in \secref{system_subsection}.
+
+To go from Equation \eqref{eq:stat_model_general} to a useful model
+two issues must be addressed: (1) which features we choose to include
+in $\mathbf{X}$ and (2) what function $f(.)$ best represents this
+problem. In fact, these issues are intertwined; depending on the
+features we include we can choose different functions.  It is
+important to choose a function that captures the data without
+overfitting so that the model's generalization error is small.  The
+model also must be computationally fast so that it is practical.
+
+% In \secref{est-intro} we introduce the regularized regression models
+% which form the basis for our algorithm. We discuss answers to the
+% questions we posed above in detail in \secref{est:regularized_lin_reg}
+% and in \secref{est:system} we describe our algorithm which is
+% computationally fast and has very high prediction accuracy.\PUNT{ (See
+%   \secref{st_model} for details on empirical results.) and low
+%   over-head (\TODO{overhead analysis}). }
+
+%{\setlength{\parindent}{0cm}{
+\noindent \textbf{Example~~}\textit{ Suppose we want to predict the
+  interference of \texttt{bfs} and \texttt{cfd} when co-scheduled.
+  The vector $z$ represents slowdown, with the first element
+  \texttt{bfs}'s slowdown and the second is \texttt{cfd}'s.  $X$ in
+  Equation \eqref{eq:stat_model_general} is constructed using
+  \texttt{IPC}, \texttt{L2}, \texttt{L3} and \texttt{MEM} of the
+  \texttt{bfs} and \texttt{cfd} when they run in isolation. The first
+  four columns of $X$ are the features for \texttt{bfs} and the last
+  four columns are \texttt{cfd}'s features.  The goal is to find the
+  $f(.)$ that produces the best prediction of slowdown.  }
+%}
+
+\subsection{Linear Regression}
+\label{sec:est-intro}
+Regression models are the most commonly used statistical models for
+predictions.  A linear model predicts outcomes as a linear combination
+of input features:
+\begin{equation}
+\label{eq:linear}
+\z = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon},
+\end{equation}
+$\z\in \R^{n}$ is the dependent variable to be predicted.  $\mathbf{X}
+\in \R^{n \times p}$ is the measured independent features.
+$\boldsymbol{\boldsymbol{\beta}} \in \R^{p}$ is the coefficient vector
+that combines the features to produce the prediction.
+$\boldsymbol{\epsilon} \in \R^{n}$ is a vector representing inherent
+noise.
+
+Building a linear model is the process of determining
+$\boldsymbol{\boldsymbol{\beta}}$ by running experiments and measuring
+both the features and the corresponding outcomes.  These measurements
+are samples of $\z$ and $\mathbf{X}$, written as $(s(\z),
+s(\mathbf{X}))$.  After sampling, $s(\z)$ and $s(\mathbf{X})$ are
+known and we can solve for $\boldsymbol{\beta}$. Then we can use
+$\boldsymbol{\boldsymbol{\beta}}$ and new features ($\mathbf{X}$) to
+predict $\z$ for instances that have not been measured.
+
+\subsection{Regularized Linear Regression}
+\label{sec:est:regularized_lin_reg}
+When determining $\boldsymbol{\boldsymbol{\beta}}$, if the number of
+samples in $\z$ (or length of $s(\z)$) is less than the number of
+features $p$ the problem is ill-posed; \ie $\mathbf{X}$ is not
+invertible and there are infinitely many solutions. This particular
+case where $p>n$ is called the \textit{high-dimensional} setting.
+Machine learning researchers have developed several
+\emph{regularization} methods which add structure to high-dimensional
+problems to make them solvable.
+% These methods have strong theoretical backing that they reduce the
+% generalization errors in the model and have shown the work well in
+% practice.
+
+
+\noindent \textbf{Example~~}\textit{ To apply linear regression,
+  $f(.)$ is chosen to be $f(.) = \mathbf{X}\boldsymbol{\beta}$ and
+  $\boldsymbol{\beta}$ is the parameter that we would like to learn
+  from the data. For example, we could observe 3 pairs from the set of
+  6 pairs (for 4 applications in our example) and predict the
+  performance for the other 3 pairs. $\z$ denotes the performance
+  vector for our applications, thus for 3 pairs, $\z \in \R^{6}$. The
+  matrix $\mathbf{X}$ in Equation \eqref{eq:stat_model_general} is
+  $\mathbf{X} \in \R^{6 \times 8}$ and $\boldsymbol{\beta} \in
+  \R^{8}$.  Now, the system of equations $\z =
+  \mathbf{X}\boldsymbol{\beta}$ has infinitely many solutions so we
+  must \emph{regularize}---\ie add more structure to---the problem.
+%}
+}
+
+There are several methods to add structure to a regression problem.
+In general, none are uniformly better than the others and their
+performance is data-dependent. Hence, standard practice is to use the
+model with the highest out-of-sample predictive power; \ie to separate
+samples into training and test data, build multiple models with the
+training data, and use the model that most accurately predicts the
+test data.
+
+\subsubsection{Ridge regularization}
+One way to add structure to the problem is to include additional
+constraints.  \emph{Ridge} regression penalizes large coefficients in
+$\boldsymbol{\beta}$ \cite{hoerl1988ridge} by requiring that
+$\|\boldsymbol{\beta}\|^2_2 \leq t$, where $t$ is a threshold:
+\begin{equation}
+\label{eq:ridge}
+\min_{\boldsymbol{\beta}} \|\z - \mathbf{X}\boldsymbol{\beta} \|^2_2 \;\; \text{  s.t.  } \| \boldsymbol{\beta} \|^2_2 \leq t
+\end{equation}
+
+\noindent \textbf{Example~~}\textit{ When we add the ridge regularizer
+  to our example, the modified problem is $\|\z -
+  \mathbf{X}\boldsymbol{\beta}\|^2_2$ and $\sum_{i=1}^8
+  \boldsymbol{\beta}^2[i]<t$. This problem has a unique solution for a
+  given $t$. This regularization shrinks large $\boldsymbol{\beta}$
+  values but does not make them 0. Hence, even if a feature $i$ is not
+  important it receives a positive coefficient $\beta_i$.  The
+  downside of this approach, then, is that it may incorporate
+  irrelevant features into the model.  In our example, it is unlikely
+  that L2 Access Rate is a valuable feature for predicting application
+  interference, because L2 caches are private in most server class
+  processors and therefore not a source of contention.  }
+%}
+
+\subsubsection{Lasso regularization}
+\emph{feature selection} is another regularization method equivalent
+to setting some elements of $\boldsymbol{\beta}$ to $0$, so those
+features cannot influence $\z$.  Formally, feature selection can be
+achieved by adding $\mathcal{L}_0$
+constraint---$\|\boldsymbol{\beta}\|_0 \leq t$---to Equation
+\eqref{eq:linear}, but doing so makes the problem non-convex and
+NP-hard.  $\mathcal{L}_1$ regularization---known as \emph{lasso}---is
+the best convex relaxation for $\mathcal{L}_0$ regularization:
+\begin{equation}
+\label{eq:lasso}
+\min_{\boldsymbol{\beta}} \|\z - \mathbf{X}\boldsymbol{\beta} \|^2_2 \;\; \text{  s.t.  } \|\boldsymbol{\beta} \|_1 \leq t
+\end{equation}
+Using lasso, the number of selected features will be smaller than the
+number of samples. A potential drawback, however, is that it cannot
+capture models where there are more relevant features than samples.
+
+%{\setlength{\parindent}{0cm}{
+\noindent \textbf{Example~~}\textit{ The modified example looks like,
+  $\|\z - \mathbf{X}\boldsymbol{\beta}\|^2_2$ and $\sum_{i=1}^8
+  |\boldsymbol{\beta}[i]|<t$. Lasso regularization will set $n-p$
+  features to 0.  In our example, that means three features will be
+  zeroed out. This could be a problem because it is likely that IPC,
+  L3 accesses, and Memory Bandwidth for both applications (\ie a total
+  of 6 features for the two applications) will be necessary to predict
+  interference as all three of these features correspond to shared
+  hardware structures.  Specifically, lasso regularization will
+  probably zero-out the L2 Accesses for both applications, but by
+  construction, it must also zero-out at least one of the relevant
+  features, likely producing lower accuracy estimates.  }
+%}
+
+\subsubsection{Elastic-net regularization}
+\label{sec:est:elastic-net}
+\textit{Elastic-net} addresses the drawbacks of the two previous
+techniques \cite{zou2005regularization}:
+\begin{equation}
+\label{eq:elastic-net}
+\min_{\boldsymbol{\beta}} \|\z - \mathbf{X}\boldsymbol{\beta} \|^2_2 \;\; \text{  s.t.  }
+\alpha \| \boldsymbol{\beta} \|^2_2 + (1-\alpha)\| \boldsymbol{\beta} \|_1 \leq t
+\end{equation}
+where $\alpha = {\lambda_1}/({\lambda_1+\lambda_2})$ and $\lambda_1$
+and $\lambda_2$ are the regularization parameters. In practice,
+setting $\alpha = 0.5$ is common and $\lambda_1$ is set during model
+training using cross-validation. Thus under these settings elastic-net
+is,
+\begin{equation}
+\label{eq:elastic-net2}
+\text{EN}(\z, \mathbf{X}) = \argmin_{  \| \boldsymbol{\beta} \|^2_2 + \| \boldsymbol{\beta} \|_1 \leq t  } \|\z - \mathbf{X}\boldsymbol{\beta}\|^2_2 
+\end{equation}
+Elastic-net \emph{groups} variables so that strongly correlated
+variables tend to be selected or rejected together.
+
+\noindent \textbf{Example~~}\textit{ Adding elastic-net to our
+  example, the modified problem looks like, $\|\z -
+  \mathbf{X}\boldsymbol{\beta}\|^2_2$ and $\sum_{i=1}^8 \alpha
+  |\boldsymbol{\beta}[i]| + (1-\alpha)\|\boldsymbol{\beta}[i]\|^2<t$.
+  The regularization in this case would shrink large values for
+  $\boldsymbol{\beta}$ and some coefficients would shrink to 0. It
+  would zero-out unimportant feature like \texttt{L2} for both
+  applications, yet capture all the important features (IPC, L3, MEM)
+  for both applications even when the number of samples is smaller
+  than the number of features.  }
+%}
+
+\subsection{Higher-order Models}
+In some cases, linear models do not accurately predict the problem.
+One higher-order approach is to add \emph{interaction} terms to the
+model, meaning that the dependent variable is possibly a
+multiplicative combination of some features.
+
+A model with interaction terms can be found by adding additional terms
+to $\mathbf{X}$ and $\mathbf{\beta}$.  Thus, a high dimensional
+problem becomes even higher dimensional, increasing model complexity
+and overhead. For a matrix $\mathbf{X}$ with dimensions $n \times p$,
+$n \ll p$ \textit{elastic-net} is $\mathcal{O}(p^3)$
+\cite{zou2005regularization}, hence for a quadratic model the
+computational complexity blows up to $\mathcal{O}(p^6)$.  Even though
+this model is richer and captures complex interactions among features,
+it is prohibitively expensive.  \SYSTEM{}'s motivation is to achieve
+the prediction accuracy of interaction terms while maintaining the
+practicality of linear models.
+
+\noindent \textbf{Example~~}\textit{ We believe the interaction
+  between our features captures the interference more accurately than
+  a linear model.  However, we do not know which of these feature
+  interactions are important in advance---\eg is it IPC and L3, L3 and
+  MEM, the L3 features for both applications, or something else?
+  Clearly, even in our simple example, the design space has become
+  much more complex.  Specifically, we capture the new interaction
+  terms by extending the feature matrix $\mathbf{X}$ to
+  $\mathbf{\tilde{X}}$, which has 8 linear terms plus ${8 \choose 2}$
+  higher order terms. The new design matrix $\mathbf{\tilde{X}}$ in
+  Equation \eqref{eq:stat_model_general} is $\mathbf{\tilde{X}} \in
+  \R^{6 \times 36}$ and $\boldsymbol{\beta} \in \R^{36}$. We
+  see---even for our simple example---the model complexity has greatly
+  increased.  }
+%}
+
+ 
+\subsection{ A New Regularization Method}
+\label{sec:est:system}
+To summarize, regression models map features into predictions.  When
+the feature space is large, regularization adds structure to make the
+problem well-formed.  Higher-order models may provide more accurate
+predictions, but increase the cost of both training and applying the
+model.
+
+Inspired by these observations, we present \SYSTEM{}, which splits
+regression modeling into two parts: (1) feature selection and (2)
+model building with interactive terms.  First, \SYSTEM{} builds a
+linear model with elastic-net, which greatly reduces feature size
+without capturing interaction terms.  Second, \SYSTEM{} builds a
+higher-order model with interaction terms using just those features
+selecting in the first step.  By reducing the feature size in the
+first step, the complexity of the higher-order model remains tractable
+and we get the benefits of both approaches: \emph{highly accurate
+  predictions with manageable complexity.}
+
+
+Given a set of $m$ applications $k$ applications to be co-scheduled,
+there are $n = {m \choose k}$ possible sets of $k$ applications. We
+use $p$ to denote the number of features.  Let $f^{(k)}(.)$ be the
+prediction function; \ie $f^{(k)}(.)$ predicts the slowdown of each of
+the $k$ co-scheduled applications using features measured when each
+application runs individually:
+\begin{equation}
+\label{eq:system_general_equation}
+\z^{(k)} = f^{(k)}(\mathbf{X}^{(k)}) + \boldsymbol{\epsilon},
+\end{equation}
+where $ \z^{(k)} \in \R^{nk}$ is the slowdown vector,
+$\mathbf{X}^{(k)} \in \R^{nk \times 2p}$ is feature matrix and
+$\boldsymbol{\epsilon} \in \R^{nk}$ is the Gaussian error vector. For
+any index $j = \text{index($i$,$S$)}$ of vector $\z$, $z_j$ is the
+slowdown of application-$i$ when co-scheduled with applications from
+set $S$. $X_{(j,:)}$ = [features of application-$i$, $\sum_{s \in
+  S}$(features of application-$s$)]. In practice, the set of possible
+features includes everything that can be measured with the Intel
+performance counter monitor tool \cite{willhalm2012intel} on Linux x86
+systems (see Table \ref{llf-table}). Taking these measurements for
+each processor core we get $p=409$ unique features per individual
+application.
+
+\begin{table*}[htp!]
+\centering
+\footnotesize
+\caption{Category of low level features using Intel Performance Counter Monitor. }
+\begin{tabular}{ ll }
+ \hline
+ \hline
+ \bf{Code} & \bf{Low level feature description} \\
+
+ \hline
+ \texttt{IPC}   & Instructions per CPU cycle    \\ 
+ \texttt{AFREQ} & Relation to nominal CPU frequency while in active state    \\ 
+ \texttt{L2MISS}& L2 cache misses (including other core's L2 cache *hits*)   \\ 
+\texttt{L2HIT}  & L2 cache hit ratio (0.00-1.00)  \\ 
+ \texttt{L2CLK} & Ratio of CPU cycles lost due to missing L2 cache but still hitting L3 cache (0.00-1.00)  \\ 
+ \texttt{L3HIT} & L2 cache hit ratio (0.00-1.00)  \\ 
+  \texttt{L3CLK}& Ratio of CPU cycles lost due to L3 cache misses (0.00-1.00)  \\ 
+ \texttt{READ}  & Bytes read from memory controller (in GBytes) \\ 
+ \texttt{WRITE} & Bytes written to memory controller (in GBytes)  \\ 
+ \texttt{COR-RES}  &  Core residency  \\ 
+\texttt{PKG-RES}  &  Cackage residency   \\ 
+ \texttt{TEMP}  &  Temperature reading in 1 degree Celsius relative to the TjMax temperature (thermal headroom) \\ 
+\texttt{EXEC}  &  Instructions per nominal CPU cycle \\ 
+\texttt{FREQ}  &  Relation to nominal CPU frequency='unhalted clock ticks'/'invariant timer ticks' (includes Intel Turbo Boost) \\ 
+\texttt{L3MISS}  &  L3 cache misses \\ 
+\texttt{ENERGY}  &  Energy consumed  \\ 
+ \hline
+ \hline
+\end{tabular}
+\label{llf-table}
+\end{table*}
+
+\begin{algorithm}[!t]
+\caption{\SYSTEM }
+\begin{algorithmic}[1]
+\REQUIRE  Training samples: $\left( s(\z^{(k)}), \; \x^{(k)} = s(\mathbf{X}^{(k)}) \right)$ ; Feature matrix: $\mathbf{X}^{(k)}$, 
+	\STATE Variable selection using elastic-net on linear model:  $\mathcal{S}: \{ i \in \mathcal{S} \; \text{if} \; \boldsymbol{\beta}^{(k)}[i] \neq 0\}$, $ \text{where} \; \boldsymbol{\beta}^{(k)} = \text{EN}(s(\z^{(k)}), \x^{(k)})$.   
+	\STATE New feature matrix with higher order terms:  $\tilde{\mathbf{X}} = [X_{\mathcal{S}},\text{Int}(X_{\mathcal{S}} ) )]$.   
+	\STATE Estimating performance: $\hat{\z}^{(k)} = \tilde{\mathbf{X}}^{(k)}\boldsymbol{\beta}^{(k)}, $ where $\boldsymbol{\beta}^{(k)} = \text{EN}(s(\z^{(k)}), s(\mathbf{\tilde{X}}^{(k)})$
+\RETURN Slowdown: $\hat{\z}^{(k)}$.
+\end{algorithmic}
+\label{alg:SYSTEM}
+\end{algorithm}
+
+\PUNT{\TODO{Need a description of the algorithm here. We can't just put it
+  in with no reference in this section.  Why is it here and what does
+  it do?  What does complete design matrix mean as an input?  Why
+  doesn't it return anything?  Basically, you need a paragraph that
+  walks through the algorithm, what is its goal?  What are the inputs?
+  What is the output?  What is it doing in English?}}
+  
+Algorithm \ref{alg:SYSTEM} summarizes \SYSTEM{}, which predicts
+slowdown when $k$ applications are co-scheduled. The algorithm takes a
+few samples of random combinations of applications running together,
+denoted by $\left( s(\z^{(k)}), \; \x^{(k)} = s(\mathbf{X}^{(k)})
+\right)$, a design matrix containing the low-level-features for all
+${n \choose k}$ combinations (denoted by $\mathbf{X}^{(k)}$) and
+outputs a slowdown vector for all combinations of applications. The
+first step does a feature selection on the linear model using
+Elastic-net as $\boldsymbol{\beta}^{(k)} = \text{EN}(y^{(k)},
+\x^{(k)})$. The non-zero coefficients of $\boldsymbol{\beta}^{(k)}$
+indicate the selected features, denoted by $\mathcal{S}$. Then, we
+construct a higher-order feature matrix $\tilde{\mathbf{X}}$ for those
+selected features only. We run elastic net again for the new feature
+space to obtain the final model which makes the performance
+prediction, denoted by $\hat{\z}^{(k)}$.
+ 
+
+
+Algorithm \ref{alg:SYSTEM} is run entirely offline.  It produces the
+slowdown estimates for all applications (even those not sampled) in up
+to $k$ co-scheduling groups.  These slowdown estimates can then be
+used to predict performance for new combinations of applications in
+online schedulers.  We show examples in the next section.  We also
+show how the estimates can be trivially updated as new measurements
+become available online.
+
+
+
