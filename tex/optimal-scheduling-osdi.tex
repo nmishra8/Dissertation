@@ -1,6 +1,6 @@
-\section{Scheduling with \SYSTEM{}}
+\section{Scheduling with \SYSTEMESP{}}
 \label{section:scheduling}
-We examine two use cases for \SYSTEM{}: (1) batch scheduling
+We examine two use cases for \SYSTEMESP{}: (1) batch scheduling
 applications on a single processor, (2) and scheduling dynamically
 arriving applications on multiple processors.
 
@@ -15,7 +15,7 @@ schedule that completes all applications' work in the minimal total
 time.  The optimal schedule can be described as a solution to a linear
 program if the performance of every application was known ahead of
 time. Since we do not know the exact performance, our algorithm uses
-\SYSTEM{} to predict the performance and then generate near-optimal
+\SYSTEMESP{} to predict the performance and then generate near-optimal
 schedules.
 
 We assume that at most $k$-tuples of applications can run together at
@@ -81,10 +81,10 @@ prediction for $\mathbf{A}$, then instead of solving Equation
 \centering
 			\label{eq:schedule_general2}
 			&   \y =\underset{  \y \geq 0}{\argmin} \;\;   \| \y \|_1\\
-                        &  \text{subject to} \;\;\;\; \tilde{\mathbf{A}} \y = \w 
+                        &  \text{subject to} \;\;\;\; \tilde{\mathbf{A}} \y = \w
 \end{aligned}
 \end{equation}
-%where $\tilde{\mathbf{A}}$ represents an estimate for $\mathbf{A}$. 
+%where $\tilde{\mathbf{A}}$ represents an estimate for $\mathbf{A}$.
 This equation is a proxy for Equation \eqref{eq:opt_sched_gaussian},
 but it cannot guarantee that the required work is finished because it
 uses predictions rather than true performance.  To deal with this
@@ -99,7 +99,7 @@ measurement and prediction.
 \begin{algorithmic}[1]
 \small
 \REQUIRE Tolerance: $\text{TOL} = 10^{-6}$ \\
-Performance prediction matrix from \SYSTEM{}: $\tilde{\mathbf{A}}$ \\
+Performance prediction matrix from \SYSTEMESP{}: $\tilde{\mathbf{A}}$ \\
 Total work: $\w$ \\
 Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$)\\
 \STATE Initialize scheduling matrix $\y^{(0)} = 0$, work remaining: $ \w_{rem} = \w$, total scheduling time: $s = 0$.
@@ -114,12 +114,12 @@ Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$)\\
 \label{alg:ItrSched}
 \end{algorithm}
 
-%In this algorithm $\hat{A}$ is a random variable representing stochastic performance and its value is different at each iteration. 
+%In this algorithm $\hat{A}$ is a random variable representing stochastic performance and its value is different at each iteration.
 Algorithm \ref{alg:ItrSched} takes four parameters: an error tolerance
 (defaulted to $10^{-6}$), \SYSTEM's predicted performance matrix, a
 vector representing the total work for each application, and a scalar
 $\eta$ controlling the trade-off between exploration-exploitation. If
-we believe that \SYSTEM{}'s performance prediction is very good, we
+we believe that \SYSTEMESP{}'s performance prediction is very good, we
 can set $\eta = 1$ to run fewer iterations, saving computation. If we
 have less confidence, then we could send a smaller amount of work to
 the linear program thereby reducing the error at each iteration and
@@ -144,11 +144,11 @@ multiple processors. Applications arrive in a stream and a centralized
 scheduler assigns an application to a processor (which may already
 have applications running). We assign jobs in a first-come-first-serve
 order; a new job is immediately assigned a processor with the goal of
-minimizing job completion time. 
+minimizing job completion time.
 
 The multi-node scheduler (see Algorithm \ref{alg:ItrSched-multi})
 takes as input: (1) an error tolerance (again defaulted to $10^{-6}$),
-(2) \SYSTEM{}'s performance prediction $\tilde{A}$, (3) a job sequence
+(2) \SYSTEMESP{}'s performance prediction $\tilde{A}$, (3) a job sequence
 (we do not look ahead, so in practice the sequence does not need to be
 known in advance), (4) the number of nodes $q$, and the
 exploration-exploitation trade-off $\eta$.  Each job is denoted as
@@ -159,26 +159,26 @@ expected work and time if assigned to each processor (lines 4--7).
 It chooses the processor that has the fastest predicted completion
 time (line 8) and schedules that job on the processor using Algorithm
 \ref{alg:ItrSched} (line 9).
- 
+
 \begin{algorithm}[!t]
 \caption{Multi-node Iterative Scheduling Algorithm}
 \begin{algorithmic}[1]
 \small
-\REQUIRE Tolerance: $\text{TOL} = 10^{-6}$\\ 
-Performance prediction matrix from \SYSTEM{}: $\tilde{\mathbf{A}}$ \\
+\REQUIRE Tolerance: $\text{TOL} = 10^{-6}$\\
+Performance prediction matrix from \SYSTEMESP{}: $\tilde{\mathbf{A}}$ \\
 Jobs arriving in stream: $J_1, J_2, \ldots, J_T $ \\
 Number of processors: $q$. \\
-Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$) \\ 
-\STATE Initialize work matrix: $\mathbf{W} = \mathbf{0}_{m \times q}$ 
-\FORALL{i = 1:T} 
+Exploration-exploitation parameter: $\eta$ ($\eta \geq 1$) \\
+\STATE Initialize work matrix: $\mathbf{W} = \mathbf{0}_{m \times q}$
+\FORALL{i = 1:T}
 \STATE Obtain job $J_i = (a_i, v_i)$. where $a_i$ is the application index and $v_i$ denotes the work for that application.
-\FORALL{j = 1:q} 
+\FORALL{j = 1:q}
 \STATE Expected work, $\w_{tmp} = \mathbf{W}(:,j)$; updated with new job's work $w_{tmp}[i] = w[a_i,j] + v_i$
 \STATE Expected schedule time, $s[j] = \min_{\y \in \mathcal{C}} \|\y\|_1 $, \\where $ \mathcal{C} = \{ \y: \tilde{\mathbf{A}} \y = \w_{tmp} ,\y \geq 0 \}$.
 \ENDFOR
 \STATE Greedily choose processor $P: P = \argmin_{i\in [q]} s_i$ with least expected scheduling time.
 \STATE Run Algorithm \ref{alg:ItrSched} for processor $P$ with $\w_{tmp}$ amount of Total work, $\tilde{\mathbf{A}}$ as the performance prediction matrix and $\eta = 5$.
-\ENDFOR 
+\ENDFOR
 \RETURN Total scheduling time for all processors: $\mathbf{s}$.
 \end{algorithmic}
 \label{alg:ItrSched-multi}

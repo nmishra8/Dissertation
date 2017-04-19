@@ -19,10 +19,10 @@ applications \cite{Koala} or optimize energy efficiency under latency
 constraints \cite{LEO}.  A recent approach combines machine learning
 with control theory to guarantee energy consumption, but only for a
 single application \cite{JouleGuard}.  Perhaps most similar to
-\SYSTEM{} is the Mantis project which also uses higher-order
+\SYSTEMESP{} is the Mantis project which also uses higher-order
 regularized regression models (based on Lasso) to predict smartphone
 app performance \cite{kwon2013mantis}.  Mantis, however, does not
-predict contention among multiple applications, which is \SYSTEM{}'s
+predict contention among multiple applications, which is \SYSTEMESP{}'s
 focus.
 
 Other approaches predict and mitigate contention in single-node
@@ -43,7 +43,7 @@ simulator rather than a real system, however, and on our real system
 these two features are not sufficient to predict contention with any
 level of accuracy.  Another single-node system, D-Factor, uses
 non-linear models to predict the slowdown of a new application given
-current resource usage \cite{Lim2012dfactor}.  Unlike \SYSTEM{},
+current resource usage \cite{Lim2012dfactor}.  Unlike \SYSTEMESP{},
 D-Factor is not capable of predicting how two applications will
 interfere with each other if neither is currently running.
 
@@ -68,13 +68,13 @@ Stay-Away \cite{stay-away} use classification schemes to predict and
 mitigate interference, but neither produces performance estimates in
 the face of interference.  Bubble-flux \cite{Bubble-flux}, an
 improvement over the earlier Bubble-up \cite{Bubble-up} does produce
-slowdown estimates and, like \SYSTEM{}, it is efficient enough to
+slowdown estimates and, like \SYSTEMESP{}, it is efficient enough to
 consider interference among more than two applications.  The main
-difference between Bubble-flux and \SYSTEM{} is that Bubble-flux uses
+difference between Bubble-flux and \SYSTEMESP{} is that Bubble-flux uses
 no offline prior information and must dynamically probe the system.
 This lack of prior information means that Bubble-flux must suffer
 either poor utilization or inaccurate schedules during the probing
-phase.  \SYSTEM{} uses a highly accurate offline model and combines
+phase.  \SYSTEMESP{} uses a highly accurate offline model and combines
 that with online updates to its predictions to further improve
 accuracy while making use of the vast amount of data available to
 inform offline model building.

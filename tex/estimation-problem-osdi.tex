@@ -4,7 +4,7 @@ This section discusses current state-of-the-art regularization methods
 and how they could be used to predict application interference.  A
 complete coverage of these techniques is beyond the scope of this
 paper---our goal is to present enough background for readers to
-understand \SYSTEM{}'s unique approach to interference prediction.
+understand \SYSTEMESP{}'s unique approach to interference prediction.
 
 We use a running example to build intuition.  This example is
 simplified, but our hope is that it provides sufficient intuition for
@@ -203,7 +203,7 @@ training using cross-validation. Thus under these settings elastic-net
 is,
 \begin{equation}
 \label{eq:elastic-net2}
-\text{EN}(\z, \mathbf{X}) = \argmin_{  \| \boldsymbol{\beta} \|^2_2 + \| \boldsymbol{\beta} \|_1 \leq t  } \|\z - \mathbf{X}\boldsymbol{\beta}\|^2_2 
+\text{EN}(\z, \mathbf{X}) = \argmin_{  \| \boldsymbol{\beta} \|^2_2 + \| \boldsymbol{\beta} \|_1 \leq t  } \|\z - \mathbf{X}\boldsymbol{\beta}\|^2_2
 \end{equation}
 Elastic-net \emph{groups} variables so that strongly correlated
 variables tend to be selected or rejected together.
@@ -234,7 +234,7 @@ $n \ll p$ \textit{elastic-net} is $\mathcal{O}(p^3)$
 \cite{zou2005regularization}, hence for a quadratic model the
 computational complexity blows up to $\mathcal{O}(p^6)$.  Even though
 this model is richer and captures complex interactions among features,
-it is prohibitively expensive.  \SYSTEM{}'s motivation is to achieve
+it is prohibitively expensive.  \SYSTEMESP{}'s motivation is to achieve
 the prediction accuracy of interaction terms while maintaining the
 practicality of linear models.
 
@@ -254,7 +254,7 @@ practicality of linear models.
   increased.  }
 %}
 
- 
+
 \subsection{ A New Regularization Method}
 \label{sec:est:system}
 To summarize, regression models map features into predictions.  When
@@ -263,11 +263,11 @@ problem well-formed.  Higher-order models may provide more accurate
 predictions, but increase the cost of both training and applying the
 model.
 
-Inspired by these observations, we present \SYSTEM{}, which splits
+Inspired by these observations, we present \SYSTEMESP{}, which splits
 regression modeling into two parts: (1) feature selection and (2)
-model building with interactive terms.  First, \SYSTEM{} builds a
+model building with interactive terms.  First, \SYSTEMESP{} builds a
 linear model with elastic-net, which greatly reduces feature size
-without capturing interaction terms.  Second, \SYSTEM{} builds a
+without capturing interaction terms.  Second, \SYSTEMESP{} builds a
 higher-order model with interaction terms using just those features
 selecting in the first step.  By reducing the feature size in the
 first step, the complexity of the higher-order model remains tractable
@@ -308,22 +308,22 @@ application.
  \bf{Code} & \bf{Low level feature description} \\
 
  \hline
- \texttt{IPC}   & Instructions per CPU cycle    \\ 
- \texttt{AFREQ} & Relation to nominal CPU frequency while in active state    \\ 
- \texttt{L2MISS}& L2 cache misses (including other core's L2 cache *hits*)   \\ 
-\texttt{L2HIT}  & L2 cache hit ratio (0.00-1.00)  \\ 
- \texttt{L2CLK} & Ratio of CPU cycles lost due to missing L2 cache but still hitting L3 cache (0.00-1.00)  \\ 
- \texttt{L3HIT} & L2 cache hit ratio (0.00-1.00)  \\ 
-  \texttt{L3CLK}& Ratio of CPU cycles lost due to L3 cache misses (0.00-1.00)  \\ 
- \texttt{READ}  & Bytes read from memory controller (in GBytes) \\ 
- \texttt{WRITE} & Bytes written to memory controller (in GBytes)  \\ 
- \texttt{COR-RES}  &  Core residency  \\ 
-\texttt{PKG-RES}  &  Cackage residency   \\ 
- \texttt{TEMP}  &  Temperature reading in 1 degree Celsius relative to the TjMax temperature (thermal headroom) \\ 
-\texttt{EXEC}  &  Instructions per nominal CPU cycle \\ 
-\texttt{FREQ}  &  Relation to nominal CPU frequency='unhalted clock ticks'/'invariant timer ticks' (includes Intel Turbo Boost) \\ 
-\texttt{L3MISS}  &  L3 cache misses \\ 
-\texttt{ENERGY}  &  Energy consumed  \\ 
+ \texttt{IPC}   & Instructions per CPU cycle    \\
+ \texttt{AFREQ} & Relation to nominal CPU frequency while in active state    \\
+ \texttt{L2MISS}& L2 cache misses (including other core's L2 cache *hits*)   \\
+\texttt{L2HIT}  & L2 cache hit ratio (0.00-1.00)  \\
+ \texttt{L2CLK} & Ratio of CPU cycles lost due to missing L2 cache but still hitting L3 cache (0.00-1.00)  \\
+ \texttt{L3HIT} & L2 cache hit ratio (0.00-1.00)  \\
+  \texttt{L3CLK}& Ratio of CPU cycles lost due to L3 cache misses (0.00-1.00)  \\
+ \texttt{READ}  & Bytes read from memory controller (in GBytes) \\
+ \texttt{WRITE} & Bytes written to memory controller (in GBytes)  \\
+ \texttt{COR-RES}  &  Core residency  \\
+\texttt{PKG-RES}  &  Cackage residency   \\
+ \texttt{TEMP}  &  Temperature reading in 1 degree Celsius relative to the TjMax temperature (thermal headroom) \\
+\texttt{EXEC}  &  Instructions per nominal CPU cycle \\
+\texttt{FREQ}  &  Relation to nominal CPU frequency='unhalted clock ticks'/'invariant timer ticks' (includes Intel Turbo Boost) \\
+\texttt{L3MISS}  &  L3 cache misses \\
+\texttt{ENERGY}  &  Energy consumed  \\
  \hline
  \hline
 \end{tabular}
@@ -333,9 +333,9 @@ application.
 \begin{algorithm}[!t]
 \caption{\SYSTEM }
 \begin{algorithmic}[1]
-\REQUIRE  Training samples: $\left( s(\z^{(k)}), \; \x^{(k)} = s(\mathbf{X}^{(k)}) \right)$ ; Feature matrix: $\mathbf{X}^{(k)}$, 
-	\STATE Variable selection using elastic-net on linear model:  $\mathcal{S}: \{ i \in \mathcal{S} \; \text{if} \; \boldsymbol{\beta}^{(k)}[i] \neq 0\}$, $ \text{where} \; \boldsymbol{\beta}^{(k)} = \text{EN}(s(\z^{(k)}), \x^{(k)})$.   
-	\STATE New feature matrix with higher order terms:  $\tilde{\mathbf{X}} = [X_{\mathcal{S}},\text{Int}(X_{\mathcal{S}} ) )]$.   
+\REQUIRE  Training samples: $\left( s(\z^{(k)}), \; \x^{(k)} = s(\mathbf{X}^{(k)}) \right)$ ; Feature matrix: $\mathbf{X}^{(k)}$,
+	\STATE Variable selection using elastic-net on linear model:  $\mathcal{S}: \{ i \in \mathcal{S} \; \text{if} \; \boldsymbol{\beta}^{(k)}[i] \neq 0\}$, $ \text{where} \; \boldsymbol{\beta}^{(k)} = \text{EN}(s(\z^{(k)}), \x^{(k)})$.
+	\STATE New feature matrix with higher order terms:  $\tilde{\mathbf{X}} = [X_{\mathcal{S}},\text{Int}(X_{\mathcal{S}} ) )]$.
 	\STATE Estimating performance: $\hat{\z}^{(k)} = \tilde{\mathbf{X}}^{(k)}\boldsymbol{\beta}^{(k)}, $ where $\boldsymbol{\beta}^{(k)} = \text{EN}(s(\z^{(k)}), s(\mathbf{\tilde{X}}^{(k)})$
 \RETURN Slowdown: $\hat{\z}^{(k)}$.
 \end{algorithmic}
@@ -348,8 +348,8 @@ application.
   doesn't it return anything?  Basically, you need a paragraph that
   walks through the algorithm, what is its goal?  What are the inputs?
   What is the output?  What is it doing in English?}}
-  
-Algorithm \ref{alg:SYSTEM} summarizes \SYSTEM{}, which predicts
+
+Algorithm \ref{alg:SYSTEM} summarizes \SYSTEMESP{}, which predicts
 slowdown when $k$ applications are co-scheduled. The algorithm takes a
 few samples of random combinations of applications running together,
 denoted by $\left( s(\z^{(k)}), \; \x^{(k)} = s(\mathbf{X}^{(k)})
@@ -364,7 +364,7 @@ construct a higher-order feature matrix $\tilde{\mathbf{X}}$ for those
 selected features only. We run elastic net again for the new feature
 space to obtain the final model which makes the performance
 prediction, denoted by $\hat{\z}^{(k)}$.
- 
+
 
 
 Algorithm \ref{alg:SYSTEM} is run entirely offline.  It produces the
@@ -374,6 +374,3 @@ used to predict performance for new combinations of applications in
 online schedulers.  We show examples in the next section.  We also
 show how the estimates can be trivially updated as new measurements
 become available online.
-
-
-

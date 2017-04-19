@@ -1,8 +1,5 @@
 \usepackage{times}
 \usepackage{natbib}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
 \usepackage{fullpage}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -25,9 +22,10 @@
 \usepackage{enumitem}
 \usepackage{mathptmx}
 \usepackage{listings}
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
+\usepackage{pgfplots,pgfplotstable}
 \usepackage{caption}
+\usepackage{subfig}
+\usepackage{tikz}
 
 \newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
 \newlength\SUBSIZE
@@ -96,7 +94,10 @@
 \newcommand{\nmnote}[1]{\mynote{prmohan}{red}{#1}}
 \newcommand{\ignore}[1]{}
 \newcommand{\rpm}{\sbox0{$1$}\sbox2{$\scriptstyle\pm$}  \raise\dimexpr(\ht0-\ht2)/2\relax\box2 }
-\newcommand{\TODO}[1]{{\bf TODO: #1}}
+
+%\newcommand{\TODO}[1]{{\bf TODO: #1}}
+\newcommand{\TODO}{}
+
 \newcommand{\NOTE}[1]{{\bf NOTE: #1}}
 \newcommand{\name}{\textsc{GUPT}\xspace}
 \newcommand{\nameplain}{GUPT\xspace}
@@ -150,4 +151,7 @@
 %\DeclarePairedDelimiter\Floor\lfloor\rfloor
 %\DeclarePairedDelimiter\Ceil\lceil\rceil
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\minimize}{min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\Floor}{\lfloor\rfloor}
+\DeclareMathOperator*{\Ceil}{\lceil\rceil}

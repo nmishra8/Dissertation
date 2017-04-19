@@ -226,7 +226,7 @@ time.
 
 \subsection{Exploiting Structure for Fast Solutions}
 %\SYSTEM{} solves \eqnrref{power}{time} on the local device (see
-%\figref{fig:timeline}, so the solution must be efficient.  
+%\figref{fig:timeline}, so the solution must be efficient.
 By exploiting the problem structure and encoding the learned model in
 the performance hash table (PHT), \SYSTEM{} solves
 \eqnrref{power}{time} in constant ($O(1)$) time.
@@ -303,7 +303,7 @@ an estimate of its own inaccuracy.
 % sections in case the learning algorithm cannot provide the
 % confidence interval.
 This section describes the general class of learning mechanisms that
-meet these requirements. 
+meet these requirements.
 
 When selecting a learning framework we must find a tradeoff between
 the specific and the general; \ie between frameworks that build
@@ -347,7 +347,7 @@ applications, meaning they will over-allocate speed to memory-bound
 applications and under-allocate to compute-bound ones.
 
 \subsubsection{Online models}
-%\TODO{Is this offline or online or both?  The prior paragraph sets up this three-legged structure: offline, online, and something which we used to call hybrid but sounds like we are now calling transfer learning. If we are going to keep that structure we should mimic it in the substructure of the rest of the section.}  
+%\TODO{Is this offline or online or both?  The prior paragraph sets up this three-legged structure: offline, online, and something which we used to call hybrid but sounds like we are now calling transfer learning. If we are going to keep that structure we should mimic it in the substructure of the rest of the section.}
 In general, all machine learning techniques take observations of some
 phenomena and produce a model to estimate future outcomes.  In our
 specific case, we want to take observations about application's
@@ -431,7 +431,7 @@ then each PHT lookup requires constant time.
 \begin{algorithmic}
 \REQUIRE Initialize the controller with a general model of speedup and powerup. Send power and performance samples to learner and receive a PHT.
 \WHILE{$True$}
-    \STATE    Measure streaming application performance 
+    \STATE    Measure streaming application performance
     \STATE    Compute required speedup (Equation \eqref{eqn:speedup})
     \STATE    Lookup $s_{hi}$ and $s_{lo}$ with PHT
     \STATE    Compute $\tau_{hi}$ and $\tau_{lo}$ (Equations \ref{eqn:s1} \& \ref{eqn:s2})
@@ -468,7 +468,7 @@ We follow prior work in quantifying uncertainty as $\rho(t) $
 \begin{equation}
   \begin{array}{rcl}
     \beta(t) &=&  \text{exp}{\left(- \left( \left|   \frac{\bar{s}(t)}{\bar{p}(t)}  -\frac{ \hat{s}(t)}{\hat{p}_(t)} \right| \right) /5\right)} \\
-    \rho(t) &=& \frac{1-\beta(t)}{1+\beta(t)} 
+    \rho(t) &=& \frac{1-\beta(t)}{1+\beta(t)}
   \end{array}
   \label{eqn:uncer}
 \end{equation}
@@ -480,3 +480,39 @@ given by our lower bound, so in practice \SYSTEM{} sets the pole
 dynamically to be the higher of the two values and \SYSTEM{} makes
 spot updates to the estimated speedup and power based on its
 observations.
+\subsection*{Probabilistic Convergence Guarantees}
+
+
+\begin{thm}
+  Let $\mathbf{s}$ and $\hat{\mathbf{s}}$ denote the true and estimated speedups of various configurations in set $C$ as $\mathbf{s} \in \mathbb{R}^{|C|}$. Let $\sigma$ denote the
+  estimation error for speedups such that, $\hat{s_i} \sim
+  N(s_i, \sigma^2)$ $\forall$ $i$. We can show that with probability
+  greater than 99.7\%, the pole $\rho(t)$ can be chosen to lie in the range, $[\Floor{1- \Floor{max(\hat{s})/(min(\hat{s}) -  3\sigma)}_0}_0, 1)$, where $\Floor{x}_0 = \max(x,0)$.
+\end{thm}
+
+\begin{proof}
+Let $\Delta$ denote the multiplicative error over speedups, such that $ \widehat{speedup(t)}\Delta = speedup(t) $. To
+guarantee convergence the value of pole, $\rho(t)$ can vary in the range
+$\Floor{1-\frac{2}{\Delta})}_0, 1)$\cite{ICSE2014}. The lowest value of $\rho(t)$ offer the fastest convergence. We have described in Equations \ref{eqn:s1} \& \ref{eqn:s2} that any speedup can be written as a linear combination of two configuration speedups as,
+
+\begin{align}
+speedup(t) = \hat{s}_{hi} \cdot \tau_{hi} + \hat{s}_{lo} \cdot (T - \tau_{hi})
+\end{align}
+\begin{align}
+\widehat{speedup}(t) = s_{hi} \cdot \tau_{hi} + s_{lo} \cdot (T - \tau_{hi})
+\end{align}
+
+We can upper bound and lower bound each of these terms,
+\begin{align}
+speedup(t) \leq T \hat{s}_{hi} \;\; \text{and} \;\; \widehat{speedup}(t) \geq T s_{lo}
+\end{align}
+
+The estimates of speedups are close to the actual speedups since
+$\hat{s} \sim N(s, \sigma^2)$, therefore with probability greater
+than 99.7\% and the speedups can be given by, $s_{lo} \geq
+\hat{s}_{lo} - 3 \sigma$. Hence, $\widehat{speedup}(t) \geq T
+(\hat{s}_{lo} -3 \sigma)$. Since, over all configurations, $\Delta \leq
+\Floor{max(\hat{s})/(min(\hat{s}) - 3\sigma)}_0$,  we can choose the pole from the range,  $([\Floor{1- \Floor{max(\hat{s})/(min(\hat{s}) - 3\sigma)}_0}_0, 1)$.
+
+
+\end{proof}

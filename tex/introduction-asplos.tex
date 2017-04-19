@@ -1,4 +1,4 @@
-%Title: \SYSTEM{}: A machine learning approach to minimizing energy under performance constraints
+%Title: \SYSTEMLEO{}: A machine learning approach to minimizing energy under performance constraints
 
 \section{Introduction}
 
@@ -49,19 +49,19 @@ In a sense, offline approaches are dependent on a rich training set
 that represents all possible behavior, while the online approaches
 generate a statistically weak -- \ie inaccurate -- estimator due to
 small sample size.
- 
-In this paper, we present \SYSTEM{} (Learning for Energy
+
+In this paper, we present \SYSTEMLEO{} (Learning for Energy
 Optimization), a learning framework that combines the best of both
 worlds, \ie the statistical properties both offline and online
 estimation.  We assume that there is some set of applications for
 which the power and performance tradeoffs are gathered offline.
-\SYSTEM{} uses a graphical model to integrate a small number of
+\SYSTEMLEO{} uses a graphical model to integrate a small number of
 observations of the current application with knowledge of the
 previously observed applications to produce accurate estimations of
 power and performance tradeoffs for the current application in all
-configurations.  \SYSTEM{}'s strength is that it quickly matches the
+configurations.  \SYSTEMLEO{}'s strength is that it quickly matches the
 behavior of the current application to a subset of the previously
-observed applications.  For example, if \SYSTEM{} has previously seen
+observed applications.  For example, if \SYSTEMLEO{} has previously seen
 an application that only scales to 8 cores, it can use that
 information to quickly determine if the current application will be
 limited in its scaling.
@@ -69,33 +69,33 @@ limited in its scaling.
 
 % Limitations and uses \TODO{Need to have a paragraph here on
 %   limitations - but keep it positive.}
-\SYSTEM{} is a fairly general approach in that it supports many types
+\SYSTEMLEO{} is a fairly general approach in that it supports many types
 of applications with different resource needs.  It is not, however,
 appropriate for all computer systems, especially ones, which run many
 small, unique jobs.  Instead, it focuses on supporting systems that 1)
 execute longer running jobs (in the 10s of seconds) or many repeated
 instances of short jobs, 2) run at a wide range of utilizations, and
 3) might have phases where optimal tradeoffs may change online.  For
-systems that meet these criteria, \SYSTEM{} provides a powerful
+systems that meet these criteria, \SYSTEMLEO{} provides a powerful
 ability to reduce the energy consumption.  For systems that service
-short ( $< 1$ second), largely unique jobs, \SYSTEM{} will work, but
+short ( $< 1$ second), largely unique jobs, \SYSTEMLEO{} will work, but
 other approaches are probably better matched to those specific needs.
 %\TODO{its probably alright for full utilization systems too because it can tell which configuration provides maximum utilization. Also, race-to-idle is not mentioned in intro?}
 
 % Our results
-We have implemented \SYSTEM{} on a Linux x86 server and tested its
+We have implemented \SYSTEMLEO{} on a Linux x86 server and tested its
 ability to minimize energy for 25 different applications from a
-variety of different benchmark suites.  We first compare \SYSTEM{}'s
+variety of different benchmark suites.  We first compare \SYSTEMLEO{}'s
 performance and power prediction accuracy to (1) the true value, (2)
 an offline approach, and (3) an online approach (See
-\Secref{sec:poc}).  On average, \SYSTEM{} is within 97\% of the true
+\Secref{sec:poc}).  On average, \SYSTEMLEO{} is within 97\% of the true
 value while the offline and online approaches only achieve 79\% and
-86\% accuracy, respectively.  We then use \SYSTEM{} to minimize energy
+86\% accuracy, respectively.  We then use \SYSTEMLEO{} to minimize energy
 for various performance requirements (or system utilizations) (See
 \Secref{sec:experiment:LP}).  Overall we find that our approach is
 within 6\% of the true optimal energy, while the offline approach
 exceeds optimal energy consumption by 29\% and online approach by
-24\%.  Finally, we show that \SYSTEM{} provides near optimal energy
+24\%.  Finally, we show that \SYSTEMLEO{} provides near optimal energy
 savings when adapting to phases within an application.
 
 % Contributions of this paper
@@ -110,14 +110,14 @@ This paper makes the following contributions:
   application. (See \Secref{sec:HBN}).
 \item It makes the source code for this learning system available in
   both Matlab and C++\footnote{leo.cs.uchicago.edu}.
-\item It evaluates \SYSTEM{} on a real system. (See
+\item It evaluates \SYSTEMLEO{} on a real system. (See
   \Secref{sec:experiment}).
-\item It compares the accuracy of \SYSTEM{}'s estimations to both the
+\item It compares the accuracy of \SYSTEMLEO{}'s estimations to both the
   truth and to offline and online learning approaches (See
   \Secref{sec:experiment:PP}).
-\item It integrates \SYSTEM{} into a runtime for energy optimization
+\item It integrates \SYSTEMLEO{} into a runtime for energy optimization
   and finds this learning framework achieves near-optimal energy
-  savings.  Furthermore, \SYSTEM{} significantly reduces energy
+  savings.  Furthermore, \SYSTEMLEO{} significantly reduces energy
   compared to both offline and online approaches as well as the
   popular race-to-idle heuristic.  (See
   \Secref{sec:experiment:LP}).
@@ -128,7 +128,7 @@ provides a motivational example to build intuition.
 \Secref{sec:notation} presents notation.
 \Secref{sec:problemFormulation} formalizes the energy minimization
 problem as a linear program and discusses the application-specific
-parameters of this problem.  \Secref{sec:HBN} elaborates our probabilistic graphical model and describes \SYSTEM{} in full detail.
-\Secref{sec:experiment} presents empirical studies on \SYSTEM{}.
+parameters of this problem.  \Secref{sec:HBN} elaborates our probabilistic graphical model and describes \SYSTEMLEO{} in full detail.
+\Secref{sec:experiment} presents empirical studies on \SYSTEMLEO{}.
 Related work is discussed in \Secref{sec:related} and the paper
 concludes in \secref{conclusion}.

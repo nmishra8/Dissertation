@@ -19,7 +19,7 @@ formulate the energy minimization problem as a linear program in
 Equation \eqref{eq:controller}:
 \begin{equation}
 \begin{aligned}
-&   \underset{\mathbf{t} \geq \mathbf{0}}{\text{min}}  
+&   \underset{\mathbf{t} \geq \mathbf{0}}{\text{min}}
 &&   \sum_{c \in \mathcal{C}} p_c t_c, \\
 &   \text{subject to} &&  \sum_{c \in \mathcal{C}} r_c t_c = W, \\
 &&&	 \sum_{c \in \mathcal{C}} t_c \leq T.
@@ -36,7 +36,7 @@ minimize the total energy consumption and ensure all work is completed
 by the deadline.  The values $p_c$ and $r_c$ are the key to solving
 this problem.  If they are known, the structure of this linear program
 allows the minimal energy schedule to be found using convex
-optimization techniques \cite{LinearProgramming}. 
+optimization techniques \cite{LinearProgramming}.
 
 This formulation is abstract so that it can be applied to many
 applications and systems.  To help build intuition, we relate it to
@@ -49,7 +49,7 @@ restricted configurations to be assignment of cores.  In
 assignment of cores, clockspeed, memory controllers, and hyperthreads.
 For \texttt{Kmeans}, each assignment of resources results in a
 different rate of computation (points clustered per time) and power
-consumption.  
+consumption.
 
 Unfortunately, power and performance are entirely application
 dependent.  For many applications, these values also vary with varying
@@ -78,4 +78,4 @@ In the next section, Section \ref{sec:HBN} we give details of
 the current application and previously seen applications for fast,
 accurate estimates.
 %\section{Notation}
-%Throughout this 
+%Throughout this

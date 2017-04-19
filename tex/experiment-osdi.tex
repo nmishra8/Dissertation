@@ -1,7 +1,7 @@
 %% applications, benchmarks
 %% jobs == instance of an application
 
-\section{Evaluation} 
+\section{Evaluation}
 In this section we evaluate \SYSTEM{}. We first describe our
 experimental setup, then evaluate the \SYSTEM{}-based schedulers, and
 finally present statistical analysis on \SYSTEM{} prediction accuracy
@@ -76,7 +76,7 @@ We compare \SYSTEM{} with:
 
 \begin{figure}[t!]
 \begin{center}
- \includegraphics[width=0.45\textwidth]{figures/barmainCOPY.pdf}
+ \includegraphics[width=0.7\textwidth]{figures/barmainCOPY.pdf}
  \caption{\small Single processor scheduling performance. On an
    average over different $k$, \SYSTEM{} is 25\% better than MEM, 29\%
    better than IPC, 27\% better than L3R, 26\% better than RND, and
@@ -161,7 +161,7 @@ with an error bar showing one standard deviation.
 % applications together dwindles after 4-tuples, the extra noise in the
 % system makes approximate scheduling using \SYSTEM{} slightly worse. We
 % see similar behavior for scheduling even in the baseline algorithms,
-% where we see improvement only up-to a certain point. 
+% where we see improvement only up-to a certain point.
 Overall, \SYSTEM{} performs much better than the baseline algorithms
 and only slightly worse than the ORACLE. On average over different
 $k$, \SYSTEM{} is 25\% faster than MEM, 29\% faster than IPC, 27\%
@@ -264,9 +264,9 @@ performance for latency sensitive applications.
 \begin{center}
  \includegraphics[width=1\textwidth]{figures/accuracy_boxplot_ridge_lasso_enet2.pdf}
  \caption{\small Prediction accuracy comparison between Enet-lin and
-     \SYSTEM{}. 
+     \SYSTEM{}.
      % We use 70\% of the data during training phase and
-     %  predict the remaining 30\% of the samples. 
+     %  predict the remaining 30\% of the samples.
    }
 \label{fig:est:box-plot}
 \end{center}
@@ -281,7 +281,7 @@ performance for latency sensitive applications.
  \hline
  &k & 2 & 3 &4 & 5 & 6 & 7 \\
  \hline
-\multirow {3}{*}{\SYSTEM{}}  & Model training (in seconds)   & 0.42    & 0.59 &   0.68 & 0.69 & 0.48 & 0.51\\ 
+\multirow {3}{*}{\SYSTEM{}}  & Model training (in seconds)   & 0.42    & 0.59 &   0.68 & 0.69 & 0.48 & 0.51\\
 & Prediction time (in seconds)  &   0.00056  & 0.003   &0.0076 & 0.0198 & 0.04 & 0.06\\
 & Training sample size (in \%)  & 70\% & 40 \% &  10 \% & 4\% & 1 \% & 1\% \\ \hline \hline
 \multirow {2}{*}{Scheduling Algorithm \ref{alg:ItrSched}}  & \SYSTEM{} (in seconds)    &0.52 & 1.18&  2.08 & 3.17 & 4.19 & 5.57\\
@@ -302,7 +302,7 @@ performance for latency sensitive applications.
  \hline
  &k & 2 & 3 &4 & 5 & 6 & 7 \\
  \hline
-\multirow {3}{*}{\SYSTEM{}}  & Model training (in seconds)   & 0.42    & 0.59 &   0.68 & 0.69 & 0.48 & 0.51\\ 
+\multirow {3}{*}{\SYSTEM{}}  & Model training (in seconds)   & 0.42    & 0.59 &   0.68 & 0.69 & 0.48 & 0.51\\
 & Prediction time (in seconds)  &   0.00056  & 0.003   &0.0076 & 0.0198 & 0.04 & 0.06\\
 & Training sample size (in \%)  & 70\% & 40 \% &  10 \% & 4\% & 1 \% & 1\% \\ \hline \hline
 \multirow {1}{*}{Scheduling Algorithm \ref{alg:ItrSched}}  & Linear program (in seconds/job) &   0.008 & 0.014 & 0.023 & 0.06 & 0.117 & 0.22\\
@@ -394,7 +394,7 @@ between 85\% to 88\% accurate.
 
 \subsection{Overhead}
 \label{sec:expt:overhead}
-\balance \SYSTEM{} has an offline sampling phase followed by an
+\SYSTEM{} has an offline sampling phase followed by an
 estimation phase. Once we have collected the samples from the batch of
 co-scheduled applications, we run \SYSTEM{} to obtain the predictions
 for the rest of the combinations of the applications. We have
@@ -423,8 +423,3 @@ system.  This is not an insignificant amount of time but this approach
 is suitable for long running applications and the benchmarks that we
 have used in this paper are all long running benchmarks with at least
 10 seconds of individual runtime.
-
-
-
-
-

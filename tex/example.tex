@@ -35,16 +35,11 @@ overcome to combine learning and control.
 \subsection{\emph{Learning} Complexity}
 \begin{figure}
 \centering
-  \subfloat[]
-  {
+
     \includegraphics[width=.25\textwidth]{figures/STREAM-contour.pdf}
     \label{fig:STREAM_contour}
-  }
-  \subfloat[]
-  {
     \input{img/STREAM-example-resized.tex}
     \label{fig:STREAM_timeline}
-  }
   \caption{(a) \texttt{STREAM} performance as a function of
     configuration.  (b) Managing \texttt{STREAM}'s performance:
     \emph{Learning} handles the complex configuration space, but
@@ -95,16 +90,10 @@ control systems \cite{ControlWare,POET,ICSE2014}.  Hence, the
 
 \begin{figure}
 \centering
-  \subfloat[]
-  {
     \includegraphics[width=.25\textwidth]{figures/BODYTRACK-contour.png}
     \label{fig:BODYTRACK_contour}
-  }
-  \subfloat[]
-  {
     \input{img/BODYTRACK-example-resized.tex}
-    \label{fig:BODYTRACK_timeline}    
-  }
+    \label{fig:BODYTRACK_timeline}
   \caption{(a) \texttt{bodytrack} performance as a function of
     configuration. (b) Managing \texttt{bodytrack}'s performance with
     another application: \emph{control} detects the change (at the
@@ -154,14 +143,15 @@ model, which may have noise and/or errors.
 
 
 
-\begin{wrapfigure}{r}{0.5\columnwidth} 
-%\begin{figure}
-%\centering
+%\begin{wrapfigure}{r}{0.5\columnwidth}
+\begin{figure}
+\centering
 \input{img/BODYTRACK-example2-resized.tex}
 \caption{Comparison of carefully tuned and default poles.}
 \label{fig:not-simple}
-%\end{figure}
-\end{wrapfigure}
+\end{figure}
+%\end{wrapfigure}
+
 To demonstrate the pole's importance when using a learned model, we
 again control \texttt{bodytrack}, this time using the adaptive
 controller from the previous subsection with a model produced by the
@@ -182,5 +172,3 @@ users with both computing and control knowledge to tune the pole,
 \emph{\SYSTEM{} incorporates the learner's confidence interval and
   estimated variance to compute a pole that provides probabilistic
   convergence guarantees.}
-
-

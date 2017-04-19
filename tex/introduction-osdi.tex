@@ -48,17 +48,17 @@ and not practical for online scheduling.
 We therefore combine linear and non-linear approaches to produce
 accurate and practical predictions.  We call our approach ESP for
 \textbf{E}stimating co-\textbf{S}cheduled \textbf{P}erformance.
-\SYSTEM{}'s key insight is to split regularization modeling into two
-parts: \emph{feature selection} and \emph{model building}.  \SYSTEM{}
+\SYSTEMESP{}'s key insight is to split regularization modeling into two
+parts: \emph{feature selection} and \emph{model building}.  \SYSTEMESP{}
 uses linear techniques to perform feature selection, but uses
 quadratic techniques for model building.  The result is a highly
 accurate predictor that is still practical and can be integrated into
 real application schedulers.
 
-\SYSTEM{} assumes there is a known (possibly very large) set of
+\SYSTEMESP{} assumes there is a known (possibly very large) set of
 applications that may be run on the system and some offline
 measurements have been taken of these individual applications.
-Specifically, \SYSTEM{} measures low-level hardware features like
+Specifically, \SYSTEMESP{} measures low-level hardware features like
 cache misses and instructions retired during a training phase.  At
 runtime, applications from this set may be launched in any arbitrary
 combination.  The goal is to efficiently predict the interference (\ie
@@ -68,41 +68,41 @@ slowdown) of co-scheduled applications.
 % node.
 
 % Use approach to build schedulers for single and multinode system
-We evaluate \SYSTEM{} by integrating it into both single and
+We evaluate \SYSTEMESP{} by integrating it into both single and
 multi-node schedulers running on Linux/x86 servers.  In the
 single-node case, we construct a batch scheduler that orders
 application execution to minimize the total completion time.  In the
 multi-node case, we build a first-come-first-serve scheduler that
 assigns applications to nodes as they arrive to minimize application
-slowdown.  We compare \SYSTEM{}-based schedulers to prior scheduling
+slowdown.  We compare \SYSTEMESP{}-based schedulers to prior scheduling
 techniques that use contention-aware heuristics to avoid interference
-\cite{resense,merkel2010resource,Merlin}.  We also compare \SYSTEM{}'s
+\cite{resense,merkel2010resource,Merlin}.  We also compare \SYSTEMESP{}'s
 accuracy to predictors built with a number of cutting-edge
 regularization methods. We find:
 \begin{itemize}
-\item The single-node \SYSTEM{} schedules are, on average, 27\% faster
+\item The single-node \SYSTEMESP{} schedules are, on average, 27\% faster
   than techniques based on heuristics.  Even with its runtime
-  overhead, the \SYSTEM{} results are only 5\% worse (on average) than
+  overhead, the \SYSTEMESP{} results are only 5\% worse (on average) than
   an oracle that has perfect knowledge of interference and no
   overhead. See \secref{sched_single_proc}.
-\item The multi-node \SYSTEM{} schedules are 60\% faster than activity
+\item The multi-node \SYSTEMESP{} schedules are 60\% faster than activity
   vector based schedules and only 5\% to 13\% worse than an oracle.
   See \secref{sched-multi-node}.
-\item Critically, \SYSTEM{} produces better results as more
-  applications are scheduled.  \SYSTEM{} produces quantifiable
+\item Critically, \SYSTEMESP{} produces better results as more
+  applications are scheduled.  \SYSTEMESP{} produces quantifiable
   performance predictions while heuristic techniques simply produce a
-  binary decision: co-schedule or not.  \SYSTEM{}'s quantifiable
+  binary decision: co-schedule or not.  \SYSTEMESP{}'s quantifiable
   predictions allow schedulers to make optimal decisions even when
   interference cannot be avoided. In contrast, heuristic techniques do
   not quantify interference and thus cannot rank decisions.  As the
   number of applications increases, the chance of heuristics making a
   very poor choice in the face of unavoidable contention also
   increases.  See \secref{exp:multi-node-job}.
-\item \SYSTEM{} is more accurate than existing linear regression
+\item \SYSTEMESP{} is more accurate than existing linear regression
   techniques in most cases.  When considering two applications,
-  \SYSTEM{} is similar to existing regularized linear regression
+  \SYSTEMESP{} is similar to existing regularized linear regression
   techniques.  Considering more than two applications, however,
-  \SYSTEM{} is uniformly more accurate than standard linear regression
+  \SYSTEMESP{} is uniformly more accurate than standard linear regression
   techniques.  See \secref{st_model}.  For reasons explained in
   \secref{est-intro}, existing regularized regression methods with
   interaction terms cannot be evaluated for accuracy because their
@@ -113,18 +113,18 @@ regularization methods. We find:
 This paper makes the following contributions:
 %\begin{itemize}
 \begin{inparaenum}[1)]
-\item \SYSTEM{}, a regularization method for predicting application
+\item \SYSTEMESP{}, a regularization method for predicting application
   interference,
-\item Demonstration of \SYSTEM{} in both single and multi-node
+\item Demonstration of \SYSTEMESP{} in both single and multi-node
   schedulers,
 \item Comparison to existing heuristic techniques on real systems,
-\item Comparison of \SYSTEM{}'s predictive accuracy to other
+\item Comparison of \SYSTEMESP{}'s predictive accuracy to other
   regularization methods,
 \item Open-source code release\footnote{The code is available at
     https://github.com/ESPAlg/ESP}.
 %\end{itemize}
 \end{inparaenum}
-\SYSTEM{} helps scheduling at multiple levels: it determines which
+\SYSTEMESP{} helps scheduling at multiple levels: it determines which
 applications should run together on a single node, it determines which
 node a new application should be scheduled on, and it avoids
 disastrous decisions that heuristic schedulers cannot.  Support for
