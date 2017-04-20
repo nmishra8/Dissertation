@@ -1,0 +1,2 @@
+out/thesis_template-figure9.pdf: img/LEO-ma-eff-summary.txt
+out/thesis_template-figure9.pdf: img/LEO-ma-lat-summary.txt

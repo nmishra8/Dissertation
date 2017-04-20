@@ -20,7 +20,7 @@
 \epigraph{Epigraph Text}
 
 %\bibliography{references}
-
+\bibliographystyle{unsrtnat}
 
 \begin{document}
 %% Basic setup commands
@@ -47,46 +47,51 @@
 \mainmatter
 
 \chapter{Introduction}
-\input{tex/introduction-asplos}
-\input{tex/intro}
-\input{tex/introduction-osdi}
+\input{tex/intro-dissertation}
+%\input{tex/introduction-asplos}
+%\input{tex/intro}
+%\input{tex/introduction-osdi}
 
 \chapter{Background and future work}
-\input{tex/related-asplos}
-\input{tex/related}
-\input{tex/previous-work-osdi}
+\input{tex/background-dissertation}
+%\input{tex/related-asplos}
+%\input{tex/related}
+%\input{tex/previous-work-osdi}
 
 \chapter{LEO: Estimation for Single Application}
-\input{tex/introduction-asplos}
+%\input{tex/introduction-asplos}
 \input{tex/example-asplos}
 \input{tex/notation-asplos}
 \input{tex/problemFormulation-asplos}
 \input{tex/hierarchicalModel-asplos}
 \input{tex/experiments-asplos}
-\input{tex/conclusion-asplos}
+%\input{tex/conclusion-asplos}
 
 \chapter{CALOREE: Controlling applications under system dynamics}
-\input{tex/intro}
+%\input{tex/intro}
 \input{tex/example}
 \input{tex/framework-new}
 \input{tex/evaluation}
-\input{tex/conclusion}
+%\input{tex/conclusion}
 
 \chapter{ESP: Application interference estimation}
-\input{tex/introduction-osdi}
-\input{tex/notation-osdi}
-\input{tex/previous-work-osdi}
+%\input{tex/introduction-osdi}
+%\input{tex/notation-osdi}
+%\input{tex/previous-work-osdi}
 \input{tex/estimation-problem-osdi}
 \input{tex/optimal-scheduling-osdi}
 \input{tex/experiment-osdi}
-\input{tex/conclusion-osdi}
+%\input{tex/conclusion-osdi}
 
 \chapter{Future work and conclusion}
-\input{tex/conclusion-asplos}
-\input{tex/conclusion}
-\input{tex/conclusion-osdi}
-\bibliography{reference}
-\makebibliography
+\input{tex/conclusion-dissertation}
+
+%\makebibliography
+\newpage
+%\printbibliography
+%\bibliography{final_bibtool}
+\bibliography{final_bibtool}
+
 % Figures and tables, if you decide to leave them to the end
 %\input{figure}
 %\input{table}

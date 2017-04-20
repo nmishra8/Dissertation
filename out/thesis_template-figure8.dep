@@ -1,0 +1,2 @@
+out/thesis_template-figure8.pdf: img/LEO-dyn-eff-summary.txt
+out/thesis_template-figure8.pdf: img/LEO-dyn-lat-summary.txt

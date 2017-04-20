@@ -1,0 +1,67 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: thesis_template.aux
+The style file: unsrtnat.bst
+Case mismatch error between cite keys meisnerISCA2011 and MeisnerISCA2011
+---line 244 of file thesis_template.aux
+ : \citation{meisnerISCA2011
+ :                          ,Kim2014}
+I'm skipping whatever remains of this command
+Database file #1: final_bibtool.bib
+Warning--I didn't find a database entry for "Ipek"
+Warning--I didn't find a database entry for "Heartbeats1"
+Warning--I didn't find a database entry for "heisner"
+Warning--can't use both author and editor fields in HandbookControl
+Warning--empty year in TCST
+Warning--empty year in TCST
+Name 3 in "Raghavendra, R. and Ranganathan, P. and Talwar, V, and Wang, Z. and Zhu, X." has a comma at the end for entry Raghavendra2008
+while executing---line 1315 of file unsrtnat.bst
+Name 3 in "Raghavendra, R. and Ranganathan, P. and Talwar, V, and Wang, Z. and Zhu, X." has a comma at the end for entry Raghavendra2008
+while executing---line 1315 of file unsrtnat.bst
+Warning--empty year in welch2006kalman
+Warning--empty year in welch2006kalman
+Warning--empty publisher in Tokic2010
+Warning--empty journal in hoffmann2011seec
+Warning--empty booktitle in 1333571
+You've used 107 entries,
+            2481 wiz_defined-function locations,
+            1116 strings with 23566 characters,
+and the built_in function-call counts, 42771 in all, are:
+= -- 3245
+> -- 2643
+< -- 54
++ -- 998
+- -- 782
+* -- 3202
+:= -- 6814
+add.period$ -- 358
+call.type$ -- 107
+change.case$ -- 210
+chr.to.int$ -- 105
+cite$ -- 115
+duplicate$ -- 2369
+empty$ -- 4028
+format.name$ -- 935
+if$ -- 9223
+int.to.chr$ -- 3
+int.to.str$ -- 108
+missing$ -- 109
+newline$ -- 565
+num.names$ -- 321
+pop$ -- 1173
+preamble$ -- 1
+purify$ -- 107
+quote$ -- 0
+skip$ -- 1296
+stack$ -- 0
+substring$ -- 1008
+swap$ -- 449
+text.length$ -- 19
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 734
+warning$ -- 8
+while$ -- 286
+width$ -- 0
+write$ -- 1396
+(There were 3 error messages)

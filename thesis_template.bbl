@@ -1,0 +1,716 @@
+\begin{thebibliography}{107}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Barroso and Holzle(2007)]{google2007}
+L.A Barroso and U.~Holzle.
+\newblock The case for energy-proportional computing.
+\newblock \emph{Computer}, 40\penalty0 (12):\penalty0 33--37, Dec 2007.
+\newblock ISSN 0018-9162.
+\newblock \doi{10.1109/MC.2007.443}.
+
+\bibitem[Meisner et~al.(2011)Meisner, Sadler, Barroso, Weber, and
+  Wenisch]{MeisnerISCA2011}
+David Meisner, Christopher~M. Sadler, Luiz~Andr{\'e} Barroso, Wolf-Dietrich
+  Weber, and Thomas~F. Wenisch.
+\newblock Power management of online data-intensive services.
+\newblock \emph{ISCA}, 2011.
+
+\bibitem[Dwyer et~al.(2012)Dwyer, Fedorova, Blagodurov, Roth, Gaud, and
+  Pei]{dwyer2012practical}
+Tyler Dwyer, Alexandra Fedorova, Sergey Blagodurov, Mark Roth, Fabien Gaud, and
+  Jian Pei.
+\newblock A practical method for estimating performance degradation on
+  multicore processors, and its application to hpc workloads.
+\newblock In \emph{Proceedings of the International Conference on High
+  Performance Computing, Networking, Storage and Analysis}, page~83. IEEE
+  Computer Society Press, 2012.
+
+\bibitem[Kambadur et~al.(2012)Kambadur, Moseley, Hank, and
+  Kim]{kambadur2012measuring}
+Melanie Kambadur, Tipp Moseley, Rick Hank, and Martha~A Kim.
+\newblock Measuring interference between live datacenter applications.
+\newblock In \emph{Proceedings of the International Conference on High
+  Performance Computing, Networking, Storage and Analysis}, page~51. IEEE
+  Computer Society Press, 2012.
+
+\bibitem[Yang et~al.(2013)Yang, Breslow, Mars, and Tang]{Bubble-flux}
+Hailong Yang, Alex Breslow, Jason Mars, and Lingjia Tang.
+\newblock Bubble-flux: Precise online qos management for increased utilization
+  in warehouse scale computers.
+\newblock In \emph{Proceedings of the 40th Annual International Symposium on
+  Computer Architecture}, ISCA '13, pages 607--618, New York, NY, USA, 2013.
+  ACM.
+\newblock ISBN 978-1-4503-2079-5.
+\newblock \doi{10.1145/2485922.2485974}.
+\newblock URL \url{http://doi.acm.org/10.1145/2485922.2485974}.
+
+\bibitem[Merkel et~al.(2010)Merkel, Stoess, and Bellosa]{merkel2010resource}
+Andreas Merkel, Jan Stoess, and Frank Bellosa.
+\newblock Resource-conscious scheduling for energy efficiency on multicore
+  processors.
+\newblock In \emph{Proceedings of the 5th European conference on Computer
+  systems}, pages 153--166. ACM, 2010.
+
+\bibitem[Yi et~al.(2003)Yi, Lilja, and Hawkins]{Yi2003}
+Joshua~J. Yi, David~J. Lilja, and Douglas~M. Hawkins.
+\newblock A statistically rigorous approach for improving simulation
+  methodology.
+\newblock In \emph{HPCA}, 2003.
+
+\bibitem[Snowdon et~al.(2009)Snowdon, Le~Sueur, Petters, and Heiser]{Koala}
+David~C. Snowdon, Etienne Le~Sueur, Stefan~M. Petters, and Gernot Heiser.
+\newblock Koala: A platform for os-level power management.
+\newblock In \emph{EuroSys}, 2009.
+
+\bibitem[Lee and Brooks(2006)]{LeeBrooks2006}
+Benjamin~C. Lee and David~M. Brooks.
+\newblock Accurate and efficient regression modeling for microarchitectural
+  performance and power prediction.
+\newblock In \emph{ASPLOS}, 2006.
+
+\bibitem[Lee et~al.(2008)Lee, Collins, Wang, and Brooks]{CPR}
+B.C. Lee, J.~Collins, Hong Wang, and D.~Brooks.
+\newblock Cpr: Composable performance regression for scalable multiprocessor
+  models.
+\newblock In \emph{MICRO}, 2008.
+
+\bibitem[Chen et~al.(2011)Chen, John, and Kaseridis]{ChenJohn2011}
+Jian Chen, Lizy~Kurian John, and Dimitris Kaseridis.
+\newblock Modeling program resource demand using inherent program
+  characteristics.
+\newblock \emph{SIGMETRICS Perform. Eval. Rev.}, 39\penalty0 (1):\penalty0
+  1--12, June 2011.
+\newblock ISSN 0163-5999.
+
+\bibitem[Li and Martinez(2006)]{Li2006}
+J.~Li and J.F. Martinez.
+\newblock Dynamic power-performance adaptation of parallel computation on chip
+  multiprocessors.
+\newblock In \emph{HPCA}, 2006.
+
+\bibitem[Petrica et~al.(2013)Petrica, Izraelevitz, Albonesi, and
+  Shoemaker]{Flicker}
+Paula Petrica, Adam~M. Izraelevitz, David~H. Albonesi, and Christine~A.
+  Shoemaker.
+\newblock Flicker: A dynamically adaptive architecture for power limited
+  multicore systems.
+\newblock In \emph{ISCA}, 2013.
+
+\bibitem[Sridharan et~al.(2013)Sridharan, Gupta, and Sohi]{ParallelismDial}
+Srinath Sridharan, Gagan Gupta, and Gurindar~S. Sohi.
+\newblock Holistic run-time parallelism management for time and energy
+  efficiency.
+\newblock In \emph{ICS}, 2013.
+
+\bibitem[Ponomarev et~al.(2001)Ponomarev, Kucuk, and Ghose]{Ponamarev}
+Dmitry Ponomarev, Gurhan Kucuk, and Kanad Ghose.
+\newblock Reducing power requirements of instruction scheduling through dynamic
+  allocation of multiple datapath resources.
+\newblock In \emph{MICRO}, 2001.
+
+\bibitem[Ansel et~al.(2012)Ansel, Pacula, Wong, Chan, Olszewski, O'Reilly, and
+  Amarasinghe]{petabricksDynamic}
+Jason Ansel, Maciej Pacula, Yee~Lok Wong, Cy~Chan, Marek Olszewski, Una-May
+  O'Reilly, and Saman Amarasinghe.
+\newblock Siblingrivalry: online autotuning through local competitions.
+\newblock In \emph{CASES}, 2012.
+
+\bibitem[Lee and Brooks(2008)]{LeeBrooks}
+Benjamin~C. Lee and David Brooks.
+\newblock Efficiency trends and limits from comprehensive microarchitectural
+  adaptivity.
+\newblock In \emph{ASPLOS}, 2008.
+
+\bibitem[Maggio et~al.(2012)Maggio, Hoffmann, Papadopoulos, Panerati,
+  Santambrogio, Agarwal, and Leva]{TAAS}
+Martina Maggio, Henry Hoffmann, Alessandro~V. Papadopoulos, Jacopo Panerati,
+  Marco~D. Santambrogio, Anant Agarwal, and Alberto Leva.
+\newblock Comparison of decision-making strategies for self-optimization in
+  autonomic computing systems.
+\newblock \emph{ACM Trans. Auton. Adapt. Syst.}, 7\penalty0 (4):\penalty0
+  36:1--36:32, December 2012.
+\newblock ISSN 1556-4665.
+\newblock \doi{10.1145/2382570.2382572}.
+\newblock URL \url{http://doi.acm.org/10.1145/2382570.2382572}.
+
+\bibitem[Zhu and Reddi(2013)]{reddiHPCA2013}
+Yuhao Zhu and Vijay~Janapa Reddi.
+\newblock High-performance and energy-efficient mobile web browsing on
+  big/little systems.
+\newblock In \emph{HPCA}, 2013.
+
+\bibitem[Dubach et~al.(2010)Dubach, Jones, Bonilla, and O'Boyle]{dubach2010}
+Christophe Dubach, Timothy~M. Jones, Edwin~V. Bonilla, and Michael F.~P.
+  O'Boyle.
+\newblock A predictive model for dynamic microarchitectural adaptivity control.
+\newblock In \emph{MICRO}, 2010.
+
+\bibitem[Bitirgen et~al.(2008)Bitirgen, Ipek, and Martinez]{Bitirgen2008}
+Ramazan Bitirgen, Engin Ipek, and Jose~F. Martinez.
+\newblock {Coordinated management of multiple interacting resources in chip
+  multiprocessors: A machine learning approach}.
+\newblock In \emph{MICRO}, 2008.
+
+\bibitem[Mishra et~al.(2015)Mishra, Zhang, Lafferty, and Hoffmann]{LEO}
+Nikita Mishra, Huazhe Zhang, John~D. Lafferty, and Henry Hoffmann.
+\newblock A probabilistic graphical model-based approach for minimizing energy
+  under performance constraints.
+\newblock In \emph{ASPLOS}, 2015.
+
+\bibitem[Delimitrou and Kozyrakis(2013)]{Paragon}
+Christina Delimitrou and Christos Kozyrakis.
+\newblock Paragon: Qos-aware scheduling for heterogeneous datacenters.
+\newblock In \emph{ASPLOS}, 2013.
+
+\bibitem[Hellerstein et~al.(2004)Hellerstein, Diao, Parekh, and
+  Tilbury]{Hellerstein2004a}
+Joseph~L. Hellerstein, Yixin Diao, Sujay Parekh, and Dawn~M. Tilbury.
+\newblock \emph{Feedback Control of Computing Systems}.
+\newblock John Wiley \& Sons, 2004.
+\newblock ISBN 047126637X.
+
+\bibitem[Chen and John(2011)]{Chen2011}
+Jian Chen and Lizy~Kurian John.
+\newblock Predictive coordination of multiple on-chip resources for chip
+  multiprocessors.
+\newblock In \emph{ICS}, 2011.
+
+\bibitem[Imes et~al.(2015{\natexlab{a}})Imes, Kim, Maggio, and Hoffmann]{POET}
+Connor Imes, David H.~K. Kim, Martina Maggio, and Henry Hoffmann.
+\newblock Poet: A portable approach to minimizing energy under soft real-time
+  constraints.
+\newblock In \emph{RTAS}, 2015{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2002)Zhang, Lu, Abdelzaher, and Stankovic]{ControlWare}
+R.~Zhang, C.~Lu, T.F. Abdelzaher, and J.A. Stankovic.
+\newblock Controlware: A middleware architecture for feedback control of
+  software performance.
+\newblock In \emph{ICDCS}, 2002.
+
+\bibitem[Li and Nahrstedt(1999)]{Agilos}
+Baochun Li and K.~Nahrstedt.
+\newblock A control-based middleware framework for quality-of-service
+  adaptations.
+\newblock \emph{IEEE Journal on Selected Areas in Communications}, 17\penalty0
+  (9), 1999.
+
+\bibitem[Vardhan et~al.(2009)Vardhan, Yuan, III, Adve, Kravets, Nahrstedt,
+  Sachs, and Jones]{grace2}
+Vibhore Vardhan, Wanghong Yuan, Albert F.~Harris III, Sarita~V. Adve, Robin
+  Kravets, Klara Nahrstedt, Daniel~Grobe Sachs, and Douglas~L. Jones.
+\newblock Grace-2: integrating fine-grained application adaptation with global
+  adaptation for saving energy.
+\newblock \emph{IJES}, 4\penalty0 (2), 2009.
+
+\bibitem[Hoffmann(2015)]{JouleGuard}
+Henry Hoffmann.
+\newblock Jouleguard: energy guarantees for approximate applications.
+\newblock In \emph{SOSP}, 2015.
+
+\bibitem[Hoerl and Kennard(1988)]{hoerl1988ridge}
+A~Hoerl and R~Kennard.
+\newblock Ridge regression, in encyclopedia of statistical sciences, vol. 8,
+  1988.
+
+\bibitem[Tibshirani(1996)]{tibshirani1996regression}
+Robert Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock \emph{Journal of the Royal Statistical Society. Series B
+  (Methodological)}, pages 267--288, 1996.
+
+\bibitem[Zou and Hastie(2005)]{zou2005regularization}
+Hui Zou and Trevor Hastie.
+\newblock Regularization and variable selection via the elastic net.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 67\penalty0 (2):\penalty0 301--320, 2005.
+
+\bibitem[Ljung(1999)]{sysid}
+Lennart Ljung.
+\newblock \emph{System Identification: Theory for the User}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 1999.
+\newblock ISBN 0-13-656695-2.
+
+\bibitem[Filieri et~al.(2015)Filieri, Hoffmann, and Maggio]{FSE2015}
+Antonio Filieri, Henry Hoffmann, and Martina Maggio.
+\newblock Automated multi-objective control for self-adaptive software design.
+\newblock In \emph{FSE}, 2015.
+
+\bibitem[Pan and Yang(2010)]{pan2010survey}
+Sinno~Jialin Pan and Qiang Yang.
+\newblock A survey on transfer learning.
+\newblock \emph{IEEE Trans. on Knowl. and Data Eng.}, 22\penalty0
+  (10):\penalty0 1345--1359, October 2010.
+\newblock ISSN 1041-4347.
+\newblock \doi{10.1109/TKDE.2009.191}.
+\newblock URL \url{http://dx.doi.org/10.1109/TKDE.2009.191}.
+
+\bibitem[Bell et~al.(2008)Bell, Koren, and Volinsky]{netflix}
+R.~M. Bell, Y.~Koren, and C.~Volinsky.
+\newblock The bellkor 2008 solution to the netflix prize.
+\newblock Technical report, {ATandT} Labs, 2008.
+
+\bibitem[Levine(2005)]{HandbookControl}
+W.S. Levine.
+\newblock \emph{The control handbook}.
+\newblock CRC Press, 2005.
+
+\bibitem[Dey et~al.(2013)Dey, Wang, Davidson, and Soffa]{resense}
+Tanima Dey, Wei Wang, Jack~W. Davidson, and Mary~Lou Soffa.
+\newblock Resense: Mapping dynamic workloads of colocated multithreaded
+  applications using resource sensitivity.
+\newblock \emph{ACM Trans. Archit. Code Optim.}, 10\penalty0 (4), December
+  2013.
+
+\bibitem[Tembey et~al.(2014)Tembey, Gavrilovska, and Schwan]{Merlin}
+Priyanka Tembey, Ada Gavrilovska, and Karsten Schwan.
+\newblock Merlin: Application- and platform-aware resource allocation in
+  consolidated server systems.
+\newblock In \emph{SOCC}, 2014.
+
+\bibitem[Ansel et~al.(2011)Ansel, Wong, Chan, Olszewski, Edelman, and
+  Amarasinghe]{petabricksStatic}
+Jason Ansel, Yee~Lok Wong, Cy~Chan, Marek Olszewski, Alan Edelman, and Saman
+  Amarasinghe.
+\newblock Language and compiler support for auto-tuning variable-accuracy
+  algorithms.
+\newblock In \emph{CGO}, 2011.
+
+\bibitem[Wu et~al.(2004)Wu, Juang, Martonosi, and Clark]{Wu2004}
+Qiang Wu, Philo Juang, Margaret Martonosi, and Douglas~W. Clark.
+\newblock Formal online methods for voltage/frequency control in multiple clock
+  domain microprocessors.
+\newblock In \emph{ASPLOS}, 2004.
+
+\bibitem[Maggio et~al.()Maggio, Hoffmann, an~d Anant~Agarwal, and Leva]{TCST}
+Martina Maggio, Henry Hoffmann, Marco D.~Santambrogio an~d Anant~Agarwal, and
+  Alberto Leva.
+\newblock Power optimization in embedded systems via feedback control of
+  resource allocation.
+\newblock \emph{IEEE Transactions on Control Systems Technology (to appear)}.
+
+\bibitem[Hoffmann et~al.(2013)Hoffmann, Maggio, Santambrogio, Leva, and
+  Agarwal]{PTRADE}
+Henry Hoffmann, Martina Maggio, Marco~D. Santambrogio, Alberto Leva, and Anant
+  Agarwal.
+\newblock A generalized software framework for accurate and efficient managment
+  of performance goals.
+\newblock In \emph{EMSOFT}, 2013.
+
+\bibitem[Imes et~al.(2015{\natexlab{b}})Imes, Kim, Maggio, and
+  Hoffmann]{Heartbeats2}
+Connor Imes, David H.~K. Kim, Martina Maggio, and Henry Hoffmann.
+\newblock Poet: A portable approach to minimizing energy under soft real-time
+  constraints.
+\newblock In \emph{RTAS}, 2015{\natexlab{b}}.
+
+\bibitem[Rajkumar et~al.(1997)Rajkumar, Lee, Lehoczky, and Siewiorek]{Rajkumar}
+R.~Rajkumar, C.~Lee, J.~Lehoczky, and Dan Siewiorek.
+\newblock A resource allocation model for qos management.
+\newblock In \emph{RTSS}, 1997.
+
+\bibitem[Sojka et~al.(2011)Sojka, P\'{\i}sa, Faggioli, Cucinotta, Checconi,
+  Hanz{\'a}lek, and Lipari]{Sojka}
+Michal Sojka, Pavel P\'{\i}sa, Dario Faggioli, Tommaso Cucinotta, Fabio
+  Checconi, Zdenek Hanz{\'a}lek, and Giuseppe Lipari.
+\newblock Modular software architecture for flexible reservation mechanisms on
+  heterogeneous resources.
+\newblock \emph{Journal of Systems Architecture}, 57\penalty0 (4), 2011.
+
+\bibitem[Raghavendra et~al.(2008)Raghavendra, Ranganathan, Talwar, Wang, and
+  Zhu]{Raghavendra2008}
+R.~Raghavendra, P.~Ranganathan, V~Talwar, Z.~Wang, and X.~Zhu.
+\newblock No "power" struggles: coordinated multi-level power management for
+  the data center.
+\newblock In \emph{ASPLOS}, 2008.
+
+\bibitem[Flinn and Satyanarayanan(1999)]{flinn99}
+J.~Flinn and M.~Satyanarayanan.
+\newblock {Energy-aware adaptation for mobile applications}.
+\newblock In \emph{SOSP}, 1999.
+
+\bibitem[Flinn and Satyanarayanan(2004)]{flinn2004}
+Jason Flinn and M.~Satyanarayanan.
+\newblock Managing battery lifetime with energy-aware adaptation.
+\newblock \emph{ACM Trans. Comp. Syst.}, 22\penalty0 (2), May 2004.
+
+\bibitem[Kim et~al.(2013)Kim, Stehr, Talcott, Dutt, and
+  Venkatasubramanian]{xtune}
+Minyoung Kim, Mark-Oliver Stehr, Carolyn Talcott, Nikil Dutt, and Nalini
+  Venkatasubramanian.
+\newblock xtune: A formal methodology for cross-layer tuning of mobile embedded
+  systems.
+\newblock \emph{ACM Trans. Embed. Comput. Syst.}, 11\penalty0 (4), January
+  2013.
+
+\bibitem[Horvath et~al.(2007)Horvath, Abdelzaher, Skadron, and Liu]{Horvarth}
+T.~Horvath, T.~Abdelzaher, K.~Skadron, and Xue Liu.
+\newblock Dynamic voltage scaling in multitier web servers with end-to-end
+  delay control.
+\newblock \emph{Computers, IEEE Transactions on}, 56\penalty0 (4), 2007.
+
+\bibitem[Lu et~al.(2006)Lu, Lu, Abdelzaher, Stankovic, and Son]{LuEtAl-2006a}
+C.~Lu, Y.~Lu, T.F. Abdelzaher, J.A. Stankovic, and S.H. Son.
+\newblock Feedback control architecture and design methodology for service
+  delay guarantees in web servers.
+\newblock \emph{IEEE TPDS}, 17\penalty0 (9):\penalty0 1014--1027, September
+  2006.
+
+\bibitem[Sun et~al.(2008)Sun, Dai, and Pan]{SunDaiPan-2008a}
+Q.~Sun, G.~Dai, and W.~Pan.
+\newblock {LPV} model and its application in web server performance control.
+\newblock In \emph{ICCSSE}, 2008.
+
+\bibitem[Zhang et~al.(2012)Zhang, Zhong, Dwarkadas, and Shen]{Zhang2012}
+Xiao Zhang, Rongrong Zhong, Sandhya Dwarkadas, and Kai Shen.
+\newblock A flexible framework for throttling-enabled multicore management
+  (temm).
+\newblock In \emph{ICPP}, 2012.
+
+\bibitem[Cochran et~al.(2011)Cochran, Hankendi, Coskun, and Reda]{packandcap}
+Ryan Cochran, Can Hankendi, Ayse~K. Coskun, and Sherief Reda.
+\newblock Pack \& cap: adaptive dvfs and thread packing under power caps.
+\newblock In \emph{MICRO}, 2011.
+
+\bibitem[Winter et~al.(2010)Winter, Albonesi, and Shoemaker]{Winter2010}
+Jonathan~A. Winter, David~H. Albonesi, and Christine~A. Shoemaker.
+\newblock Scalable thread scheduling and global power management for
+  heterogeneous many-core architectures.
+\newblock In \emph{PACT}, 2010.
+
+\bibitem[Roy et~al.(2011)Roy, Rumble, Stutsman, Levis, Mazi\`{e}res, and
+  Zeldovich]{Cinder}
+Arjun Roy, Stephen~M. Rumble, Ryan Stutsman, Philip Levis, David Mazi\`{e}res,
+  and Nickolai Zeldovich.
+\newblock Energy management in mobile devices with the cinder operating system.
+\newblock In \emph{EuroSys}, 2011.
+
+\bibitem[Wu and Lee(2012)]{wu2012inferred}
+Weidan Wu and Benjamin~C Lee.
+\newblock Inferred models for dynamic and sparse hardware-software spaces.
+\newblock In \emph{Microarchitecture (MICRO), 2012 45th Annual IEEE/ACM
+  International Symposium on}, pages 413--424. IEEE, 2012.
+
+\bibitem[Filieri et~al.(2014)Filieri, Hoffmann, and Maggio]{ICSE2014}
+Antonio Filieri, Henry Hoffmann, and Martina Maggio.
+\newblock Automated design of self-adaptive software with control-theoretical
+  formal guarantees.
+\newblock In \emph{ICSE}, 2014.
+
+\bibitem[Oliner et~al.(2013)Oliner, Iyer, Stoica, Lagerspetz, and
+  Tarkoma]{carat}
+Adam~J. Oliner, Anand~P. Iyer, Ion Stoica, Eemil Lagerspetz, and Sasu Tarkoma.
+\newblock Carat: Collaborative energy diagnosis for mobile devices.
+\newblock In \emph{Proceedings of the 11th ACM Conference on Embedded Networked
+  Sensor Systems}, SenSys '13, pages 10:1--10:14, New York, NY, USA, 2013. ACM.
+\newblock ISBN 978-1-4503-2027-6.
+\newblock \doi{10.1145/2517351.2517354}.
+\newblock URL \url{http://doi.acm.org/10.1145/2517351.2517354}.
+
+\bibitem[Goel et~al.(1998)Goel, Steere, Pu, and Walpole]{SWiFT}
+Ashvin Goel, David Steere, Calton Pu, and Jonathan Walpole.
+\newblock Swift: A feedback control and dynamic reconfiguration toolkit.
+\newblock In \emph{2nd USENIX Windows NT Symposium}, 1998.
+
+\bibitem[Pothukuchi et~al.(2016)Pothukuchi, Ansari, Voulgaris, and
+  Torrellas]{josep-isca2016}
+Raghavendra Pothukuchi, Amin Ansari, Petros Voulgaris, and Josep Torrellas.
+\newblock Using multiple input, multiple output formal control to maximize
+  resource efficiency in architectures.
+\newblock In \emph{ISCA}, 2016.
+
+\bibitem[Chiang et~al.(2002)Chiang, Arpaci-Dusseau, and
+  Vernon]{chiang2002impact}
+Su-Hui Chiang, Andrea Arpaci-Dusseau, and Mary~K Vernon.
+\newblock The impact of more accurate requested runtimes on production job
+  scheduling performance.
+\newblock In \emph{Job Scheduling Strategies for Parallel Processing}, pages
+  103--127. Springer, 2002.
+
+\bibitem[Kanev et~al.(2015)Kanev, Darago, Hazelwood, Ranganathan, Moseley, Wei,
+  and Brooks]{kanev2015profiling}
+Svilen Kanev, Juan~Pablo Darago, Kim Hazelwood, Parthasarathy Ranganathan, Tipp
+  Moseley, Gu-Yeon Wei, and David Brooks.
+\newblock Profiling a warehouse-scale computer.
+\newblock In \emph{Computer Architecture (ISCA), 2015 ACM/IEEE 42nd Annual
+  International Symposium on}, pages 158--169. IEEE, 2015.
+
+\bibitem[Kwon et~al.(2013)Kwon, Lee, Yi, Kwon, Yang, Chun, Huang, Maniatis,
+  Naik, and Paek]{kwon2013mantis}
+Yongin Kwon, Sangmin Lee, Hayoon Yi, Donghyun Kwon, Seungjun Yang, Byung-Gon
+  Chun, Ling Huang, Petros Maniatis, Mayur Naik, and Yunheung Paek.
+\newblock Mantis: Automatic performance prediction for smartphone applications.
+\newblock In \emph{Proceedings of the 2013 USENIX conference on Annual
+  Technical Conference}, pages 297--308. USENIX Association, 2013.
+
+\bibitem[Xu et~al.(2010)Xu, Chen, Dick, and Mao]{xu2010cache}
+Chi Xu, Xi~Chen, Robert Dick, and Zhuoqing~Morley Mao.
+\newblock Cache contention and application performance prediction for
+  multi-core systems.
+\newblock In \emph{Performance Analysis of Systems \& Software (ISPASS), 2010
+  IEEE International Symposium on}, pages 76--86. IEEE, 2010.
+
+\bibitem[Chen et~al.(2010)Chen, Xu, Dick, and Mao]{chen2010performance}
+Xi~Chen, Chi Xu, Robert~P Dick, and Zhuoqing~Morley Mao.
+\newblock Performance and power modeling in a multi-programmed multi-core
+  environment.
+\newblock In \emph{Proceedings of the 47th Design Automation Conference}, pages
+  813--818. ACM, 2010.
+
+\bibitem[Subramanian et~al.(2015)Subramanian, Seshadri, Ghosh, Khan, and
+  Mutlu]{subramanian2015slowdown}
+Lavanya Subramanian, Vivek Seshadri, Arnab Ghosh, Samira Khan, and Onur Mutlu.
+\newblock The application slowdown model: Quantifying and controlling the
+  impact of inter-application interference at shared caches and main memory.
+\newblock In \emph{MICRO}, 2015.
+
+\bibitem[Lim et~al.(2012)Lim, Huh, Kim, Shipman, and Das]{Lim2012dfactor}
+Seung-Hwan Lim, Jae-Seok Huh, Youngjae Kim, Galen~M. Shipman, and Chita~R. Das.
+\newblock D-factor: A quantitative model of application slow-down in
+  multi-resource shared systems.
+\newblock \emph{SIGMETRICS Perform. Eval. Rev.}, 40\penalty0 (1), June 2012.
+
+\bibitem[Vasi\'{c} et~al.(2012)Vasi\'{c}, Novakovi\'{c}, Miu\v{c}in,
+  Kosti\'{c}, and Bianchini]{dejavu}
+Nedeljko Vasi\'{c}, Dejan Novakovi\'{c}, Svetozar Miu\v{c}in, Dejan Kosti\'{c},
+  and Ricardo Bianchini.
+\newblock Dejavu: Accelerating resource allocation in virtualized environments.
+\newblock \emph{SIGARCH Comput. Archit. News}, 40\penalty0 (1), March 2012.
+
+\bibitem[Delimitrou and Kozyrakis(2014)]{quasar}
+Christina Delimitrou and Christos Kozyrakis.
+\newblock Quasar: Resource-efficient and qos-aware cluster management.
+\newblock In \emph{ASPLOS}, 2014.
+
+\bibitem[Rameshan et~al.(2014)Rameshan, Navarro, Monte, and Vlassov]{stay-away}
+Navaneeth Rameshan, Leandro Navarro, Enric Monte, and Vladimir Vlassov.
+\newblock Stay-away, protecting sensitive applications from performance
+  interference.
+\newblock In \emph{Middleware}, 2014.
+
+\bibitem[Mars et~al.(2011)Mars, Tang, Hundt, Skadron, and Soffa]{Bubble-up}
+Jason Mars, Lingjia Tang, Robert Hundt, Kevin Skadron, and Mary~Lou Soffa.
+\newblock Bubble-up: Increasing utilization in modern warehouse scale computers
+  via sensible co-locations.
+\newblock In \emph{MICRO}, 2011.
+
+\bibitem[Fan and Lv(2008)]{fan2008sure}
+Jianqing Fan and Jinchi Lv.
+\newblock Sure independence screening for ultrahigh dimensional feature space.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 70\penalty0 (5):\penalty0 849--911, 2008.
+
+\bibitem[Yuan and Lin(2006)]{yuan2006model}
+Ming Yuan and Yi~Lin.
+\newblock Model selection and estimation in regression with grouped variables.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 68\penalty0 (1):\penalty0 49--67, 2006.
+
+\bibitem[Bien et~al.(2013)Bien, Taylor, and Tibshirani]{bien2013lasso}
+Jacob Bien, Jonathan Taylor, and Robert Tibshirani.
+\newblock A lasso for hierarchical interactions.
+\newblock \emph{Annals of statistics}, 41\penalty0 (3):\penalty0 1111, 2013.
+
+\bibitem[Narayanan et~al.(2006)Narayanan, Ozisikyilmaz, Zambreno, Memik, and
+  Choudhary]{minebench}
+R.~Narayanan, B.~Ozisikyilmaz, J.~Zambreno, G.~Memik, and A.~Choudhary.
+\newblock Minebench: A benchmark suite for data mining workloads.
+\newblock In \emph{IISWC}, 2006.
+
+\bibitem[Hoffmann(2013)]{HotPower}
+Henry Hoffmann.
+\newblock Racing vs. pacing to idle: A comparison of heuristics for
+  energy-aware resource allocation.
+\newblock In \emph{HotPower}, 2013.
+
+\bibitem[Bradley et~al.(1977)Bradley, Hax, and Magnanti]{LinearProgramming}
+S.P. Bradley, A.C. Hax, and T.L. Magnanti.
+\newblock \emph{Applied mathematical programming}.
+\newblock Addison-Wesley Pub. Co., 1977.
+
+\bibitem[Efron and Morris(1975)]{efron1975data}
+Bradley Efron and Carl Morris.
+\newblock Data analysis using stein's estimator and its generalizations.
+\newblock \emph{Journal of the American Statistical Association}, 70\penalty0
+  (350):\penalty0 311--319, 1975.
+
+\bibitem[Morris(1983)]{morris1983parametric}
+Carl~N Morris.
+\newblock Parametric empirical bayes inference: theory and applications.
+\newblock \emph{Journal of the American Statistical Association}, 78\penalty0
+  (381):\penalty0 47--55, 1983.
+
+\bibitem[Gelman et~al.(2013)Gelman, Carlin, Stern, Dunson, Vehtari, and
+  Rubin]{gelman2013bayesian}
+Andrew Gelman, John~B Carlin, Hal~S Stern, David~B Dunson, Aki Vehtari, and
+  Donald~B Rubin.
+\newblock \emph{Bayesian data analysis}.
+\newblock CRC press, 2013.
+
+\bibitem[Yu et~al.(2005)Yu, Tresp, and Schwaighofer]{yu2005learning}
+Kai Yu, Volker Tresp, and Anton Schwaighofer.
+\newblock Learning gaussian processes from multiple tasks.
+\newblock In \emph{Proceedings of the 22nd international conference on Machine
+  learning}, pages 1012--1019. ACM, 2005.
+
+\bibitem[Deng et~al.(2012)Deng, Meisner, Bhattacharjee, Wenisch, and
+  Bianchini]{deng2012coscale}
+Qingyuan Deng, David Meisner, Abhishek Bhattacharjee, Thomas~F Wenisch, and
+  Ricardo Bianchini.
+\newblock Coscale: Coordinating cpu and memory system dvfs in server systems.
+\newblock In \emph{Microarchitecture (MICRO), 2012 45th Annual IEEE/ACM
+  International Symposium on}, pages 143--154. IEEE, 2012.
+
+\bibitem[Wu(1983)]{wu1983convergence}
+CF~Jeff Wu.
+\newblock On the convergence properties of the em algorithm.
+\newblock \emph{The Annals of statistics}, pages 95--103, 1983.
+
+\bibitem[Bienia et~al.(2008)Bienia, Kumar, Singh, and Li]{parsec}
+C.~Bienia, S.~Kumar, J.~P. Singh, and K.~Li.
+\newblock The {PARSEC} benchmark suite: Characterization and architectural
+  implications.
+\newblock In \emph{PACT}, 2008.
+
+\bibitem[Che et~al.(2009)Che, Boyer, Meng, Tarjan, Sheaffer, Lee, and
+  Skadron]{rodinia}
+Shuai Che, Michael Boyer, Jiayuan Meng, David Tarjan, Jeremy~W. Sheaffer,
+  Sang-Ha Lee, and Kevin Skadron.
+\newblock Rodinia: A benchmark suite for heterogeneous computing.
+\newblock In \emph{IISWC}, 2009.
+
+\bibitem[Hoffmann et~al.(2011{\natexlab{a}})Hoffmann, Sidiroglou, Carbin,
+  Misailovic, Agarwal, and Rinard]{DynamicKnobs}
+Henry Hoffmann, Stelios Sidiroglou, Michael Carbin, Sasa Misailovic, Anant
+  Agarwal, and Martin Rinard.
+\newblock Dynamic knobs for responsive power-aware computing.
+\newblock In \emph{ASPLOS}, 2011{\natexlab{a}}.
+
+\bibitem[Carroll and Heiser(2013)]{Carroll2013}
+Aaron Carroll and Gernot Heiser.
+\newblock Mobile multicores: Use them or waste them.
+\newblock In \emph{Proceedings of the Workshop on Power-Aware Computing and
+  Systems}, HotPower '13, pages 12:1--12:5, New York, NY, USA, 2013. ACM.
+\newblock ISBN 978-1-4503-2458-8.
+\newblock \doi{10.1145/2525526.2525850}.
+\newblock URL \url{http://doi.acm.org/10.1145/2525526.2525850}.
+
+\bibitem[Le~Sueur and Heiser(2011)]{LeSueur11}
+Etienne Le~Sueur and Gernot Heiser.
+\newblock Slow down or sleep, that is the question.
+\newblock In \emph{Proceedings of the 2011 USENIX Annual Technical Conference},
+  Portland, OR, USA, June 2011.
+
+\bibitem[Zhang and Hoffmann(2016)]{PUPiL}
+Huazhe Zhang and Henry Hoffmann.
+\newblock Maximizing performance under a power cap: A comparison of hardware,
+  software, and hybrid techniques.
+\newblock In \emph{ASPLOS}, 2016.
+
+\bibitem[Sharifi et~al.(2011)Sharifi, Srikantaiah, Mishra, Kandemir, and
+  Das]{METE}
+Akbar Sharifi, Shekhar Srikantaiah, Asit~K. Mishra, Mahmut Kandemir, and
+  Chita~R. Das.
+\newblock Mete: meeting end-to-end qos in multicores through system-wide
+  resource management.
+\newblock In \emph{SIGMETRICS}, 2011.
+
+\bibitem[Welch and Bishop()]{welch2006kalman}
+Greg Welch and Gary Bishop.
+\newblock An introduction to the kalman filter.
+\newblock Technical Report TR 95-041, UNC Chapel Hill, Department of Computer
+  Science.
+
+\bibitem[Kim et~al.(2015)Kim, Imes, and Hoffmann]{kim-cpsna}
+David H.~K. Kim, Connor Imes, and Henry Hoffmann.
+\newblock Racing and pacing to idle: Theoretical and empirical analysis of
+  energy optimization heuristics.
+\newblock In \emph{CPSNA}, 2015.
+
+\bibitem[Tokic(2010)]{Tokic2010}
+Michel Tokic.
+\newblock Adaptive $\epsilon$-greedy exploration in reinforcement learning
+  based on value differences.
+\newblock In \emph{KI}. 2010.
+
+\bibitem[McCalpin(1995)]{stream}
+John~D. McCalpin.
+\newblock Memory bandwidth and machine balance in current high performance
+  computers.
+\newblock \emph{IEEE TCCA Newsletter}, pages 19--25, December 1995.
+
+\bibitem[Miyoshi et~al.(2002)Miyoshi, Lefurgy, Van~Hensbergen, Rajamony, and
+  Rajkumar]{powerslope}
+Akihiko Miyoshi, Charles Lefurgy, Eric Van~Hensbergen, Ram Rajamony, and Raj
+  Rajkumar.
+\newblock Critical power slope: Understanding the runtime effects of frequency
+  scaling.
+\newblock In \emph{ICS}, 2002.
+
+\bibitem[Hoffmann et~al.(2010)Hoffmann, Eastep, Santambrogio, Miller, and
+  Agarwal]{icac2010heartbeats}
+Henry Hoffmann, Jonathan Eastep, Marco~D. Santambrogio, Jason~E. Miller, and
+  Anant Agarwal.
+\newblock Application heartbeats: a generic interface for specifying program
+  performance and goals in autonomous computing environments.
+\newblock In \emph{ICAC}, 2010.
+
+\bibitem[Willhalm(2012)]{willhalm2012intel}
+Thomas Willhalm.
+\newblock Intel performance counter monitor-a better way to measure cpu
+  utilization.
+\newblock \emph{last modified August}, 16, 2012.
+
+\bibitem[Hoffmann et~al.(2011{\natexlab{b}})Hoffmann, Maggio, Santambrogio,
+  Leva, and Agarwal]{hoffmann2011seec}
+Henry Hoffmann, Martina Maggio, Marco~D Santambrogio, Alberto Leva, and Anant
+  Agarwal.
+\newblock Seec: a general and extensible framework for self-aware computing.
+\newblock 2011{\natexlab{b}}.
+
+\bibitem[Hoffmann et~al.(2012)Hoffmann, Holt, Kurian, Lau, Maggio, Miller,
+  Neuman, Sinangil, Sinangil, Agarwal, Chandrakasan, and Devadas]{Hoffmann2012}
+Henry Hoffmann, Jim Holt, George Kurian, Eric Lau, Martina Maggio, Jason~E.
+  Miller, Sabrina~M. Neuman, Mahmut Sinangil, Yildiz Sinangil, Anant Agarwal,
+  Anantha~P. Chandrakasan, and Srinivas Devadas.
+\newblock Self-aware computing in the angstrom processor.
+\newblock In \emph{DAC}, 2012.
+
+\bibitem[Gentzsch et~al.(2005)Gentzsch, Iwano, Johnston-Watt, Minhas, and
+  Yousif]{1508273}
+W.~Gentzsch, K.~Iwano, D.~Johnston-Watt, M.A. Minhas, and M.~Yousif.
+\newblock Self-adaptable autonomic computing systems: An industry view.
+\newblock In \emph{Proceedings of the 16th International Workshop on Database
+  and Expert Systems Applications}, pages 201--205, Aug 2005.
+\newblock \doi{10.1109/DEXA.2005.173}.
+
+\bibitem[Dini et~al.(2004)Dini, Gentzsch, Potts, Clemm, Yousif, and
+  Polze]{1333571}
+Petre Dini, Wolfgang Gentzsch, Mark Potts, Alexander Clemm, Mazin Yousif, and
+  Andreas Polze.
+\newblock Internet, {GRID}, self-adaptability and beyond: Are we ready?
+\newblock Aug 2004.
+
+\bibitem[Salehie and Tahvildari(2009)]{1516538}
+Mazeiar Salehie and Ladan Tahvildari.
+\newblock {Self-adaptive software: Landscape and research challenges}.
+\newblock \emph{ACM Trans. Auton. Adapt. Syst.}, 4\penalty0 (2):\penalty0
+  1--42, 2009.
+\newblock ISSN 1556-4665.
+\newblock \doi{http://doi.acm.org/10.1145/1516533.1516538}.
+
+\bibitem[Kephart(2005)]{Kephardt2005}
+J.O. Kephart.
+\newblock Research challenges of autonomic computing.
+\newblock In \emph{ICSE}, 2005.
+
+\bibitem[Laddaga(1999)]{laddaga1999}
+Robert Laddaga.
+\newblock Guest editor's introduction: Creating robust software through
+  self-adaptation.
+\newblock \emph{IEEE Intelligent Systems}, 14, 1999.
+
+\end{thebibliography}

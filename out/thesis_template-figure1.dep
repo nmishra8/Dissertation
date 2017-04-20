@@ -1,0 +1,2 @@
+out/thesis_template-figure1.pdf: img/dynamics-example-leo.txt
+out/thesis_template-figure1.pdf: img/dynamics-example-poet.txt

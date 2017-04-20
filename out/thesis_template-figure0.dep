@@ -1,0 +1,2 @@
+out/thesis_template-figure0.pdf: img/complexity-example-leo.txt
+out/thesis_template-figure0.pdf: img/complexity-example-poet.txt

@@ -1,0 +1,422 @@
+\section{Introduction}
+
+% Dennard Scaling making energy essential.  Architects address energy
+% by making more complicated processors which expose resources to
+% software management.  For a wide range of applications, need to meet
+% performance goals with minimal energy.
+Large classes of computing systems---from embedded to cloud---must
+deliver reliable performance to users while minimizing energy to
+increase battery life or decrease operating costs.  To address these
+conflicting requirements, hardware architects expose diverse,
+heterogeneous resources with a wide array of performance and energy
+tradeoffs.  Software must allocate these resources to
+guarantee performance requirements are met with minimal energy. Energy is increasingly important; reducing energy consumption reduces
+operating costs in datacenters and increases battery life in mobile
+devices.  Second, computer systems are often underutilized, meaning
+there are significant portions of time where application performance
+demands do not require the full system capacity
+\cite{google2007,MeisnerISCA2011}.
+
+% Problem: How to minimize energy while meeting load demands
+These trends raise the problem of allocating available resources
+to meet the current performance demand while minimizing energy
+consumption. This problem is a \emph{constrained optimization}
+problem. The current utilization level represents a performance
+constraint (\ie an amount of work that must be completed in a given
+time); system energy consumption represents the objective function to
+be minimized. There are three primary difficulties in determining how to allocate
+heterogeneous resources.
+
+The first is \emph{complexity}: resources
+interact in complicated ways, leading to non-convex optimization
+spaces. This problem is challenging because it requires a great deal of
+knowledge to solve.  More than knowledge of the single fastest, or
+most energy efficient system configuration solving this problem
+requires knowledge of the power and performance available in all
+configurations and the extraction of those configurations that
+represent Pareto-optimal tradeoffs.  Acquiring this knowledge is
+additionally complicated by the fact that these power/performance
+tradeoffs are often application -- or even input -- dependent.  Thus,
+there is a need for techniques that accurately estimate these
+application-dependent parameters during run-time.
+
+The second is \emph{dynamics}: perfor\-mance requirements
+must be met despite unpredictable disturbances; \eg{} phases in input
+or changes in operating environment.  Prior work addresses each of
+these difficulties individually. We want the benefits of both learning and control
+to ensure
+performance requirements are met with minimal energy in complex and
+dynamic environments.
+
+The third is \emph{application interference}: Applications co-scheduled on the
+same physical hardware \emph{interfere} with one another by contending for shared resources
+\cite{dwyer2012practical,kambadur2012measuring,Bubble-flux,merkel2010resource}. By accurately predicting this interference, a scheduler
+can determine optimal assignments of applications to physical
+machines, leading to higher throughput in batch systems and better
+quality-of-service for latency-sensitive applications. Data center and super computer operators often have a great deal of
+accumulated data about past jobs and their interference, yet turning
+this data into effective interference predictors is difficult
+\cite{kambadur2012measuring}.
+
+In this thesis we present new statistical methods for performance and power estimation which would allow us to develop better scheduling algorithms and also more energy efficient systems.
+
+
+
+\section{Background}
+Machine learning techniques represent a promising approach to
+addressing this estimation problem.  \emph{Offline learning}
+approaches collect profiling data for known applications and use that
+to predict optimal behavior for unseen applications (examples include
+\cite{Yi2003,Koala,LeeBrooks2006,CPR,ChenJohn2011}).  \emph{Online
+ learning} approaches use information collected while an application
+is running to quickly estimate the optimal configuration (examples
+include
+\cite{Li2006,Flicker,ParallelismDial,Ponamarev,petabricksDynamic,LeeBrooks,TAAS}).
+Offline methods require minimal runtime overhead, but suffer because
+they estimate only trends and cannot adapt to particulars of the
+current application.  Online methods customize to the current
+application, but cannot leverage experience from other applications.
+In a sense, offline approaches are dependent on a rich training set
+that represents all possible behavior, while the online approaches
+generate a statistically weak -- \ie inaccurate -- estimator due to
+small sample size.
+
+Many machine learning approaches model the complex performance/power
+tradeoff spaces inherent to heterogeneous computing
+\cite{reddiHPCA2013,dubach2010,Bitirgen2008,Ipek,Koala,LEO,Flicker,Ponamarev,Paragon}.
+Learning handles non-convexity, identifying local optima and moving to
+globally optimal solutions. These techniques are computationally
+expensive and lack support for dynamics; \ie{} when the environment
+changes the expensive model building process must be restarted.
+Control theoretic solutions provide formal guarantees that they will
+converge to the desired performance despite system dynamics
+\cite{Hellerstein2004a,Chen2011,POET,ControlWare,Agilos,grace2,JouleGuard}.
+Control provides formal guarantees of convergence to the desired
+performance, but these guarantees require \emph{ground truth} models
+and control will not converge if the models do not accurately capture
+system complexity---including local optima and non-linearities.
+
+  To apply machine learning to build an
+accurate predictor from this data, two fundamental decisions must be
+made: (1) what \emph{features} should be measured and (2) what
+\emph{model} maps these features into an accurate prediction.  Smaller
+feature spaces provide more computationally efficient models, but
+may miss key data and reduce prediction accuracy.  The art to modeling
+is managing the tradeoffs between feature set size and the model
+accuracy.  One family of machine learning
+techniques---\emph{regularization}--- addresses the particular problem
+where the number of features is much larger than the number of
+samples; \ie the problem is \emph{ill-posed} and unsolvable with
+standard regression analysis.  Regularization methods solve such
+ill-posed problems by simultaneously selecting both the features and
+the model
+\cite{hoerl1988ridge,tibshirani1996regression,zou2005regularization}.
+
+
+\section{Contribution}
+In this work, we present
+
+\begin{itemize}
+  \item \SYSTEMLEO{} (Learning for Energy
+  Optimization), a learning framework that combines the best of both
+  worlds, \ie the statistical properties both offline and online
+  estimation.
+ \item \SYSTEM{} creates a general control system implementation that factors
+ out the parameters that must be learned.
+ \item ESP (\textbf{E}stimating co-\textbf{S}cheduled \textbf{P}erformance) for
+ application interference estimation.
+\end{itemize}
+
+\subsection{\SYSTEMLEO{}}
+\SYSTEMLEO{} uses a graphical model to integrate a small number of
+observations of the current application with knowledge of the
+previously observed applications to produce accurate estimations of
+power and performance tradeoffs for the current application in all
+configurations.  \SYSTEMLEO{}'s strength is that it quickly matches the
+behavior of the current application to a subset of the previously
+observed applications.  For example, if \SYSTEMLEO{} has previously seen
+an application that only scales to 8 cores, it can use that
+information to quickly determine if the current application will be
+limited in its scaling.
+
+
+% Limitations and uses \TODO{Need to have a paragraph here on
+%   limitations - but keep it positive.}
+\SYSTEMLEO{} is a fairly general approach in that it supports many types
+of applications with different resource needs.  It is not, however,
+appropriate for all computer systems, especially ones, which run many
+small, unique jobs.  Instead, it focuses on supporting systems that 1)
+execute longer running jobs (in the 10s of seconds) or many repeated
+instances of short jobs, 2) run at a wide range of utilizations, and
+3) might have phases where optimal tradeoffs may change online.  For
+systems that meet these criteria, \SYSTEMLEO{} provides a powerful
+ability to reduce the energy consumption.  For systems that service
+short ( $< 1$ second), largely unique jobs, \SYSTEMLEO{} will work, but
+other approaches are probably better matched to those specific needs.
+%\TODO{its probably alright for full utilization systems too because it can tell which configuration provides maximum utilization. Also, race-to-idle is not mentioned in intro?}
+
+% Our results
+We have implemented \SYSTEMLEO{} on a Linux x86 server and tested its
+ability to minimize energy for 25 different applications from a
+variety of different benchmark suites.  We first compare \SYSTEMLEO{}'s
+performance and power prediction accuracy to (1) the true value, (2)
+an offline approach, and (3) an online approach (See
+\Secref{sec:poc}).  On average, \SYSTEMLEO{} is within 97\% of the true
+value while the offline and online approaches only achieve 79\% and
+86\% accuracy, respectively.  We then use \SYSTEMLEO{} to minimize energy
+for various performance requirements (or system utilizations) (See
+\Secref{sec:experiment:LP}).  Overall we find that our approach is
+within 6\% of the true optimal energy, while the offline approach
+exceeds optimal energy consumption by 29\% and online approach by
+24\%.  Finally, we show that \SYSTEMLEO{} provides near optimal energy
+savings when adapting to phases within an application.
+
+% Contributions of this work
+This work makes the following contributions:
+\begin{itemize}
+\item To the best of our knowledge, this is the first application of
+ probabilistic graphical models for solving crucial system
+ optimization problems such as energy minimization.
+\item It presents a graphical model capable of accurately
+ estimating the application-specific performance and power of
+ computer system configurations without prior knowledge of the
+ application. (See \Secref{sec:HBN}).
+\item It makes the source code for this learning system available in
+ both Matlab and C++\footnote{leo.cs.uchicago.edu}.
+\item It evaluates \SYSTEMLEO{} on a real system. (See
+ \Secref{sec:experiment}).
+\item It compares the accuracy of \SYSTEMLEO{}'s estimations to both the
+ truth and to offline and online learning approaches (See
+ \Secref{sec:experiment:PP}).
+\item It integrates \SYSTEMLEO{} into a runtime for energy optimization
+ and finds this learning framework achieves near-optimal energy
+ savings.  Furthermore, \SYSTEMLEO{} significantly reduces energy
+ compared to both offline and online approaches as well as the
+ popular race-to-idle heuristic.  (See
+ \Secref{sec:experiment:LP}).
+\end{itemize}
+
+\subsection{\SYSTEM{}}
+\SYSTEM{} creates a general control system implementation that factors
+out the parameters that must be learned.  While traditional control
+designs assume all combinations of resource configurations have been
+measured accurately (requiring 100s or 1000s of samples
+\cite{sysid,FSE2015}), \SYSTEM{} tunes its internal models and
+parameters while sampling only a small subset of possible
+configurations.  Among these, the controller's \emph{pole} is a key
+parameter.  \SYSTEM{} automatically tunes the pole, providing formal
+guarantees the controller converges to the desired performance---even
+when behavior is estimated by a noisy learner rather than directly
+measured.  \SYSTEM{} implements modular abstractions and self-tuning
+mechanisms such that the expensive learning can be offloaded to
+another system and the controller itself runs in
+constant---$O(1)$---time.  Thus, learning's high cost can be amortized
+as \SYSTEM{} uses \emph{transfer learning} to apply knowledge from
+multiple devices and applications \cite{pan2010survey}.
+
+\SYSTEM{}'s generality allows a wide range of learning techniques to
+be paired with its controller.  So, \SYSTEM{} not only provides an
+advantage over existing individual learning and control techniques, it
+allows us to explore different combinations of learning and control to
+find the best.
+
+% Implement CALOREE.  Test against state of the art learning and
+% self-tuning control systems.  We find that:
+We evaluate \SYSTEM{} by implementing the learner on an x86 server and
+the controller on heterogeneous ARM big.LITTLE devices.  We compare
+\SYSTEM{} to existing, state-of-the-art learning (including polynomial
+regression \cite{Koala,dubach2010}, the Netflix algorithm
+\cite{netflix,Paragon}, and a hierarchical Bayesian model \cite{LEO})
+and control (including proportional-integral-derivative
+\cite{Hellerstein2004a} and adaptive, or self-tuning
+\cite{HandbookControl}) techniques.  \PUNT{Additionally, we compare to
+  a naive combination of learning and control that does not account
+  for the inaccuracies of learned models.}  We set performance
+goals---as latency requirements---for a set of benchmark applications
+and then measure both the percentage of time the requirements are
+violated and the energy for each application.  We test both
+\emph{single-app}, where an application runs alone, and
+\emph{multi-app} environments, where other applications enter the
+system and compete for resources.  \SYSTEM{} achieves the:
+\begin{itemize}[leftmargin=1em]
+\item \textit{Most reliable performance:}
+  \begin{itemize}[leftmargin=1em]
+  \item In the \emph{single-app} case, the best prior technique misses
+    12\% of deadlines on average, while \SYSTEM{} misses only 5\% on
+    average---reducing deadline misses by more than 58\% compared to
+    prior approaches.
+  \item In the \emph{multi-app} case, the best prior approach averages
+    30\% deadline misses, but \SYSTEM{} misses just 5.6\% of
+    deadlines---a huge improvement over prior work.
+  \end{itemize}
+\item \textit{Best energy savings:} We compare to an \emph{oracle}
+  with a perfect model of the application, system, and future events.
+  \begin{itemize}[leftmargin=1em]
+  \item In the \emph{single-app} case, the best prior approach
+    averages 12\% more energy consumption than the oracle, but
+    \SYSTEM{} consumes only 5\% more.
+  \item In the \emph{multi-app} case, the best prior approach averages
+    18\% more energy than the oracle, while \SYSTEM{} consumes just
+    8\% more.
+  \end{itemize}
+\end{itemize}
+
+% Key contributions.
+% Contributions, but I decided against bulleted llist for thsi work
+In summary, control approaches are well suited to dynamic environments
+and learning techniques accurately model complex, heterogeneous
+processors.  \emph{To the best of our knowledge, \SYSTEM{} is the
+  first work to combine the two to ensure application performance
+  without prior knowledge of the controlled application.}  Our formal
+analysis of \SYSTEM{}'s convergence despite noisy inputs shows how to
+incorporate learned variance into control theoretic guarantees.  We
+demonstrate the practical benefits of these contributions by
+implementing \SYSTEM{} for mobile/embedded processors to show it
+provides more reliable performance and lower energy than individual,
+state-of-the-art learning and control solutions.
+
+\subsection{\SYSTEMESP{}}
+To apply machine learning to build an
+accurate predictor from this data, two fundamental decisions must be
+made: (1) what \emph{features} should be measured and (2) what
+\emph{model} maps these features into an accurate prediction.  Smaller
+feature spaces provide more computationally efficient models, but
+may miss key data and reduce prediction accuracy.  The art to modeling
+is managing the tradeoffs between feature set size and the model
+accuracy.  One family of machine learning
+techniques---\emph{regularization}--- addresses the particular problem
+where the number of features is much larger than the number of
+samples; \ie the problem is \emph{ill-posed} and unsolvable with
+standard regression analysis.  Regularization methods solve such
+ill-posed problems by simultaneously selecting both the features and
+the model
+\cite{hoerl1988ridge,tibshirani1996regression,zou2005regularization}.
+
+This work explores such state-of-the-art regularization models for
+predicting application interference.  We find that regularized linear
+regression methods require a relatively small number of features, but
+produce inaccurate models.  In contrast, non-linear models that
+include \emph{interaction terms}---\ie permit features to be
+multiplied together---are more accurate, but are extremely inefficient
+and not practical for online scheduling.
+%Practicality is
+%a central concern as several statistical methods for predicting
+%application interference have proven not to scale beyond two
+%applications \cite{Kambadur2010}; \ie they are impractical to
+%use when co-scheduling three or more applications.
+
+% Our approach -- split feature selection and model building into two
+We therefore combine linear and non-linear approaches to produce
+accurate and practical predictions.  We call our approach ESP for
+\textbf{E}stimating co-\textbf{S}cheduled \textbf{P}erformance.
+\SYSTEMESP{}'s key insight is to split regularization modeling into two
+parts: \emph{feature selection} and \emph{model building}.  \SYSTEMESP{}
+uses linear techniques to perform feature selection, but uses
+quadratic techniques for model building.  The result is a highly
+accurate predictor that is still practical and can be integrated into
+real application schedulers.
+
+\SYSTEMESP{} assumes there is a known (possibly very large) set of
+applications that may be run on the system and some offline
+measurements have been taken of these individual applications.
+Specifically, \SYSTEMESP{} measures low-level hardware features like
+cache misses and instructions retired during a training phase.  At
+runtime, applications from this set may be launched in any arbitrary
+combination.  The goal is to efficiently predict the interference (\ie
+slowdown) of co-scheduled applications.
+We evaluate \SYSTEMESP{} by integrating it into both single and
+multi-node schedulers running on Linux/x86 servers.  In the
+single-node case, we construct a batch scheduler that orders
+application execution to minimize the total completion time.  In the
+multi-node case, we build a first-come-first-serve scheduler that
+assigns applications to nodes as they arrive to minimize application
+slowdown.  We compare \SYSTEMESP{}-based schedulers to prior scheduling
+techniques that use contention-aware heuristics to avoid interference
+\cite{resense,merkel2010resource,Merlin}.  We also compare \SYSTEMESP{}'s
+accuracy to predictors built with a number of cutting-edge
+regularization methods. We find:
+\begin{itemize}
+\item The single-node \SYSTEMESP{} schedules are, on average, 27\% faster
+  than techniques based on heuristics.  Even with its runtime
+  overhead, the \SYSTEMESP{} results are only 5\% worse (on average) than
+  an oracle that has perfect knowledge of interference and no
+  overhead. See \secref{sched_single_proc}.
+\item The multi-node \SYSTEMESP{} schedules are 60\% faster than activity
+  vector based schedules and only 5\% to 13\% worse than an oracle.
+  See \secref{sched-multi-node}.
+\item Critically, \SYSTEMESP{} produces better results as more
+  applications are scheduled.  \SYSTEMESP{} produces quantifiable
+  performance predictions while heuristic techniques simply produce a
+  binary decision: co-schedule or not.  \SYSTEMESP{}'s quantifiable
+  predictions allow schedulers to make optimal decisions even when
+  interference cannot be avoided. In contrast, heuristic techniques do
+  not quantify interference and thus cannot rank decisions.  As the
+  number of applications increases, the chance of heuristics making a
+  very poor choice in the face of unavoidable contention also
+  increases.  See \secref{exp:multi-node-job}.
+\item \SYSTEMESP{} is more accurate than existing linear regression
+  techniques in most cases.  When considering two applications,
+  \SYSTEMESP{} is similar to existing regularized linear regression
+  techniques.  Considering more than two applications, however,
+  \SYSTEMESP{} is uniformly more accurate than standard linear regression
+  techniques.  See \secref{st_model}.  For reasons explained in
+  \secref{est-intro}, existing regularized regression methods with
+  interaction terms cannot be evaluated for accuracy because their
+  models are too complex to be implemented in practice.
+\end{itemize}
+
+% Contributions:
+This work makes the following contributions:
+%\begin{itemize}
+\begin{inparaenum}[1)]
+\item \SYSTEMESP{}, a regularization method for predicting application
+  interference,
+\item Demonstration of \SYSTEMESP{} in both single and multi-node
+  schedulers,
+\item Comparison to existing heuristic techniques on real systems,
+\item Comparison of \SYSTEMESP{}'s predictive accuracy to other
+  regularization methods,
+\item Open-source code release\footnote{The code is available at
+    https://github.com/ESPAlg/ESP}.
+%\end{itemize}
+\end{inparaenum}
+\SYSTEMESP{} helps scheduling at multiple levels: it determines which
+applications should run together on a single node, it determines which
+node a new application should be scheduled on, and it avoids
+disastrous decisions that heuristic schedulers cannot.  Support for
+data analytics has become an important research topic in computing
+systems, and this work explores how data analytics can be used to
+improve computing systems.
+
+
+We therefore combine linear and non-linear approaches to produce
+accurate and practical predictions.
+\SYSTEMESP{}'s key insight is to split regularization modeling into two
+parts: \emph{feature selection} and \emph{model building}.  \SYSTEMESP{}
+uses linear techniques to perform feature selection, but uses
+quadratic techniques for model building.  The result is a highly
+accurate predictor that is still practical and can be integrated into
+real application schedulers.
+
+\SYSTEMESP{} assumes there is a known (possibly very large) set of
+applications that may be run on the system and some offline
+measurements have been taken of these individual applications.
+Specifically, \SYSTEMESP{} measures low-level hardware features like
+cache misses and instructions retired during a training phase.  At
+runtime, applications from this set may be launched in any arbitrary
+combination.  The goal is to efficiently predict the interference (\ie
+slowdown) of co-scheduled applications.
+
+\PUNT{
+\section{Outline}
+The rest of the work is organized as follows. \Secref{sec:example}
+provides a motivational example to build intuition.
+\Secref{sec:notation} presents notation.
+\Secref{sec:problemFormulation} formalizes the energy minimization
+problem as a linear program and discusses the application-specific
+parameters of this problem.  \Secref{sec:HBN} elaborates our probabilistic
+graphical model and describes \SYSTEMLEO{} in full detail.
+\Secref{sec:experiment} presents empirical studies on \SYSTEMLEO{}.
+Related work is discussed in \Secref{sec:related} and the work
+concludes in \secref{conclusion}.
+}

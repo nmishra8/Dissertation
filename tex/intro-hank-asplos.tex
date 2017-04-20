@@ -3,7 +3,7 @@
 \section{Introduction}
 
 % Two trends: energy and load variations
-This paper addresses two trends in modern computing systems.  First, energy is increasingly important; reducing energy consumption reduces operating costs in datacenters and increases battery life in mobile devices.  Second, computer systems are often underutilized, meaning they spend significant portions of time operating at less than full computational capacity \cite{}.
+This work addresses two trends in modern computing systems.  First, energy is increasingly important; reducing energy consumption reduces operating costs in datacenters and increases battery life in mobile devices.  Second, computer systems are often underutilized, meaning they spend significant portions of time operating at less than full computational capacity \cite{}.
 
 % Problem: How to minimize energy while meeting load demands
 These two trends raise the problem of allocating available resources to meet the current computation demand while minimizing energy consumption. This problem is a \emph{constrainted optimization} problem. The current utilization level represents a performance constraint (\ie an amount of work that must be completed in a given time); system energy consumption represents the objective function to be minimized.
@@ -19,8 +19,8 @@ We address this need by presenting \SYSTEMLEO{}, a hierarchical Bayesian learnin
 % Our results
 We have implemented \SYSTEMLEO{} on a Linux x86 server and tested its ability to predict the power and performance of 24 different applications using leave-on-out cross validation.  We first compare the accuracy of \SYSTEMLEO{}'s performance and power predictions to both the true value and a simple statistical method based on regression (see \secref{}).  We find that, on average, \SYSTEMLEO{} is within XX\% of the true value and exceeds the regression method by YY\%.  We then use \SYSTEMLEO{} to solve the energy minimization problem for various performance requirements (see \secref{}).  Overall we find that \SYSTEMLEO{} is within XX\% of the true optimal, while exceeding race-to-idle by YY\% and regression based methods by ZZ\%.
 
-% Contributions of this paper
-This paper makes the following contributions:
+% Contributions of this work
+This work makes the following contributions:
 \begin{itemize}
 \item It presents a hierarchical Bayesian model capable of accurately estimating the application-specific performance and power of computer system configurations without prior knowledge of the application. (See \secref{framework}).
 \item It makes the source code for this learning system available in both Matlab and C++\footnote{\TODO{put url here.}}.
@@ -29,4 +29,4 @@ This paper makes the following contributions:
 \item It integrates \SYSTEMLEO{} into a runtime for energy optimization and finds this learning framework can find near-optimal energy savings (see secref{}).
 \end{itemize}
 
-The rest of the paper is organized as follows...
+The rest of the work is organized as follows...

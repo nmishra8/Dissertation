@@ -26,7 +26,7 @@
 \usepackage{caption}
 \usepackage{subfig}
 \usepackage{tikz}
-
+\usepackage{mathtools}
 \newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
 \newlength\SUBSIZE
 \newcommand{\ONECOLFIGMUL}{0.81}
@@ -148,10 +148,10 @@
 \newcommand{\appref}[1]{Appendix~\ref{app:#1}}
 \renewcommand{\paragraph}[1]{\vspace{3pt}\noindent\textbf{#1}}
 \newcommand{\st}{s.t.}
-%\DeclarePairedDelimiter\Floor\lfloor\rfloor
-%\DeclarePairedDelimiter\Ceil\lceil\rceil
+\DeclarePairedDelimiter\Floor\lfloor\rfloor
+\DeclarePairedDelimiter\Ceil\lceil\rceil
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\minimize}{min}
 \DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\Floor}{\lfloor\rfloor}
-\DeclareMathOperator*{\Ceil}{\lceil\rceil}
+%\DeclareMathOperator*{\Floor}{\lfloor\rfloor}
+%\DeclareMathOperator*{\Ceil}{\lceil\rceil}

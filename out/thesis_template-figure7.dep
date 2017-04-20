@@ -1,0 +1,2 @@
+out/thesis_template-figure7.pdf: img/ma-eff-summary.txt
+out/thesis_template-figure7.pdf: img/ma-lat-summary.txt

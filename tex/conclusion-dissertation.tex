@@ -1,0 +1,62 @@
+\section{Conclusion}
+This work has presented \SYSTEMLEO{}, a system capable of learning
+Pareto-optimal power and performance tradeoffs for an application
+running on a configurable system.  \SYSTEMLEO{} combines some of the best
+features of both online and offline learning approaches.  Offline,
+\SYSTEMLEO{} acquires knowledge about a range of application behaviors.
+Online, \SYSTEMLEO{} quickly matches the observed behavior of a new
+application to previously seen behavior from other applications to
+produce highly accurate estimates of performance and power.  We have
+implemented \SYSTEMLEO{}, made the source code available, and tested it
+on a real system with 25 different applications exhibiting a range of
+behaviors.  Across all applications, \SYSTEMLEO{} achieves greater than
+97\% accuracy in its performance and power estimations despite only
+sampling less than 2\% of the possible configuration space for an
+application it has never seen before.  These estimations are then used
+to allocate resources and save energy.  \SYSTEMLEO{} produces energy
+savings within 6\% of optimal while purely Offline or Online
+approaches are both over 24\% of optimal.  \SYSTEMLEO{}'s learning
+framework represents a promising approach to help generalize resource
+allocation in energy limited computing environments and could be used
+in conjunction with other control techniques to help develop a
+\emph{self-aware} computing system
+\cite{Hoffmann2012,1508273,1333571,1516538,Kephardt2005,laddaga1999}.
+
+While much recent work has built systems to support learning and big
+data, in this work we use learning and big data to build better
+systems.  Specifically by proposing \SYSTEM{}, a combination of
+machine learning and control for managing resources to meet
+performance requirements with minimal energy.  \SYSTEM{}'s unique
+contribution is showing how machine learning and control theory can be
+combined at runtime to provide more reliable performance and lower
+energy than either in isolation.  Furthermore, this combination is not
+just practical, it provides formal guarantees that the system will
+converge to the desired performance.
+
+This work explores machine learning methods for predicting
+application interference in computing systems.  Specifically, we
+explore several state-of-the-art regularization techniques for
+high-dimensional problems---when many more features are available than
+samples---and we conclude that existing linear techniques are not
+accurate enough, while existing higher-order techniques are accurate
+but slow.  Inspired by these observations we present \SYSTEMESP{}, a
+combination of linear feature selection with higher-order model
+building that achieves the practicality of linear models with the
+accuracy of higher-order models.  We have demonstrated that
+\SYSTEMESP{}'s quantitative predictions produce significantly better
+schedules than existing heuristics for both single and multi-node
+systems, with up to 1.8$\times$ improvement in application completion
+time and significantly lower variance.  Additionally, \SYSTEMESP{}
+achieves much higher prediction accuracies than prior
+approaches---over 93\% when considering three or more applications.
+We have made the source code available so that others may improve on
+or compare with \SYSTEMESP{}.
+
+\section{Future Work}
+We have proposed methods to control single application under dynamic resource
+requirement and a method to estimate application interference. An interesting
+direction for future work is how to control resource allocation for multiple
+applications on a multi-node system. It is a very difficult problem because of
+computational blowup with multiple applications across multiple resources and
+multiple nodes. Another interesting direction is finding more low-level features for better
+estimation of application interference.

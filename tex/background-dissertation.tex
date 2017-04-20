@@ -1,0 +1,256 @@
+\label{sec:related}
+We discuss related work on energy and power optimization. Offline optimization techniques have been proposed (\eg \cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic}, but
+they are limited by reliance on a robust training phase.  If behavior
+occurs online that was not represented in the training data, then
+these approaches may produce suboptimal results.
+
+Several approaches augment offline model building with online
+measurement.  For example, many systems employ control theoretic
+designs which couple offline model building with online feedback
+control
+\cite{Wu2004,TCST,Chen2011,PTRADE,Heartbeats2,ControlWare,Agilos,Rajkumar,Sojka,Raghavendra2008}.
+Over a narrow range of applications the combination of offline
+learning and control works well, as the offline models capture the
+general behavior of the entire class of application and require
+negligible online overhead.  This focused approach is extremely
+effective for multimedia applications
+\cite{grace2,flinn99,flinn2004,xtune,TCST} and web-servers
+\cite{Horvarth,LuEtAl-2006a,SunDaiPan-2008a}.  The goal of \SYSTEMLEO{},
+however, is to build a more general framework applicable to a broad
+range of applications.  \SYSTEMLEO{}'s approach is complementary to
+control based approaches.  For example, incorporating \SYSTEMLEO{} into
+control-based approaches might extend them to other domains even when
+the application characteristics are not known ahead of time.
+
+Some approaches have combined offline predictive models with online
+adaptation
+\cite{Zhang2012,packandcap,Winter2010,dubach2010,Koala,Cinder, wu2012inferred}.  For
+example, Dubach et al.  propose such a combo for optimizing the
+microarchitecture of a single core \cite{dubach2010}.  Such predictive
+models have also been employed at the OS level to manage system energy
+consumption \cite{Koala,Cinder}. \cite{wu2012inferred}.
+
+Other approaches adopt an almost completely online model, optimizing
+based only on dynamic runtime feedback
+\cite{Li2006,Flicker,ParallelismDial,Ponamarev,petabricksDynamic,LeeBrooks}.
+For example, Flicker is a configurable architecture and optimization
+framework that uses only online models to maximize performance under a
+power limitation \cite{Flicker}.  Another example, ParallelismDial,
+uses online adaptation to tailor parallelism to application workload.
+
+
+Perhaps the most similar approaches to \SYSTEMLEO{} are others that
+combine offline modeling with online model updates
+\cite{ICSE2014,Bitirgen2008,Ipek}.  For example, Bitirgen et al use an
+artificial neural network to allocate resources to multiple
+applications in a multicore \cite{Bitirgen2008}.  The neural network
+is trained offline and then adapted online using measured feedback.
+This approach optimizes performance but does not consider power or
+energy minimization.
+
+Like these approaches, \SYSTEMLEO{} combines offline model building and
+with online model updates.  \emph{Unlike prior approaches, \SYSTEMLEO{}
+  learns not a single best state, but rather all Pareto-optimal
+  tradeoffs in the power/performance space (like those illustrated in
+  \figref{fig:pareto})}.  These tradeoffs can be used to maximize
+performance or to minimize energy across an application's entire range
+of possible utilization.  There is a cost for this added benefit:
+\SYSTEMLEO{}'s online phase is likely higher overhead than these prior
+approaches that focus only on maximizing performance.  In that sense,
+however, these approaches complement each other.  If fastest
+performance is the goal, then prior approaches are likely the best
+option.  If the goal is to minimize energy for a range of possible
+performance, then \SYSTEMLEO{} produces near optimal energy.
+
+
+We discuss related work in managing resources to meet performance
+goals and reduce energy.
+
+\section{Machine Learning}
+We break learning for resource management into 3 categories: offline,
+online, and hybrid approaches.
+
+\noindent \textbf{Offline Learning} These approaches build models
+before deployment and then use those fixed models to allocate
+resources
+\cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic}.  The
+model-building phase is expensive, requiring both a large number of
+samples and substantial computation.  Applying the model online,
+however, is low overhead.  The main drawback is that the models are
+not updated as the system runs: a problem for adapting workloads.
+\PUNT{A good example of an offline approach applies learning to render
+  web pages on mobile systems with low energy \cite{reddiHPCA2013}. It
+  builds an offline model mapping web page features into performance
+  for different core types.  When a new page is downloaded, the system
+  estimates the resources needed to render the web page and uses the
+  lowest energy configuration that meets user satisfaction.  This
+  approach handles the complexity of allocating resources to webpage
+  rendering, but cannot address dynamics; \eg{} when other apps run
+  concurrently with the web browser.}  Carat is a good example of an
+offline learner that aggregates data across multiple devices to
+generate a report for human users about how to configure their device
+to increase battery life \cite{carat}.  While both Carat and \SYSTEM{}
+learn across devices, they have very different goals.  Carat returns
+very high-level information to human users; \eg{} update a driver to
+extend battery life.  \SYSTEM{} automatically builds and applies
+low-level models to save energy.
+
+\noindent \textbf{Online Learning} Online techniques observe the
+current application to tune system resource usage for that application
+\cite{Li2006,Flicker,ParallelismDial,Ponamarev,petabricksDynamic,LeeBrooks}.
+For example, Flicker is a configurable architecture and optimization
+framework that uses online models to maximize performance under a
+power limitation \cite{Flicker}.  Another example, ParallelismDial,
+uses online adaptation to tailor parallelism to application workload
+\cite{ParallelismDial}.
+
+
+
+\noindent \textbf{Hybrid Approaches} Some approaches combine offline
+predictive models with online adaptation
+\cite{Zhang2012,packandcap,Winter2010,dubach2010,Koala,Cinder,
+  wu2012inferred}.  For example, Dubach et al.  use hybrid models to
+optimize the microarchitecture of a single core \cite{dubach2010}.
+Such predictive models have also been employed at the operating system
+level to manage system energy consumption
+\cite{Koala,Cinder,wu2012inferred}.  Other approaches combine offline
+modeling with online updates \cite{JouleGuard,Bitirgen2008,Ipek}.  For
+example, Bitirgen et al use an artificial neural network to allocate
+resources to multiple applications in a multicore \cite{Bitirgen2008}.
+The neural network is trained offline and then adapted online using
+measured feedback.  This approach maximizes performance but does not
+consider power or energy minimization.
+
+\section{Control}
+Almost all control solutions can be thought of as a combination of
+offline model building with online adaptation.  The model building
+involves substantial empirical measurement that is used to synthesize
+a control system
+\cite{Wu2004,TCST,Chen2011,PTRADE,POET,ControlWare,Agilos,Rajkumar,Sojka,Raghavendra2008}.
+The combination of offline learning and control works well over a
+narrow range of applications, as the offline models capture the
+general behavior of a class of application and require negligible
+online overhead.  This focused approach is extremely effective for
+multimedia applications \cite{grace2,flinn99,flinn2004,xtune,TCST} and
+web-servers \cite{Horvarth,LuEtAl-2006a,SunDaiPan-2008a} because the
+workloads can be characterized ahead of time so that the models
+produce sound control.
+
+Indeed, the need for good models is the central tension in developing
+control for computing systems.  It is always possible to build a
+controller for a specific application and system by extensively
+modeling that pair.  More general controllers, which work with a range
+of applications, have addressed the need for models in various ways.
+Some provide libraries that encapsulate control functionality and
+require user-specified models
+\cite{ControlWare,Sojka,Rajkumar,POET,SWiFT}.  Others automatically
+synthesize both a model and a controller for either hardware
+\cite{josep-isca2016} or software \cite{ICSE2014,FSE2015}.  JouleGuard
+combines learning for energy efficiency with control for managing
+application parameters \cite{JouleGuard}.  In JouleGuard, a learner
+adapts the controller's coefficients to model uncertainty, but
+JouleGuard's learner does not produce a new model for the controller.
+Because JouleGuard's learner runs on the same device as the controlled
+application, it must be computationally efficient and thus it cannot
+identify correlations across applications or even different resource
+configurations.  \SYSTEM{} is unique in that a separate learner
+generates an application-specific model automatically.  By offloading
+the learning task, \SYSTEM{} (1) combines data from many applications
+and systems and (2) applies computationally expensive, but highly
+accurate learning techniques.
+
+
+\section{Application interference}
+Accurate performance estimates are essential for solving scheduling
+and resource allocation problems \cite{chiang2002impact}.  Accurate
+estimates are difficult to obtain due to the complexity and diversity
+of large-scale systems \cite{kanev2015profiling}.  A particular
+challenge is modeling performance loss due to contention among
+applications \cite{kambadur2012measuring}.  Better contention models
+could improve system utilization while ensuring quality-of-service in
+latency sensitive applications \cite{Bubble-flux}.
+
+Several approaches investigate statistical and machine learning
+techniques for estimating power, performance, and energy of a single
+application running on a single system.  Many of these approaches
+improve the time of developing new hardware designs, but are not
+suitable for online resource management
+\cite{Yi2003,LeeBrooks2006,CPR}.  Other approaches can predict the
+power and performance of various resource allocations to single
+applications \cite{Koala} or optimize energy efficiency under latency
+constraints \cite{LEO}.  A recent approach combines machine learning
+with control theory to guarantee energy consumption, but only for a
+single application \cite{JouleGuard}.  Perhaps most similar to
+\SYSTEMESP{} is the Mantis project which also uses higher-order
+regularized regression models (based on Lasso) to predict smartphone
+app performance \cite{kwon2013mantis}.  Mantis, however, does not
+predict contention among multiple applications, which is \SYSTEMESP{}'s
+focus.
+
+Other approaches predict and mitigate contention in single-node
+systems.  Many decide to co-schedule or not, but they do not produce
+quantitative slowdown estimates.  For example, Dwyer et al. propose a
+classifier that predicts whether contention will be high or low, but
+this approach does not produce a numerical estimate
+\cite{dwyer2012practical}.  Similarly, ReSense detects highly
+contended resources and reacts to reduce that contention, but it never
+estimates contention \cite{resense}. Another approach estimates
+throughput (total system performance), but does not produce estimates
+of individual application performance
+\cite{xu2010cache,chen2010performance}.  Subramanian et al. propose an
+approach that does produce accurate estimates of performance (within
+9.9\%) based on only last-level cache access rate and memory bandwidth
+\cite{subramanian2015slowdown}.  These results are achieved on a
+simulator rather than a real system, however, and on our real system
+these two features are not sufficient to predict contention with any
+level of accuracy.  Another single-node system, D-Factor, uses
+non-linear models to predict the slowdown of a new application given
+current resource usage \cite{Lim2012dfactor}.  Unlike \SYSTEMESP{},
+D-Factor is not capable of predicting how two applications will
+interfere with each other if neither is currently running.
+
+Several approaches estimate and mitigate contention to schedule for
+multi-node systems.  The activity vectors approach works on single or
+multi-node systems by maximizing the variance among resource usage in
+co-scheduled applications \cite{merkel2010resource}.  This heuristic
+makes intuitive sense -- applications with very different resource
+needs are less likely to interfere with each other -- but this
+approach does not produce quantitative estimates and therefore can
+make bad decisions when contention is unavoidable.  Merlin, is
+somewhat similar, in that it tries to estimate contended resources and
+migrate virtual machines to areas of lower contention, but it also
+does not produce slowdown estimates \cite{Merlin}.  DejaVu is a
+machine learning approach that classifies application workloads and
+then schedules according to known good schedules for the
+classification \cite{dejavu}. DejaVu creates an \emph{interference
+  index} which can be used to rank slowdowns and migrate VMs or
+reallocate resources, but it does not produce accurate estimates of
+the actual slowdowns incurred.  Similarly, Quasar \cite{quasar} and
+Stay-Away \cite{stay-away} use classification schemes to predict and
+mitigate interference, but neither produces performance estimates in
+the face of interference.  Bubble-flux \cite{Bubble-flux}, an
+improvement over the earlier Bubble-up \cite{Bubble-up} does produce
+slowdown estimates and, like \SYSTEMESP{}, it is efficient enough to
+consider interference among more than two applications.  The main
+difference between Bubble-flux and \SYSTEMESP{} is that Bubble-flux uses
+no offline prior information and must dynamically probe the system.
+This lack of prior information means that Bubble-flux must suffer
+either poor utilization or inaccurate schedules during the probing
+phase.  \SYSTEMESP{} uses a highly accurate offline model and combines
+that with online updates to its predictions to further improve
+accuracy while making use of the vast amount of data available to
+inform offline model building.
+
+%\TODO{One paragraph on stats related work.}
+We model interference estimation as a \emph{high-dimensional}
+regression problem with prohibitively many dimensions.  Many
+statistical methods address high-dimensionality (\eg SURE
+\cite{fan2008sure}). In computer system performance, however,
+measurable features are highly correlated and existing methods do not
+provide high accuracy.  Other statistical models emit more accurate
+predictors given correlated features (\eg \cite{yuan2006model} and
+\cite{bien2013lasso}), but they do not scale to our problem size.
+Even though we make a strong assumption that the interaction terms are
+present only if their individual linear terms are significant, the
+heuristic has very high accuracy and produces good schedules in
+practice.
