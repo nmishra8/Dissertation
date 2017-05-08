@@ -8,15 +8,15 @@
 \newcommand{\SYSTEMESP}{ESP}
 %\newcommand{\SYSTEM2}{CALO\-REE}
 %% Use these commands to set biographic information for the title page:
-\title{Statistical Methods for Performance Estimation for Improving Scheduling and Energy Minimization}
+\title{Statistical Methods for Improving Dynamic Scheduling and Resource Usage in Computing Systems}
 \author{Nikita Mishra}
 \department{Computer Science}
-\division{Physical Science Division}
+\division{Physical Sciences}
 \degree{Doctor of Philosophy}
-\date{June 10, 2017}
+\date{June 2017}
 
 %% Use these commands to set a dedication and epigraph text
-\dedication{Dedication Text}
+\dedication{Dedicated to my family who have always supported me}
 \epigraph{Epigraph Text}
 
 %\bibliography{references}
@@ -31,7 +31,7 @@
 % These lines can be commented out to disable the copyright/dedication/epigraph pages
 \makecopyright
 \makededication
-\makeepigraph
+%\makeepigraph
 %% Make the various tables of contents
 \tableofcontents
 \listoffigures
@@ -39,6 +39,7 @@
 \graphicspath{{figures/}} % Location of the graphics files
 
 \acknowledgments
+\input{tex/acknowledgements.tex }
 % Enter Acknowledgements here
 
 %\abstract
@@ -65,14 +66,14 @@
 \input{tex/problemFormulation-asplos}
 \input{tex/hierarchicalModel-asplos}
 \input{tex/experiments-asplos}
-%\input{tex/conclusion-asplos}
+\input{tex/conclusion-asplos}
 
 \chapter{CALOREE: Controlling applications under system dynamics}
 %\input{tex/intro}
 \input{tex/example}
 \input{tex/framework-new}
 \input{tex/evaluation}
-%\input{tex/conclusion}
+\input{tex/conclusion}
 
 \chapter{ESP: Application interference estimation}
 %\input{tex/introduction-osdi}
@@ -81,11 +82,12 @@
 \input{tex/estimation-problem-osdi}
 \input{tex/optimal-scheduling-osdi}
 \input{tex/experiment-osdi}
-%\input{tex/conclusion-osdi}
+\input{tex/conclusion-osdi}
 
 \chapter{Future work and conclusion}
 \input{tex/conclusion-dissertation}
-
+\clearpage% or cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliography}
 %\makebibliography
 \newpage
 %\printbibliography

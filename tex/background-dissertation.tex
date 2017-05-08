@@ -1,10 +1,11 @@
 \label{sec:related}
-We discuss related work on energy and power optimization. Offline optimization techniques have been proposed (\eg \cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic}, but
-they are limited by reliance on a robust training phase.  If behavior
+In this section, we will discuss the related work on energy and power optimization.
+Previously, some offline
+optimization techniques have been proposed (\eg \cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic},
+but they are limited by reliance on a robust training phase.  If behavior
 occurs online that was not represented in the training data, then
-these approaches may produce suboptimal results.
-
-Several approaches augment offline model building with online
+these approaches may produce suboptimal results. Several approaches augment
+offline model building with online
 measurement.  For example, many systems employ control theoretic
 designs which couple offline model building with online feedback
 control
@@ -15,13 +16,15 @@ general behavior of the entire class of application and require
 negligible online overhead.  This focused approach is extremely
 effective for multimedia applications
 \cite{grace2,flinn99,flinn2004,xtune,TCST} and web-servers
-\cite{Horvarth,LuEtAl-2006a,SunDaiPan-2008a}.  The goal of \SYSTEMLEO{},
+\cite{Horvarth,LuEtAl-2006a,SunDaiPan-2008a}.
+\PUNT{
+ The goal of \SYSTEMLEO{},
 however, is to build a more general framework applicable to a broad
 range of applications.  \SYSTEMLEO{}'s approach is complementary to
 control based approaches.  For example, incorporating \SYSTEMLEO{} into
 control-based approaches might extend them to other domains even when
 the application characteristics are not known ahead of time.
-
+}
 Some approaches have combined offline predictive models with online
 adaptation
 \cite{Zhang2012,packandcap,Winter2010,dubach2010,Koala,Cinder, wu2012inferred}.  For
@@ -39,15 +42,16 @@ power limitation \cite{Flicker}.  Another example, ParallelismDial,
 uses online adaptation to tailor parallelism to application workload.
 
 
-Perhaps the most similar approaches to \SYSTEMLEO{} are others that
+Some approaches that
 combine offline modeling with online model updates
-\cite{ICSE2014,Bitirgen2008,Ipek}.  For example, Bitirgen et al use an
+\cite{ICSE2014,Bitirgen2008}.  For example, Bitirgen et al use an
 artificial neural network to allocate resources to multiple
 applications in a multicore \cite{Bitirgen2008}.  The neural network
 is trained offline and then adapted online using measured feedback.
 This approach optimizes performance but does not consider power or
 energy minimization.
 
+\PUNT{
 Like these approaches, \SYSTEMLEO{} combines offline model building and
 with online model updates.  \emph{Unlike prior approaches, \SYSTEMLEO{}
   learns not a single best state, but rather all Pareto-optimal
@@ -61,16 +65,16 @@ however, these approaches complement each other.  If fastest
 performance is the goal, then prior approaches are likely the best
 option.  If the goal is to minimize energy for a range of possible
 performance, then \SYSTEMLEO{} produces near optimal energy.
-
+}
 
 We discuss related work in managing resources to meet performance
 goals and reduce energy.
 
 \section{Machine Learning}
+\PUNT{Cuanta (SOCC'11), ICE (ICAC'15), Q-Clouds (EuroSys'10), TRACON (SC'11), PACman (ICAC'13), CloudScope (MASCOTS'15)
+}
 We break learning for resource management into 3 categories: offline,
-online, and hybrid approaches.
-
-\noindent \textbf{Offline Learning} These approaches build models
+online, and hybrid approaches. Offline  approaches build models
 before deployment and then use those fixed models to allocate
 resources
 \cite{Yi2003,LeeBrooks2006,CPR,ChenJohn2011,petabricksStatic}.  The
@@ -93,20 +97,14 @@ to increase battery life \cite{carat}.  While both Carat and \SYSTEM{}
 learn across devices, they have very different goals.  Carat returns
 very high-level information to human users; \eg{} update a driver to
 extend battery life.  \SYSTEM{} automatically builds and applies
-low-level models to save energy.
-
-\noindent \textbf{Online Learning} Online techniques observe the
-current application to tune system resource usage for that application
+low-level models to save energy.Online techniques observe the current application
+to tune system resource usage for that application
 \cite{Li2006,Flicker,ParallelismDial,Ponamarev,petabricksDynamic,LeeBrooks}.
 For example, Flicker is a configurable architecture and optimization
 framework that uses online models to maximize performance under a
 power limitation \cite{Flicker}.  Another example, ParallelismDial,
 uses online adaptation to tailor parallelism to application workload
-\cite{ParallelismDial}.
-
-
-
-\noindent \textbf{Hybrid Approaches} Some approaches combine offline
+\cite{ParallelismDial}. Hybrid  approaches combine offline
 predictive models with online adaptation
 \cite{Zhang2012,packandcap,Winter2010,dubach2010,Koala,Cinder,
   wu2012inferred}.  For example, Dubach et al.  use hybrid models to
@@ -114,7 +112,7 @@ optimize the microarchitecture of a single core \cite{dubach2010}.
 Such predictive models have also been employed at the operating system
 level to manage system energy consumption
 \cite{Koala,Cinder,wu2012inferred}.  Other approaches combine offline
-modeling with online updates \cite{JouleGuard,Bitirgen2008,Ipek}.  For
+modeling with online updates \cite{JouleGuard, Bitirgen2008}.  For
 example, Bitirgen et al use an artificial neural network to allocate
 resources to multiple applications in a multicore \cite{Bitirgen2008}.
 The neural network is trained offline and then adapted online using

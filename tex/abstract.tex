@@ -2,67 +2,64 @@
   This thesis is about using statistical methods for performance and power estimation which would allow us to develop better
   scheduling algorithms and also more energy efficient systems.
   In many deployments, computer systems are underutilized – meaning that
-  applications have perfor- mance requirements that demand less than full
+  applications have performance requirements that demand less than full
   system capacity. Ideally, we would take advantage of this under-utilization
   by allocating system resources so that the performance requirements are met
   and energy is minimized. This optimization problem is complicated by the fact
-  that the per- formance and power consumption of various system configurations
+  that the performance and power consumption of various system configurations
   are often application – or even input – dependent. Thus, practically,
   minimizing energy for a performance constraint requires fast, accurate
   estimations of application-dependent performance and power tradeoffs. We propose
-  a set of algorithms for different scenarios to tackle this problem. First, we
-  propose LEO, a probabilistic graphical model-based learning system that
+  a set of algorithms for different scenarios to tackle this problem.
+First, we propose LEO, a probabilistic graphical model-based learning system that
   provides accurate online estimates of an application’s power and performance
-  as a function of system configuration. This work mostly focused on the performance estimation
-  for single applications.
-  As the second part of our work, we look into the estimation for application’s performance when they are co-scheduled with other applications. Applications co-scheduled on the same phys- ical hardware interfere with one another by contending for shared resources [10, 19, 40, 30]. We quantify interference as slowdown, or the performance loss one application experiences in the pres- ence of co-scheduled applications. Predicting this interference ahead of time would be particularly valuable for job scheduling. Given an accurate interference prediction, a scheduler can determine optimal assignments of applications to physical machines, leading to higher throughput in batch systems and better quality-of-service for latency-sensitive applications.
-  In data centers and super computers schedulers often have a great deal of accumulated data about past jobs and their interference, yet turning this data into effective interference predictors is difficult [19]. Fundamentally, two basic decisions must be made: (1) what features should be measured and (2) what model will map these features into an accurate prediction. The smaller the feature space, the more computationally efficient the model, but smaller feature spaces may also miss key data and produce inaccurate models. The art to regression modeling is to manage the tradeoffs between the feature-space and the accuracy of the regression model. Using state-of-the- art statistical methods for large feature sets, such as regularized regression, the feature space and the model are determined simultaneously [13, 36, 44].
-  We explore such state-of-the-art regularized regression models for estimating application in- terference. We find that regularized linear regression methods require a relatively small number of features, but produce inaccurate models. In contrast, non-linear models that include interac- tion terms – i.e., permit features to be multiplied together – are more accurate, but are extremely inefficient and not practical for online scheduling.
-  We therefore propose an efficient technique for estimating application interference based on sparse regression. We call our approach ESP for Estimating co-Scheduled Performance. The key insight in ESP is to split regression modeling into two parts: feature selection and model building. ESP uses linear techniques to perform feature selection, but uses quadratic techniques for model building. The result is a highly accurate predictor that is still practical and can be integrated into a real application scheduler.
-  ESP assumes that there is a known (possibly very large) set of applications that may be run on the system and some offline measurements have been taken of these individual applications. Specifically, ESP measures low-level hardware features like cache misses and instructions per clock during a training phase. At runtime, applications from this set may be launched in any arbitrary combination. The goal is to efficiently predict the interference (i.e., slowdown) that ap- plications incur when co-scheduled.
-  As, the third part of our work, we design a system called CALOREE which allows
-  the learnt models to be combined witha controller so that the system is robust
-  to dynamic situations with changing resource requirement. Two central challenges arise when allocating system resources to meet these conflicting goals:
-   (1) complex- ity—modern hardware exposes diverse resources with com- plicated interactions—and (2)
-   dynamics—performance must be maintained despite unpredictable changes in operating environment or input.
-   Machine learning accurately predicts the performance of complex, interacting resources, but does not address
-   system dynamics; control theory adjusts resource usage dynamically, but struggles with complex resource
-   interaction. We therefore propose CALOREE, a combination of learning and control that automatically adjusts
-   resource usage to meet performance requirements with minimal en- ergy in complex, dynamic environments.
+  as a function of system configuration. This work mostly focuses on the performance estimation
+  for single applications. As the second part of our work, we design a system called CALOREE which allows
+  the learnt models to be combined with a controller so that the system is robust
+  to dynamic situations with changing resource requirement. Finally, as the third
+  part of our work, we look into the estimation for application’s performance when
+  they are co-scheduled with other applications.  Applications co-scheduled on the same physical hardware interfere with one
+  another by contending for shared resources. Predicting this interference ahead of time would be particularly valuable for
+  job scheduling. We therefore propose an efficient technique for estimating application interference
+  based on sparse regression. We call our approach ESP for Estimating co-Scheduled Performance.
+
+  LEO uses a graphical model to integrate a small number of observations of the current application with
+knowledge of the previously observed applications to produce accurate estimations of
+power and performance trade-offs for the current application in all configurations.
+LEO produces the most accurate estimates and near optimal energy savings.
+These estimates can greatly resource allocation in static situation.
+But the second major challenge in real systems is \textit{dynamics}, dynamics—performance must
+be maintained despite unpredictable changes in operating environment or input.
+Machine learning accurately predicts the performance of complex, interacting resources, but does not address
+system dynamics; control theory adjusts resource usage dynamically, but
+   struggles with complex resource
+   interaction. We therefore propose CALOREE, a combination of learning and control
+   that automatically adjusts
+   resource usage to meet performance requirements with minimal energy in complex, dynamic environments.
    CALOREE breaks resource allocation into two sub-tasks: learning speedup as a function of resource usage, and
    controlling speedup to meet performance requirements. CALOREE also defines a general interface allowing
    different learners to be combined with a controller while maintaining control’s formal guarantees that
-   performance will converge to the goal. We implement CALO- REE and test its ability to deliver reliable
+   performance will converge to the goal. We implement CALOREE and test its ability to deliver reliable
    performance on heterogeneous ARM big.LITTLE architectures in both single and multi-application scenarios.
-   Compared to state-of-the- art learning and control solutions, we find that CALOREE reduces deadline misses
+   Compared to state-of-the-art learning and control solutions, we find that CALOREE reduces deadline misses
    by 2–6x while reducing energy consumption by 7–10\%.
-\PUNT{
-This thesis is about using statistical methods for performance and power estimation which would allow us to develop better
-scheduling algorithms and also more energy efficient systems.
-In many deployments, computer systems are underutilized – meaning that
-applications have perfor- mance requirements that demand less than full
-system capacity. Ideally, we would take advantage of this under-utilization
-by allocating system resources so that the performance requirements are met
-and energy is minimized. This optimization problem is complicated by the fact
-that the per- formance and power consumption of various system configurations
-are often application – or even input – dependent. Thus, practically,
-minimizing energy for a performance constraint requires fast, accurate
-estimations of application-dependent performance and power tradeoffs. We propose
-a set of algorithms for different scenarios to tackle this problem. First, we
-propose LEO, a probabilistic graphical model-based learning system that
-provides accurate online estimates of an application’s power and performance
-as a function of system configuration. This work mostly focused on the performance estimation
-for single applications.
-As the second part of our work, we look into the estimation for application’s performance when they
-are co-scheduled with other applications.
-As, the third part of our work, we design a system called CALOREE which allows
-the learnt models to be combined witha controller so that the system is robust
-to dynamic situations with changing resource requirement. Two central challenges arise when allocating system resources to meet these conflicting goals:
- (1) complex- ity—modern hardware exposes diverse resources with com- plicated interactions—and (2)
- dynamics—performance must be maintained despite unpredictable changes in operating environment or input.
- Machine learning accurately predicts the performance of complex, interacting resources, but does not address
- system dynamics; control theory adjusts resource usage dynamically, but struggles with complex resource
- interaction. We therefore propose CALOREE, a combination of learning and control that automatically adjusts
- resource usage to meet performance requirements with minimal en- ergy in complex, dynamic environments.
- }
+Finally, the additional challenge that real systems face is performance loss due
+to application interference. We quantify interference as slowdown, or the performance loss one application
+   experiences in the presence of co-scheduled applications.
+    Given an accurate interference prediction, a scheduler can determine
+   optimal assignments of applications to physical machines, leading to higher throughput
+   in batch systems and better quality-of-service for latency-sensitive applications.
+   In data centers and super computers schedulers often have a great deal of accumulated
+   data about past jobs and their interference, yet turning this data into effective
+   interference predictors is difficult.
+   We explore such state-of-the-art regularized regression models for estimating
+   application interference. We find that regularized linear regression methods
+   require a relatively small number of features, but produce inaccurate models.
+   In contrast, non-linear models that include interaction terms – i.e., permit
+   features to be multiplied together – are more accurate, but are extremely inefficient
+   and not practical for online scheduling.
+The key insight in ESP is to split regression modeling into two parts: feature
+   selection and model building. ESP uses linear techniques to perform feature selection,
+   but uses quadratic techniques for model building. The result is a highly accurate
+   predictor that is still practical and can be integrated into a real application scheduler.
 \end{abstract}

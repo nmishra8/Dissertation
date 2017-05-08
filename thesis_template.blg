@@ -3,13 +3,11 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis_template.aux
 The style file: unsrtnat.bst
 Case mismatch error between cite keys meisnerISCA2011 and MeisnerISCA2011
----line 244 of file thesis_template.aux
+---line 246 of file thesis_template.aux
  : \citation{meisnerISCA2011
  :                          ,Kim2014}
 I'm skipping whatever remains of this command
 Database file #1: final_bibtool.bib
-Warning--I didn't find a database entry for "Ipek"
-Warning--I didn't find a database entry for "Heartbeats1"
 Warning--I didn't find a database entry for "heisner"
 Warning--can't use both author and editor fields in HandbookControl
 Warning--empty year in TCST
@@ -18,14 +16,14 @@ Name 3 in "Raghavendra, R. and Ranganathan, P. and Talwar, V, and Wang, Z. and Z
 while executing---line 1315 of file unsrtnat.bst
 Name 3 in "Raghavendra, R. and Ranganathan, P. and Talwar, V, and Wang, Z. and Zhu, X." has a comma at the end for entry Raghavendra2008
 while executing---line 1315 of file unsrtnat.bst
+Warning--empty booktitle in 1333571
 Warning--empty year in welch2006kalman
 Warning--empty year in welch2006kalman
 Warning--empty publisher in Tokic2010
 Warning--empty journal in hoffmann2011seec
-Warning--empty booktitle in 1333571
 You've used 107 entries,
             2481 wiz_defined-function locations,
-            1116 strings with 23566 characters,
+            1112 strings with 23536 characters,
 and the built_in function-call counts, 42771 in all, are:
 = -- 3245
 > -- 2643

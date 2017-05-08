@@ -211,23 +211,6 @@ Henry Hoffmann.
 \newblock Jouleguard: energy guarantees for approximate applications.
 \newblock In \emph{SOSP}, 2015.
 
-\bibitem[Hoerl and Kennard(1988)]{hoerl1988ridge}
-A~Hoerl and R~Kennard.
-\newblock Ridge regression, in encyclopedia of statistical sciences, vol. 8,
-  1988.
-
-\bibitem[Tibshirani(1996)]{tibshirani1996regression}
-Robert Tibshirani.
-\newblock Regression shrinkage and selection via the lasso.
-\newblock \emph{Journal of the Royal Statistical Society. Series B
-  (Methodological)}, pages 267--288, 1996.
-
-\bibitem[Zou and Hastie(2005)]{zou2005regularization}
-Hui Zou and Trevor Hastie.
-\newblock Regularization and variable selection via the elastic net.
-\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
-  Methodology)}, 67\penalty0 (2):\penalty0 301--320, 2005.
-
 \bibitem[Ljung(1999)]{sysid}
 Lennart Ljung.
 \newblock \emph{System Identification: Theory for the User}.
@@ -257,6 +240,23 @@ R.~M. Bell, Y.~Koren, and C.~Volinsky.
 W.S. Levine.
 \newblock \emph{The control handbook}.
 \newblock CRC Press, 2005.
+
+\bibitem[Hoerl and Kennard(1988)]{hoerl1988ridge}
+A~Hoerl and R~Kennard.
+\newblock Ridge regression, in encyclopedia of statistical sciences, vol. 8,
+  1988.
+
+\bibitem[Tibshirani(1996)]{tibshirani1996regression}
+Robert Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock \emph{Journal of the Royal Statistical Society. Series B
+  (Methodological)}, pages 267--288, 1996.
+
+\bibitem[Zou and Hastie(2005)]{zou2005regularization}
+Hui Zou and Trevor Hastie.
+\newblock Regularization and variable selection via the elastic net.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 67\penalty0 (2):\penalty0 301--320, 2005.
 
 \bibitem[Dey et~al.(2013)Dey, Wang, Davidson, and Soffa]{resense}
 Tanima Dey, Wei Wang, Jack~W. Davidson, and Mary~Lou Soffa.
@@ -604,6 +604,48 @@ Etienne Le~Sueur and Gernot Heiser.
 \newblock In \emph{Proceedings of the 2011 USENIX Annual Technical Conference},
   Portland, OR, USA, June 2011.
 
+\bibitem[Hoffmann et~al.(2012)Hoffmann, Holt, Kurian, Lau, Maggio, Miller,
+  Neuman, Sinangil, Sinangil, Agarwal, Chandrakasan, and Devadas]{Hoffmann2012}
+Henry Hoffmann, Jim Holt, George Kurian, Eric Lau, Martina Maggio, Jason~E.
+  Miller, Sabrina~M. Neuman, Mahmut Sinangil, Yildiz Sinangil, Anant Agarwal,
+  Anantha~P. Chandrakasan, and Srinivas Devadas.
+\newblock Self-aware computing in the angstrom processor.
+\newblock In \emph{DAC}, 2012.
+
+\bibitem[Gentzsch et~al.(2005)Gentzsch, Iwano, Johnston-Watt, Minhas, and
+  Yousif]{1508273}
+W.~Gentzsch, K.~Iwano, D.~Johnston-Watt, M.A. Minhas, and M.~Yousif.
+\newblock Self-adaptable autonomic computing systems: An industry view.
+\newblock In \emph{Proceedings of the 16th International Workshop on Database
+  and Expert Systems Applications}, pages 201--205, Aug 2005.
+\newblock \doi{10.1109/DEXA.2005.173}.
+
+\bibitem[Dini et~al.(2004)Dini, Gentzsch, Potts, Clemm, Yousif, and
+  Polze]{1333571}
+Petre Dini, Wolfgang Gentzsch, Mark Potts, Alexander Clemm, Mazin Yousif, and
+  Andreas Polze.
+\newblock Internet, {GRID}, self-adaptability and beyond: Are we ready?
+\newblock Aug 2004.
+
+\bibitem[Salehie and Tahvildari(2009)]{1516538}
+Mazeiar Salehie and Ladan Tahvildari.
+\newblock {Self-adaptive software: Landscape and research challenges}.
+\newblock \emph{ACM Trans. Auton. Adapt. Syst.}, 4\penalty0 (2):\penalty0
+  1--42, 2009.
+\newblock ISSN 1556-4665.
+\newblock \doi{http://doi.acm.org/10.1145/1516533.1516538}.
+
+\bibitem[Kephart(2005)]{Kephardt2005}
+J.O. Kephart.
+\newblock Research challenges of autonomic computing.
+\newblock In \emph{ICSE}, 2005.
+
+\bibitem[Laddaga(1999)]{laddaga1999}
+Robert Laddaga.
+\newblock Guest editor's introduction: Creating robust software through
+  self-adaptation.
+\newblock \emph{IEEE Intelligent Systems}, 14, 1999.
+
 \bibitem[Zhang and Hoffmann(2016)]{PUPiL}
 Huazhe Zhang and Henry Hoffmann.
 \newblock Maximizing performance under a power cap: A comparison of hardware,
@@ -670,47 +712,5 @@ Henry Hoffmann, Martina Maggio, Marco~D Santambrogio, Alberto Leva, and Anant
   Agarwal.
 \newblock Seec: a general and extensible framework for self-aware computing.
 \newblock 2011{\natexlab{b}}.
-
-\bibitem[Hoffmann et~al.(2012)Hoffmann, Holt, Kurian, Lau, Maggio, Miller,
-  Neuman, Sinangil, Sinangil, Agarwal, Chandrakasan, and Devadas]{Hoffmann2012}
-Henry Hoffmann, Jim Holt, George Kurian, Eric Lau, Martina Maggio, Jason~E.
-  Miller, Sabrina~M. Neuman, Mahmut Sinangil, Yildiz Sinangil, Anant Agarwal,
-  Anantha~P. Chandrakasan, and Srinivas Devadas.
-\newblock Self-aware computing in the angstrom processor.
-\newblock In \emph{DAC}, 2012.
-
-\bibitem[Gentzsch et~al.(2005)Gentzsch, Iwano, Johnston-Watt, Minhas, and
-  Yousif]{1508273}
-W.~Gentzsch, K.~Iwano, D.~Johnston-Watt, M.A. Minhas, and M.~Yousif.
-\newblock Self-adaptable autonomic computing systems: An industry view.
-\newblock In \emph{Proceedings of the 16th International Workshop on Database
-  and Expert Systems Applications}, pages 201--205, Aug 2005.
-\newblock \doi{10.1109/DEXA.2005.173}.
-
-\bibitem[Dini et~al.(2004)Dini, Gentzsch, Potts, Clemm, Yousif, and
-  Polze]{1333571}
-Petre Dini, Wolfgang Gentzsch, Mark Potts, Alexander Clemm, Mazin Yousif, and
-  Andreas Polze.
-\newblock Internet, {GRID}, self-adaptability and beyond: Are we ready?
-\newblock Aug 2004.
-
-\bibitem[Salehie and Tahvildari(2009)]{1516538}
-Mazeiar Salehie and Ladan Tahvildari.
-\newblock {Self-adaptive software: Landscape and research challenges}.
-\newblock \emph{ACM Trans. Auton. Adapt. Syst.}, 4\penalty0 (2):\penalty0
-  1--42, 2009.
-\newblock ISSN 1556-4665.
-\newblock \doi{http://doi.acm.org/10.1145/1516533.1516538}.
-
-\bibitem[Kephart(2005)]{Kephardt2005}
-J.O. Kephart.
-\newblock Research challenges of autonomic computing.
-\newblock In \emph{ICSE}, 2005.
-
-\bibitem[Laddaga(1999)]{laddaga1999}
-Robert Laddaga.
-\newblock Guest editor's introduction: Creating robust software through
-  self-adaptation.
-\newblock \emph{IEEE Intelligent Systems}, 14, 1999.
 
 \end{thebibliography}

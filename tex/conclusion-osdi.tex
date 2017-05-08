@@ -1,4 +1,6 @@
-\section{Conclusion}
+\section{Summary}
+% Contributions:
+
 This work explores machine learning methods for predicting
 application interference in computing systems.  Specifically, we
 explore several state-of-the-art regularization techniques for
@@ -17,3 +19,43 @@ achieves much higher prediction accuracies than prior
 approaches---over 93\% when considering three or more applications.
 We have made the source code available so that others may improve on
 or compare with \SYSTEMESP{}.
+This work makes the following contributions:
+%\begin{itemize}
+\begin{inparaenum}[1)]
+\item \SYSTEMESP{}, a regularization method for predicting application
+  interference,
+\item Demonstration of \SYSTEMESP{} in both single and multi-node
+  schedulers,
+\item Comparison to existing heuristic techniques on real systems,
+\item Comparison of \SYSTEMESP{}'s predictive accuracy to other
+  regularization methods,
+\item Open-source code release\footnote{The code is available at
+    https://github.com/ESPAlg/ESP}.
+%\end{itemize}
+\end{inparaenum}
+\SYSTEMESP{} helps scheduling at multiple levels: it determines which
+applications should run together on a single node, it determines which
+node a new application should be scheduled on, and it avoids
+disastrous decisions that heuristic schedulers cannot.  Support for
+data analytics has become an important research topic in computing
+systems, and this work explores how data analytics can be used to
+improve computing systems.
+
+
+We therefore combine linear and non-linear approaches to produce
+accurate and practical predictions.
+\SYSTEMESP{}'s key insight is to split regularization modeling into two
+parts: \emph{feature selection} and \emph{model building}.  \SYSTEMESP{}
+uses linear techniques to perform feature selection, but uses
+quadratic techniques for model building.  The result is a highly
+accurate predictor that is still practical and can be integrated into
+real application schedulers.
+
+\SYSTEMESP{} assumes there is a known (possibly very large) set of
+applications that may be run on the system and some offline
+measurements have been taken of these individual applications.
+Specifically, \SYSTEMESP{} measures low-level hardware features like
+cache misses and instructions retired during a training phase.  At
+runtime, applications from this set may be launched in any arbitrary
+combination.  The goal is to efficiently predict the interference (\ie
+slowdown) of co-scheduled applications.
