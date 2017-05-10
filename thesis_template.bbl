@@ -1,4 +1,4 @@
-\begin{thebibliography}{107}
+\begin{thebibliography}{108}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -712,5 +712,10 @@ Henry Hoffmann, Martina Maggio, Marco~D Santambrogio, Alberto Leva, and Anant
   Agarwal.
 \newblock Seec: a general and extensible framework for self-aware computing.
 \newblock 2011{\natexlab{b}}.
+
+\bibitem[Hsu(2010)]{hsu2010algorithms}
+Daniel~Joseph Hsu.
+\newblock Algorithms for active learning.
+\newblock 2010.
 
 \end{thebibliography}

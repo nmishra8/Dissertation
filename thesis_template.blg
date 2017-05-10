@@ -2,10 +2,10 @@ This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis_template.aux
 The style file: unsrtnat.bst
-Case mismatch error between cite keys meisnerISCA2011 and MeisnerISCA2011
+Case mismatch error between cite keys meisnerisca2011 and MeisnerISCA2011
 ---line 246 of file thesis_template.aux
- : \citation{meisnerISCA2011
- :                          ,Kim2014}
+ : \citation{meisnerisca2011
+ :                          ,kim2014}
 I'm skipping whatever remains of this command
 Database file #1: final_bibtool.bib
 Warning--I didn't find a database entry for "heisner"
@@ -21,45 +21,46 @@ Warning--empty year in welch2006kalman
 Warning--empty year in welch2006kalman
 Warning--empty publisher in Tokic2010
 Warning--empty journal in hoffmann2011seec
-You've used 107 entries,
+Warning--empty journal in hsu2010algorithms
+You've used 108 entries,
             2481 wiz_defined-function locations,
-            1112 strings with 23536 characters,
-and the built_in function-call counts, 42771 in all, are:
-= -- 3245
-> -- 2643
-< -- 54
-+ -- 998
-- -- 782
-* -- 3202
-:= -- 6814
-add.period$ -- 358
-call.type$ -- 107
-change.case$ -- 210
-chr.to.int$ -- 105
-cite$ -- 115
-duplicate$ -- 2369
-empty$ -- 4028
-format.name$ -- 935
-if$ -- 9223
+            1115 strings with 23601 characters,
+and the built_in function-call counts, 43028 in all, are:
+= -- 3266
+> -- 2650
+< -- 55
++ -- 1002
+- -- 784
+* -- 3213
+:= -- 6856
+add.period$ -- 361
+call.type$ -- 108
+change.case$ -- 212
+chr.to.int$ -- 106
+cite$ -- 117
+duplicate$ -- 2387
+empty$ -- 4056
+format.name$ -- 938
+if$ -- 9277
 int.to.chr$ -- 3
-int.to.str$ -- 108
-missing$ -- 109
-newline$ -- 565
-num.names$ -- 321
-pop$ -- 1173
+int.to.str$ -- 109
+missing$ -- 110
+newline$ -- 570
+num.names$ -- 324
+pop$ -- 1184
 preamble$ -- 1
-purify$ -- 107
+purify$ -- 108
 quote$ -- 0
-skip$ -- 1296
+skip$ -- 1307
 stack$ -- 0
-substring$ -- 1008
-swap$ -- 449
+substring$ -- 1010
+swap$ -- 450
 text.length$ -- 19
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 734
-warning$ -- 8
-while$ -- 286
+type$ -- 741
+warning$ -- 9
+while$ -- 288
 width$ -- 0
-write$ -- 1396
+write$ -- 1407
 (There were 3 error messages)

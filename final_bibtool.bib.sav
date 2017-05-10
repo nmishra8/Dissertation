@@ -1,5 +1,4 @@
 % Encoding: UTF-8
-
 ###Proceedings{	  dblp:conf/im/2007,
   title		= {Integrated Network Management, IM 2007. 10th IFIP/IEEE
 		  International Symposium on Integrated Network Management,
@@ -235,6 +234,11 @@
   ee		= {http://dx.doi.org/10.1007/978-3-642-04492-2_13},
   crossref	= {DBLP:conf/apnoms/2009},
   bibsource	= {DBLP, http://dblp.uni-trier.de}
+}
+@article{hsu2010algorithms,
+  title={Algorithms for active learning},
+  author={Hsu, Daniel Joseph},
+  year={2010}
 }
 
 @Article{	  10.1109/lcn.2004.112,
@@ -35565,7 +35569,7 @@
   number	= {}
 }
 
-@TechReport{	  kim2014,
+@TechReport{kim2014,
   author	= {David H. K. Kim and Henry Hoffmann},
   title		= {Racing and Pacing to Idle: Minimizing Energy Under
 		  Performance Constraints},

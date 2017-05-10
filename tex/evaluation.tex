@@ -178,9 +178,8 @@ misses 45\% of all deadlines, which is clearly unacceptable.
   \vskip -2.5em
     \input{img/single-app-energy-small.tex}
   \vskip -1em
-  \label{fig:multi}
   \caption{Comparison of application performance error and energy for single application scenario.}
- \label{fig:odroidall}
+  \label{fig:single-perf}
 \end{figure*}
 
 When we allow \SYSTEM{} to adaptively tune its pole, however, we see
@@ -194,7 +193,7 @@ approach.
 
 The summary data shows us that the best prior approaches are
 race-to-idle, HBM, and adaptive control.
-\figsref{fig:single-perf}{fig:single-energy} show the detailed results
+\figref{fig:single-perf} shows the detailed results
 for the 60, 75, and 90\% targets comparing the best of these prior
 approaches to \SYSTEM{} with no pole and \SYSTEM{} coupled with the
 HBM---other data has been omitted for space.  The benchmarks are
@@ -270,12 +269,10 @@ average of 20\%, which is only 5\% more than optimal.  It also
 produces the second lowest energy, using slightly more than
 race-to-idle because it uses LITTLE cores to make up for some work
 that cannot be done on a big core due to the second application.
-\figsref{fig:multi-perf}{fig:multi-energy} shows the detailed results.
+\figref{fig:multi} shows the detailed results.
 The 90\% target is generally not reachable in this scenario as it
 would require the controlled application to have exclusive use of all
-big cores. \TODO{Hank: I am thinking that we subtract out the optimal
-  number of deadline misses here.}
-
+big cores.
 
 
 \PUNT{
@@ -358,7 +355,7 @@ fluctuations compared to Adaptive-Control.
 %\end{wrapfigure}
 LAVAMD has one of the most complicated responses to resource usage on
 our system with multiple local optima, as shown in
-\figref{fig:lavamd}.  \secref{guarantees} presents an analytical
+\figref{fig:lavamd-is-hard}(a).  \secref{guarantees} presents an analytical
 argument that tuning the controller to model variance and confidence
 interval prevents oscillation and provide probabilistic control
 theoretic guarantees despite using noisy, learned models to control
@@ -366,7 +363,7 @@ such complicated behavior.  We now demonstrate this empirically by
 showing LAVAMD's single-app behavior controlled by both CALOREE-NoPole
 and \SYSTEM{}-HBM to meet the 80\% target.
 
-\figref{fig:lavamd-pole} shows the results, with time on the x-axis
+\figref{fig:lavamd-is-hard}(b) shows the results, with time on the x-axis
 and normalized performance and power on the respective y-axes.
 CALOREE-NoPole oscillates around the desired performance and causes
 wide fluctuations in power consumption.  In contrast, after receiving

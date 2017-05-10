@@ -144,24 +144,24 @@ between training and testing data for \SYSTEM{}.
 $k$, the y-axis is the time to complete the work, and there is a bar
 showing the mean scheduling time for each of our points of comparison
 with an error bar showing one standard deviation.
-% During the offline phase, we first sample a few configurations
-% followed by calculating the estimated performance those samples;
-% overhead of which is discussed in the next section(Section
-% \secref{expt:overhead}). Once we do the estimation of the performance
-% using \SYSTEM{} individually for each $k = 2:6$ ($k$ denotes the
-% maximum number of applications we are willing to co-schedule
-% together), we run Algorithm \ref{alg:ItrSched-multi} to schedule those
-% applications. We notice that, as per our intuition, as we allow more
-% applications to run together, the scheduling time for the ORACLE
-% decreases. But, the scheduling time does not decrease significantly
-% after 4-tuples. On the other hand for \SYSTEM{} the scheduling time
-% decrease until 4-tuples and slightly increases after that. We
-% attribute this to the fact that as we estimate more tuples the overall
-% estimation error is piling up and since the benefit of running more
-% applications together dwindles after 4-tuples, the extra noise in the
-% system makes approximate scheduling using \SYSTEM{} slightly worse. We
-% see similar behavior for scheduling even in the baseline algorithms,
-% where we see improvement only up-to a certain point.
+During the offline phase, we first sample a few configurations
+followed by calculating the estimated performance those samples;
+overhead of which is discussed in the next section(Section
+\secref{expt:overhead}). Once we do the estimation of the performance
+using \SYSTEM{} individually for each $k = 2:6$ ($k$ denotes the
+maximum number of applications we are willing to co-schedule
+together), we run Algorithm \ref{alg:ItrSched-multi} to schedule those
+applications. We notice that, as per our intuition, as we allow more
+applications to run together, the scheduling time for the ORACLE
+decreases. But, the scheduling time does not decrease significantly
+after 4-tuples. On the other hand for \SYSTEM{} the scheduling time
+decrease until 4-tuples and slightly increases after that. We
+attribute this to the fact that as we estimate more tuples the overall
+estimation error is piling up and since the benefit of running more
+applications together dwindles after 4-tuples, the extra noise in the
+system makes approximate scheduling using \SYSTEM{} slightly worse. We
+see similar behavior for scheduling even in the baseline algorithms,
+where we see improvement only up-to a certain point.
 Overall, \SYSTEM{} performs much better than the baseline algorithms
 and only slightly worse than the ORACLE. On average over different
 $k$, \SYSTEM{} is 25\% faster than MEM, 29\% faster than IPC, 27\%
@@ -318,6 +318,19 @@ performance for latency sensitive applications.
 %single and multi-node schedulers.  We assert that \SYSTEM{}'s accurate
 %quantifiable predictions are the key to its success.  Here we analyze
 %that accuracy directly.
+\begin{figure}[!t]
+\begin{center}
+ \includegraphics[width=0.7\columnwidth]{figures/accuracy_netflix_vs_esp.png}
+ \caption{\small Sample complexity plot for Netflix algorithm used by Paragon}
+\label{fig:expt:accuracy_netlix}
+\end{center}
+\end{figure}
+
+We also compare \SYSTEM{} to the Netflix algorithm used by paragon. Netflix algorithm
+performs a low rank matrix completion on performance matrix for pairs of application.
+The underlying assumption used by the algorithm is that if two applications work well
+with some application, they should perform well together as well. We find that \SYSTEM{}
+is consistently superior probably because the Netflix algorithm to  but it does not use the low-level-features.
 
 We compare \SYSTEM{} with the \textit{elastic-net} regularization
 method on the linear model (\textit{Enet-lin}) described in
@@ -351,44 +364,44 @@ For $k>2$, the prediction accuracy for the \SYSTEM{} varies from 93\%
 to 96\% with very small variance. On the other hand, Enet-lin is only
 between 85\% to 88\% accurate.
 
-% \begin{figure*}[!htbp]
-% \begin{center}
-%  \includegraphics[width=1\textwidth]{figures/solution_path_general.pdf}
-%  \caption{ A solution path diagram using elastic-net for a linear model (no interaction terms) with just an important subset of variables so that it is easier to visualize.  Each dark solid line in the plot represents a variable's coefficient. The corresponding variable is mentioned on the line. The dashed blue line indicates largest $\lambda$ such that MSE is within one standard error of the minimum, a scalar and the dashed green line corresponds $\lambda$ value with minimum MSE.  Since, the variables in the design matrix are highly correlated, variable signs may not be correctly represented.}
-% \label{fig:est:solution-path}
-% \end{center}
-% \end{figure*}
-% \subsubsection{Discussion for the solution path for regression models}
-% We wanted to build some more intuition about the variable selection
-% and how the model evolves over different values for $k$. In
-% \figref{fig:est:solution-path}, we show a variable in and out plot and
-% what is known as a \textit{solution path} in statistics. The x-axis is
-% the regularization parameter $\lambda$ and y-axis is the coefficient
-% size. For the co-efficient size to relatively make sense we have
-% normalized the columns of the design matrix to have Euclidean-norm
-% equal to 1. As we increase $\lambda$ the regularization becomes less
-% strict and more and more variables can enter the model. In this figure
-% we have a solution path diagram using elastic-net for a linear model
-% (no interaction terms) with just an important subset of variables so
-% that it is easier to visualize.  Each dark solid line in the plot
-% represents a variable's coefficient and how it changes as we increase
-% lambda.  The corresponding variable is mentioned on the solid plot
-% line itself. The dashed blue line indicates largest $\lambda$ such
-% that MSE is within one standard error of the minimum, a scalar and the
-% dashed green line corresponds $\lambda$ value with minimum MSE.
-% Since, the variables in the design matrix are highly correlated, a
-% positive (or a negative) variable in this diagram does not mean that
-% it certainly positively (or negatively) affects the performance. But,
-% if the variable has large absolute value, we can still claim that,
-% conditioned on other variables selected in the model it has large
-% impact. What is interesting in this figure is how as $k$ increases the
-% model evolves. $k=2, 3$ and $4$ have similar solution paths and $k=5,
-% 6$ and $7$ has similar path but the two paths are a bit different from
-% each other, indicating some phase transition happening at $k=4$. This
-% indicates that there might be an opportunity to predict performance
-% for larger $k$'s by aggregating data for smaller $k$. This can be very
-% important for datacenters where they only observe very large number of
-% applications co-scheduled together.
+\begin{figure*}[!htbp]
+\begin{center}
+ \includegraphics[width=1\textwidth]{figures/solution_path_general.pdf}
+ \caption{ A solution path diagram using elastic-net for a linear model (no interaction terms) with just an important subset of variables so that it is easier to visualize.  Each dark solid line in the plot represents a variable's coefficient. The corresponding variable is mentioned on the line. The dashed blue line indicates largest $\lambda$ such that MSE is within one standard error of the minimum, a scalar and the dashed green line corresponds $\lambda$ value with minimum MSE.  Since, the variables in the design matrix are highly correlated, variable signs may not be correctly represented.}
+\label{fig:est:solution-path}
+\end{center}
+\end{figure*}
+\subsubsection{Discussion for the solution path for regression models}
+We wanted to build some more intuition about the variable selection
+and how the model evolves over different values for $k$. In
+\figref{fig:est:solution-path}, we show a variable in and out plot and
+what is known as a \textit{solution path} in statistics. The x-axis is
+the regularization parameter $\lambda$ and y-axis is the coefficient
+size. For the co-efficient size to relatively make sense we have
+normalized the columns of the design matrix to have Euclidean-norm
+equal to 1. As we increase $\lambda$ the regularization becomes less
+strict and more and more variables can enter the model. In this figure
+we have a solution path diagram using elastic-net for a linear model
+(no interaction terms) with just an important subset of variables so
+that it is easier to visualize.  Each dark solid line in the plot
+represents a variable's coefficient and how it changes as we increase
+lambda.  The corresponding variable is mentioned on the solid plot
+line itself. The dashed blue line indicates largest $\lambda$ such
+that MSE is within one standard error of the minimum, a scalar and the
+dashed green line corresponds $\lambda$ value with minimum MSE.
+Since, the variables in the design matrix are highly correlated, a
+positive (or a negative) variable in this diagram does not mean that
+it certainly positively (or negatively) affects the performance. But,
+if the variable has large absolute value, we can still claim that,
+conditioned on other variables selected in the model it has large
+impact. What is interesting in this figure is how as $k$ increases the
+model evolves. $k=2, 3$ and $4$ have similar solution paths and $k=5,
+6$ and $7$ has similar path but the two paths are a bit different from
+each other, indicating some phase transition happening at $k=4$. This
+indicates that there might be an opportunity to predict performance
+for larger $k$'s by aggregating data for smaller $k$. This can be very
+important for datacenters where they only observe very large number of
+applications co-scheduled together.
 
 
 

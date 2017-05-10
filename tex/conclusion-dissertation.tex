@@ -58,5 +58,11 @@ requirement and a method to estimate application interference. An interesting
 direction for future work is how to control resource allocation for multiple
 applications on a multi-node system. It is a very difficult problem because of
 computational blowup with multiple applications across multiple resources and
-multiple nodes. Another interesting direction is finding more low-level features for better
-estimation of application interference.
+multiple nodes. It would involve using algorithms like ESP for performance
+estimation of a set of applications and then using those estimates for a much
+larger linear program. We should also look into direct estimation of the power and
+performance pareto frontier which has fewer points to estimate than the entire frontier
+using active learning algorithms \cite{hsu2010algorithms}.
+Another interesting direction is improving estimation of application interference
+and scaling up application interference. In order to improve the estimates we
+probably require more informative low-level features.
