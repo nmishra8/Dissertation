@@ -1,4 +1,4 @@
-out/thesis_template-figure13.pdf: img/pole/leo-poet-np-LAVAMD.txt
-out/thesis_template-figure13.pdf: img/pole/leo-poet-LAVAMD.txt
-out/thesis_template-figure13.pdf: img/pole/leo-poet-np-LAVAMD.txt
-out/thesis_template-figure13.pdf: img/pole/leo-poet-LAVAMD.txt
+out/thesis_template-figure13.pdf: img/x264-native-ducks/poet-x264.txt
+out/thesis_template-figure13.pdf: img/x264-native-ducks/leopoet-x264.txt
+out/thesis_template-figure13.pdf: img/x264-native-ducks/poet-x264.txt
+out/thesis_template-figure13.pdf: img/x264-native-ducks/leopoet-x264.txt

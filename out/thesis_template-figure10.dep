@@ -1,3 +1,2 @@
-out/thesis_template-figure10.pdf: img/image_text/ma-lat-0.60-v4.txt
-out/thesis_template-figure10.pdf: img/image_text/ma-lat-0.75-v4.txt
-out/thesis_template-figure10.pdf: img/image_text/ma-lat-0.90-v4.txt
+out/thesis_template-figure10.pdf: img/LEO-dyn-eff-summary.txt
+out/thesis_template-figure10.pdf: img/LEO-dyn-lat-summary.txt

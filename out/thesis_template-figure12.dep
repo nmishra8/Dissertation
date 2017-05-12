@@ -1,4 +1,6 @@
-out/thesis_template-figure12.pdf: img/x264-native-ducks/poet-x264.txt
-out/thesis_template-figure12.pdf: img/x264-native-ducks/leopoet-x264.txt
-out/thesis_template-figure12.pdf: img/x264-native-ducks/poet-x264.txt
-out/thesis_template-figure12.pdf: img/x264-native-ducks/leopoet-x264.txt
+out/thesis_template-figure12.pdf: img/bodytrack/poet2-BODYTRACK.txt
+out/thesis_template-figure12.pdf: img/bodytrack/leo2-BODYTRACK.txt
+out/thesis_template-figure12.pdf: img/bodytrack/leopoet2-BODYTRACK.txt
+out/thesis_template-figure12.pdf: img/bodytrack/poet2-BODYTRACK.txt
+out/thesis_template-figure12.pdf: img/bodytrack/leo2-BODYTRACK.txt
+out/thesis_template-figure12.pdf: img/bodytrack/leopoet2-BODYTRACK.txt

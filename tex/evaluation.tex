@@ -141,7 +141,7 @@ the models, and then test on $x$.
 
 \subsection{Performance and Energy for Single App}
 %Setup
-
+\label{sec:perf-energy-arm-single}
 \begin{figure}[!th]
 \centering
   \input{img/single-app-summary2-v4.tex}
@@ -205,6 +205,7 @@ and the normalized energy, respectively.
 
 
 \subsection{Performance and Energy for Multiple Apps}
+\label{sec:perf-energy-arm-multi}
 \begin{figure}[!t]
 \centering
   \input{img/multi-app-summary2-v4.tex}
@@ -217,21 +218,6 @@ and the normalized energy, respectively.
 
 
 
-\begin{figure}[!t]
-\centering
-  \input{img/LEO-single-app-summary.tex}
-   \vskip -.5em
-  \caption{Clover Summary data for single-app scenario.}
-  \label{fig:multi-sum}
-\end{figure}
-
-\begin{figure}[!t]
-\centering
-  \input{img/LEO-multi-app-summary.tex}
-   \vskip -.5em
-  \caption{Clover Summary data for multi-app scenario.}
-  \label{fig:multi-sum}
-\end{figure}
 
 
 We again launch each benchmark with a performance target (using the
@@ -241,6 +227,7 @@ bind to one big core, which interferes with the application \SYSTEM{}
 is controlling.  Delivering performance to the original application in
 this dynamic scenario tests \SYSTEM{}'s ability to react to
 environmental changes.
+
 
 \begin{figure*}[t]
  \captionsetup[subfigure]{labelformat=empty}
@@ -273,8 +260,33 @@ The 90\% target is generally not reachable in this scenario as it
 would require the controlled application to have exclusive use of all
 big cores.
 
+\subsection{CALOREE on multi-core systems}
+In addition to ARM big.LITTLE systems we also repeated the experiments described in
+\secref{perf-energy-arm-single} and \secref{perf-energy-arm-multi} on dual-socket Linux 3.2.0 system with a
+SuperMICRO X9DRL-iF motherboard and two Intel Xeon E5-2690 processors. We used
+same benchmarks as described in \secref{setup-leo}. In \figref{fig:single-sum-clover}
+and \figref{fig:multi-sum-clover} we describe the summary of our findings. We find that
+other than the race-to-idle, CALOREE has the best performance as only being 4.9\% worse than the optimal.
+It has the best energy savings as consuming only 6.9\% extra energy than the optimal, whereas race-to-idle
+uses 19.3\% more energy.
+In the multi-app scenario, CALOREE has significatly better performance than all the other baselines with only 1.53\% worse performance than the optimal. It also has the highest energy savings with only 7\% worse than the optimal. We feel that CALOREE approach is a very versatile approach and it can used on homogenous and hetergenous systems alike.
 
-\PUNT{
+
+\begin{figure}[!t]
+\centering
+  \input{img/LEO-single-app-summary.tex}
+  \caption{Summary data for single-app scenario on multicore processors.}
+  \label{fig:single-sum-clover}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+  \input{img/LEO-multi-app-summary.tex}
+  \caption{Summary data for multi-app scenario on multicore processors.}
+  \label{fig:multi-sum-clover}
+\end{figure}
+
+
 \subsection{Multiapp Details for \texttt{bodytrack}}
 To demonstrate \SYSTEM{} in this dynamic environment we look at the
 specific example of \texttt{bodytrack} with a 70\% target, shown in
@@ -311,7 +323,7 @@ this system.
   \caption{Time series of \texttt{Bodytrack} with phase change caused by multiple applications running.}
   \label{fig:bodytrack-multiapp}
 \end{figure}
-}
+
 
 \subsection{Adapting to Phase Changes}
 \begin{figure}[!h]

@@ -1,1 +1,4 @@
-out/thesis_template-figure14.pdf: img/sample_accuracy-v3.txt
+out/thesis_template-figure14.pdf: img/pole/leo-poet-np-LAVAMD.txt
+out/thesis_template-figure14.pdf: img/pole/leo-poet-LAVAMD.txt
+out/thesis_template-figure14.pdf: img/pole/leo-poet-np-LAVAMD.txt
+out/thesis_template-figure14.pdf: img/pole/leo-poet-LAVAMD.txt

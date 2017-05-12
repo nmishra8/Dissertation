@@ -3,7 +3,7 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis_template.aux
 The style file: unsrtnat.bst
 Case mismatch error between cite keys paragon and Paragon
----line 388 of file thesis_template.aux
+---line 393 of file thesis_template.aux
  : \citation{paragon
  :                  ,quasar}
 I'm skipping whatever remains of this command
