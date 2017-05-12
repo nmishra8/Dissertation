@@ -318,20 +318,29 @@ performance for latency sensitive applications.
 %single and multi-node schedulers.  We assert that \SYSTEM{}'s accurate
 %quantifiable predictions are the key to its success.  Here we analyze
 %that accuracy directly.
+
+
+\subsection{\SYSTEM{} Accuracy versus the Collaborative filter Algorithm}
 \begin{figure}[!t]
-\begin{center}
  \includegraphics[width=0.7\columnwidth]{figures/accuracy_netflix_vs_esp.png}
- \caption{\small Sample complexity plot for Netflix algorithm used by Paragon}
-\label{fig:expt:accuracy_netlix}
-\end{center}
+ \caption{Sample complexity plot for Collaborative filter algorithm used by Paragon}
+\label{fig:netlix}
 \end{figure}
+We compare \SYSTEM{}'s accuracy to that of collaborative filtering;
+\eg{} the Collaborative filter algorithm, which is used by other machine-learning
+based interference predictors \cite{paragon,quasar}.  Specifically, we
+use collaborative filtering to predict which pairs of applications
+will work well together.  The intuition is that if two applications we
+have never run together work well with some third application, they
+may work well together themselves.
 
-We also compare \SYSTEM{} to the Netflix algorithm used by paragon. Netflix algorithm
-performs a low rank matrix completion on performance matrix for pairs of application.
-The underlying assumption used by the algorithm is that if two applications work well
-with some application, they should perform well together as well. We find that \SYSTEM{}
-is consistently superior probably because the Netflix algorithm to  but it does not use the low-level-features.
-
+\PUNT{\figref{fig:accuracy_netflix} Figure \figref{fig:netflix}} Figure 5.6 compares the accuracy of the
+Collaborative filter algorithm and \SYSTEM{} for predicting the interference of
+pairs of applications.  The y-axis shows accuracy and the x-axis shows
+the percentage of samples.  This experiment shows that \SYSTEM{}
+always outperforms collaborative filtering for our benchmarks.  These
+results demonstrate the importance of incorporating low-level features
+into the prediction.
 We compare \SYSTEM{} with the \textit{elastic-net} regularization
 method on the linear model (\textit{Enet-lin}) described in
 \secref{est:elastic-net}.  \PUNT{The comparisons are based on
